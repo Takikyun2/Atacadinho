@@ -1,0 +1,245 @@
+body {
+    margin: 0;
+}
+
+.topo {
+    background-color: #D9C091;
+    width: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.topo-decoracao {
+    background-color: #708C89;
+    margin: 10px;
+    height: 60px;
+    width: 95%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    color: #ffffff;
+    font-family: "Lalezar", system-ui;
+    font-size: 45px;
+    margin: 0;
+    text-align: center;
+}
+
+main {
+    margin: 10px;
+    margin-top: 80px;
+}
+
+.section-campo {
+    display: flex;
+    flex-direction: column; 
+}
+
+.div-campo {
+    background-color: #D9D9D9;
+    width: 250px;
+    height: 100px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 30px; 
+    margin-right: auto; 
+}
+
+.text-campo {
+    font-size: 25px;
+    margin-bottom: 10px; 
+}
+
+.div-campo-quanti {
+    background-color: #D9D9D9;
+    width: 250px;
+    height: 100px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* FINALIZAR CAMPO */
+.total {
+    background-color: #708C89;
+    width: 850px;
+    height: 100px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center; /* Alinha verticalmente os itens no centro */
+}
+
+.text-total {
+    flex: 0.6; /* O label usa o espaço mínimo necessário */
+    text-align: center; /* Alinha o texto do label à esquerda */ /* Espaço à esquerda para o label */
+    font-size: 60px;
+    color: #ffffff;
+}
+
+.campo-total {
+    flex: 2; /* O input usa mais espaço disponível */
+    width: 100%; /* Faz o input ocupar toda a largura disponível no flex container */
+    height: 45px;
+    padding: 5px;
+    font-size: 40px;
+}
+
+.btn-total {
+    border: none;
+    flex: 0; /* O botão usa o espaço mínimo necessário */
+    padding: 10px 20px;
+    margin-left: 10px; /* Espaço entre o input e o botão */
+    height: 100%;
+    font-size: 30px;
+    background-color: #D9C091;
+}
+
+/* FINALIZAR CAMPO */
+.campo {
+    width: 80%; 
+    padding: 5px;
+    font-size: 18px;
+}
+
+.conteiner {
+    display: flex;
+    flex-direction: row; 
+    gap: 30px; 
+    overflow-x: auto; 
+    overflow-y: auto; 
+}
+
+/** TABELA */
+
+table.tabela {
+    border-collapse: collapse;
+    width: 100%; 
+    height: 100%;
+    min-width: 1130px; 
+    position: relative;
+}
+.table-wrapper {
+    max-height: 330px; /* Ajuste conforme necessário */
+    overflow-y: auto; /* Permite rolar verticalmente */
+    position: relative; /* Necessário para o posicionamento do tfoot */
+}
+
+caption {
+    background-color: #708C89;
+    color: #ffffff;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+th, td {
+    border: 1px solid rgb(160, 160, 160);
+    padding: 10px;
+    text-align: left;
+}
+
+td {
+    background-color: #d7c7a8;
+}
+
+tr:hover{
+    background-color: #708C89;
+}
+
+thead th {
+    background-color: #D9C091; 
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9; 
+}
+
+tbody tr:hover {
+    background-color: #e0e0e0; 
+}
+
+tfoot {
+    background-color: #708C89;
+    color: #ffffff;
+    font-size: 25px;
+    font-weight: 900;
+    position: sticky; /* Usa sticky para fixar o rodapé no fundo do contêiner */
+    bottom: 0; /* Coloca o rodapé no fundo do contêiner */
+    z-index: 2; /* Garante que o rodapé fique acima do corpo da tabela */
+}
+
+
+
+/** QUANT-BOX */
+
+.quant-box {
+    margin-top: 15px;
+    margin-left: 0;
+    margin-right: auto; 
+    display: flex;
+    justify-content: flex-start;
+    gap: 30px; 
+}   
+
+/*! Tabela Responsiva */
+.table-responsive {
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch; 
+}
+
+@media (max-width: 768px) {
+    .conteiner {
+        flex-direction: column; 
+    }
+
+    table.tabela {
+        min-width: 100%; 
+    }
+
+    caption {
+        font-size: 1.2em; 
+    }
+
+    th, td {
+        padding: 8px; 
+    }
+
+    .div-campo {
+        width: 100%; 
+        margin-left: 0; 
+        margin-right: 0; 
+    }
+}
+
+@media (max-width: 480px) {
+    caption {
+        font-size: 1em; 
+    }
+
+    th, td {
+        padding: 6px; 
+    }
+
+    h1 {
+        font-size: 30px; 
+    }
+
+    .text-campo {
+        font-size: 18px; 
+    }
+
+    .campo {
+        font-size: 14px; 
+    }
+}

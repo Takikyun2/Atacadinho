@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self'"> -->
+
+  <link rel="stylesheet" href="../../styles/cadastros/cadastro-produtos.css">
+  <link rel="stylesheet" href="../../packages/bootstrap-5.3.3/dist/css/bootstrap.css">
+  <title>Cadastros de produtos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+
+    <style>
+      #video {
+        width: 100%;
+        max-width: 600px;
+      }
+      #result {
+        margin-top: 10px;
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+    </style>
+</style>
+</head>
+
+<body>
+  <header id="header-container" class="displayFlex">
+    <div class="banner wrapper displayFlex">
+      <h1>Cadastro do produto</h1>
+    </div>
+  </header>
+
+  <main id="main-container">
+
+    <form id="form-produto" class="displayFlex">
+
+      <div class="wrapper_grid wrapper">
+
+        <div class="form-lg displayFlex flex-column">
+          <label for="product-name">Nome do
+            produto</label>
+          <input type="text" id="product-name" name="product-name">
+        </div>
+
+        <div class="forms-group displayFlex flex-column">
+          <label for="price">Preço
+            Venda</label>
+          <input type="text" id="price" name="price" placeholder="R$">
+        </div>
+
+        <div class="forms-group displayFlex flex-column">
+          <label for="unit">Unidade</label>
+          <input type="text" id="unit" name="unit" placeholder="Un, Pç, Ka">
+        </div>
+
+        <div class="forms-group displayFlex flex-column">
+          <label for="cod-sku">Código
+            (SKU)</label>
+          <input type="text" id="cod-sku" name="cod-sku">
+        </div>
+
+        <div class="forms-group displayFlex flex-column">
+          <label for="category">Categoria</label>
+          <select id="category" name="category">
+          </select>
+        </div>
+
+
+        <div class="forms-group displayFlex flex-column">
+          <label for="condition">Condição</label>
+          <input type="text" id="condition" name="condition">
+        </div>
+
+        <div class="forms-group displayFlex flex-column">
+          <label for="CodigoBarras">Codigo de Barras</label>
+          <input type="text" id="CodigoBarras" name="CodigoBarras">
+          <a id="btn-scanear">Scanear</a>
+        </div>
+
+        <div id="btn-group" class="forms-group displayFlex flex-column">
+          <div class="btn-group displayFlex">
+            <button type="submit" id="submit-product">
+              Adicionar</button>
+            <button id="close-modal">Cancelar</button>
+          </div>
+        </div>
+        <video id="video" autoplay></video>
+
+      </div>
+    </form>
+
+    <a href="../tabelas/tabela_de_produtos.html" class="table-btn">VOLTAR A TABELA</a>
+
+  </main>
+  <script src="./cadastro_renderer.js"></script>
+
+  <script src="https://unpkg.com/@zxing/library@latest"></script>
+  <script>
+    const btnScanear = document.getElementById("btn-scanear");
+      // Configuração do leitor ZXing
+      const codeReader = new ZXing.BrowserBarcodeReader();
+
+      // Captura do vídeo
+      const videoElement = document.getElementById('video');
+
+      // Função para iniciar o leitor de códigos de barras
+      function startScanner() {
+        codeReader.decodeFromVideoDevice(null, videoElement, (result, error) => {
+          if (result) {
+            document.getElementById('CodigoBarras').value = result.text;
+          }
+          if (error) {
+            console.error(error);
+          }
+        });
+      }
+
+      btnScanear.addEventListener("click", () => {
+        // Inicia o scanner
+        startScanner();
+
+        // Lida com erros e exibe mensagens adequadas
+        codeReader.listVideoInputDevices().then(videoInputDevices => {
+          if (videoInputDevices.length > 0) {
+            // Inicia o scanner se dispositivos de vídeo estiverem disponíveis
+            startScanner();
+          } else {
+            document.getElementById('result').textContent = 'Nenhum dispositivo de vídeo encontrado.';
+          }
+        }).catch(err => {
+          console.error(err);
+          document.getElementById('result').textContent = 'Erro ao acessar a câmera.';
+        });
+
+      })
+    
+   
+
+   
+
+  </script>
+</body>
+
+</html>

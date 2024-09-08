@@ -1,0 +1,20 @@
+{
+  "name": "gereciador_de_caixa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^32.0.1"
+  },
+  "dependencies": {
+    "mariadb": "^3.3.1",
+    "mysql2": "^3.11.0"
+  }
+}
