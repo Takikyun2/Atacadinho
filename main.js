@@ -26,10 +26,10 @@ function carregar_janela() {
     height: 1080,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      contextIsolation: true,//true
-      enableRemoteModule: true, 
-      nodeIntegration: false, //false
-      webSecurity: false//
+      contextIsolation: true, //true
+      enableRemoteModule: false,
+      nodeIntegration: false,
+      webSecurity: false
     }
   });
 
@@ -46,6 +46,8 @@ app.whenReady().then(async () => {
 /* Ipc  */
 
 // ? - Produtos Ipc start
+
+// Metodos do ProdutoController
 
 ipcMain.handle('adicionar-produto', async (event, produto) => {
   try {
@@ -82,12 +84,24 @@ ipcMain.handle('remover-produto', async (event, id) => {
   }
 });
 
+// Metodos do CategoriaController
+
 ipcMain.handle('listar-categorias', async () => { // faz o listar-categorias ser visivel para o todo
   try {
     return await CategoriaController.listarCategoria();
   } catch (err) {
     return { erro: err.message };
   }
+});
+
+// Metodos do CompraController
+
+ipcMain.handle('buscar-produto-nome', async (event, args) => {
+  return await CompraController.buscarProdutoPorNome({ body: args });
+});
+
+ipcMain.handle('buscar-produto-codigo', async (event, args) => {
+  return await CompraController.buscarProdutosPorCodigo({ body: args });
 });
 
 // ? - Produtos Ipc end

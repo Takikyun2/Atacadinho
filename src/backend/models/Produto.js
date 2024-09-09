@@ -1,3 +1,6 @@
+// Clayton - classe produto e seus metodos
+// Eduardo - alteração no codigo por mudança da biblioteca
+
 const { pool } = require('../database/database');
 
 class Produto {
@@ -47,7 +50,7 @@ class Produto {
       conn = await pool.getConnection();
       const [rows] = await conn.execute('SELECT * FROM produtos WHERE idproduto = ?', [idproduto]);
       return rows[0]; // retorna o primeiro (e esperado único) resultado
-    }catch (error) {
+    } catch (error) {
       console.error('Erro ao realizar a consulta:', error);
       throw error;
     } finally {
@@ -64,7 +67,7 @@ class Produto {
         [novosDados.nome, novosDados.preco, novosDados.unidade, novosDados.sku, novosDados.categoria, novosDados.condicao, idproduto]
       );
       return res; // res contém informações sobre a operação de atualização
-    }catch (error) {
+    } catch (error) {
       console.error('Erro ao realizar a atualizacao:', error);
       throw error;
     } finally {
@@ -85,6 +88,35 @@ class Produto {
       if (conn) conn.release();
     }
   }
+
+  static async buscarPorNome(nomeProduto) {
+    let conn;
+    try {
+      conn = await pool.getConnection();
+      const [res] = await conn.execute('SELECT * FROM produtos WHERE nome LIKE ?', [`%${nomeProduto}%`]);
+      return res;
+    } catch (error) {
+      console.error('Erro ao realizar a consulta por nome:', error);
+      throw error;
+    } finally {
+      if (conn) conn.release();
+    }
+  }
+
+  static async buscarPorCodigo(codigoBarras) {
+    let conn;
+    try {
+      conn = await pool.getConnection();
+      const [res] = await conn.execute('SELECT * FROM produtos WHERE codBarra LIKE ?', [codigoBarras]);
+      return res;
+    } catch (error) {
+      console.error('Erro ao realizar a consulta código de barras:', error);
+      throw error;
+    } finally {
+      if (conn) conn.release();
+    }
+  }
+
 }
 
 module.exports = Produto;

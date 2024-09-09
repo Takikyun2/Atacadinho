@@ -1,3 +1,6 @@
+// Clayton - classe produto e seus metodos
+// Eduardo - alteração no codigo por mudança da biblioteca
+
 const Produto = require('../models/Produto')
 
 class ProdutoController {
