@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function atualizarTotalGeral() {
     totalGeral = produtos.reduce((sum, produto) => sum + produto.total, 0);
-    document.getElementById('total').value = totalGeral.toFixed(2);
+    document.getElementById('totalGeral').value = totalGeral.toFixed(2);
   }
 
 })
