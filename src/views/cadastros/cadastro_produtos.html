@@ -9,20 +9,21 @@
   <link rel="stylesheet" href="../../styles/cadastros/cadastro-produtos.css">
   <link rel="stylesheet" href="../../packages/bootstrap-5.3.3/dist/css/bootstrap.css">
   <title>Cadastros de produtos</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 
-    <style>
-      #video {
-        width: 100%;
-        max-width: 600px;
-      }
-      #result {
-        margin-top: 10px;
-        font-size: 1.2em;
-        font-weight: bold;
-      }
-    </style>
-</style>
+  <style>
+    #video {
+      width: 100%;
+      max-width: 600px;
+    }
+
+    #result {
+      margin-top: 10px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  </style>
+  </style>
 </head>
 
 <body>
@@ -94,51 +95,51 @@
     <a href="../tabelas/tabela_de_produtos.html" class="table-btn">VOLTAR A TABELA</a>
 
   </main>
-  <script src="./cadastro_renderer.js"></script>
+  <script src="../../frontend/cadastro_produto_renderer.js"></script>
 
   <script src="https://unpkg.com/@zxing/library@latest"></script>
   <script>
     const btnScanear = document.getElementById("btn-scanear");
-      // Configuração do leitor ZXing
-      const codeReader = new ZXing.BrowserBarcodeReader();
+    // Configuração do leitor ZXing
+    const codeReader = new ZXing.BrowserBarcodeReader();
 
-      // Captura do vídeo
-      const videoElement = document.getElementById('video');
+    // Captura do vídeo
+    const videoElement = document.getElementById('video');
 
-      // Função para iniciar o leitor de códigos de barras
-      function startScanner() {
-        codeReader.decodeFromVideoDevice(null, videoElement, (result, error) => {
-          if (result) {
-            document.getElementById('CodigoBarras').value = result.text;
-          }
-          if (error) {
-            console.error(error);
-          }
-        });
-      }
+    // Função para iniciar o leitor de códigos de barras
+    function startScanner() {
+      codeReader.decodeFromVideoDevice(null, videoElement, (result, error) => {
+        if (result) {
+          document.getElementById('CodigoBarras').value = result.text;
+        }
+        if (error) {
+          console.error(error);
+        }
+      });
+    }
 
-      btnScanear.addEventListener("click", () => {
-        // Inicia o scanner
-        startScanner();
+    btnScanear.addEventListener("click", () => {
+      // Inicia o scanner
+      startScanner();
 
-        // Lida com erros e exibe mensagens adequadas
-        codeReader.listVideoInputDevices().then(videoInputDevices => {
-          if (videoInputDevices.length > 0) {
-            // Inicia o scanner se dispositivos de vídeo estiverem disponíveis
-            startScanner();
-          } else {
-            document.getElementById('result').textContent = 'Nenhum dispositivo de vídeo encontrado.';
-          }
-        }).catch(err => {
-          console.error(err);
-          document.getElementById('result').textContent = 'Erro ao acessar a câmera.';
-        });
+      // Lida com erros e exibe mensagens adequadas
+      codeReader.listVideoInputDevices().then(videoInputDevices => {
+        if (videoInputDevices.length > 0) {
+          // Inicia o scanner se dispositivos de vídeo estiverem disponíveis
+          startScanner();
+        } else {
+          document.getElementById('result').textContent = 'Nenhum dispositivo de vídeo encontrado.';
+        }
+      }).catch(err => {
+        console.error(err);
+        document.getElementById('result').textContent = 'Erro ao acessar a câmera.';
+      });
 
-      })
-    
-   
+    })
 
-   
+
+
+
 
   </script>
 </body>

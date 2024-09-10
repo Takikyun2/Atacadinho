@@ -10,13 +10,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   
         if (produtos.length > 0) {
           produtos.forEach(produto => {
-            const row = document.createElement('tr');
-            const nome = produto.nome || 'Não definido';
-            const codigo = produto.codigo || 'Não definido';
-            const preco = parseFloat(produto.preco) || 0;
             const idProduto = produto.idproduto || 'Não definido';
+            const nome = produto.nome || 'Não definido';
+            const codigo = produto.codBarra || 'Não definido';
+            const preco = parseFloat(produto.preco) || 0;
+            const row = document.createElement('tr');
+            
   
             row.innerHTML = `
+              <td>${idProduto}</td>
               <td>${nome}</td>
               <td>${codigo}</td>
               <td>R$ ${preco.toFixed(2)}</td>

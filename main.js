@@ -3,6 +3,7 @@ const path = require('path')
 const { createDataBaseIfNotExists, setupDatabase } = require('./src/backend/database/database')
 const ProdutoController = require('./src/backend/controllers/ProdutoController')
 const CategoriaController = require('./src/backend/controllers/CategoriaController')
+const CompraController = require('./src/backend/controllers/CompraController')
 
 
 /* 
@@ -97,11 +98,11 @@ ipcMain.handle('listar-categorias', async () => { // faz o listar-categorias ser
 // Metodos do CompraController
 
 ipcMain.handle('buscar-produto-nome', async (event, args) => {
-  return await CompraController.buscarProdutoPorNome({ body: args });
+  return await CompraController.buscarProdutoPorNome(args);
 });
 
 ipcMain.handle('buscar-produto-codigo', async (event, args) => {
-  return await CompraController.buscarProdutosPorCodigo({ body: args });
+  return await CompraController.buscarProdutosPorCodigo(args);
 });
 
 // ? - Produtos Ipc end

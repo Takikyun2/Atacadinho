@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tela Principal</title>
-    <link rel="stylesheet" href="../../styles/tabelas/principal.css">
+    <link rel="stylesheet" href="../../styles/tabelas/tela_caixa.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
@@ -63,57 +63,13 @@
                                     <td>Unidade</td>
                                     <td>R$ 50,00</td>
                                 </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>001</td>
-                                    <td>Produto Exemplo</td>
-                                    <td>R$ 10,00</td>
-                                    <td>5</td>
-                                    <td>Unidade</td>
-                                    <td>R$ 50,00</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>001</td>
-                                    <td>Produto Exemplo</td>
-                                    <td>R$ 10,00</td>
-                                    <td>5</td>
-                                    <td>Unidade</td>
-                                    <td>R$ 50,00</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>001</td>
-                                    <td>Produto Exemplo</td>
-                                    <td>R$ 10,00</td>
-                                    <td>5</td>
-                                    <td>Unidade</td>
-                                    <td>R$ 50,00</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>001</td>
-                                    <td>Produto Exemplo</td>
-                                    <td>R$ 10,00</td>
-                                    <td>5</td>
-                                    <td>Unidade</td>
-                                    <td>R$ 50,00</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>001</td>
-                                    <td>Produto Exemplo</td>
-                                    <td>R$ 10,00</td>
-                                    <td>5</td>
-                                    <td>Unidade</td>
-                                    <td>R$ 50,00</td>
-                                </tr>
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <form action="">
+                                    <form class="busca-form">
                                         <td colspan="7"><input id="busca-input" class="input_tabela"
                                                 placeholder="Buscar Produtos..." type="text"></td>
+                                        <ul id="listaBusca" class="lista-busca"></ul>
                                     </form>
                                 </tr>
                             </tfoot>
@@ -221,7 +177,7 @@
 
     <!-- script area/links -->
 
-    <script src="../../frontend/compras.js"></script>
+    <script src="../../frontend/caixa_renderer.js"></script>
 </body>
 
 </html>

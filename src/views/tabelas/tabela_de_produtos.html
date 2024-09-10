@@ -5,39 +5,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Produtos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../../styles/tabelas/tabela_de_produtos.css" rel="stylesheet">
 </head>
+<!-- Tela desenvolvida por Davi e Elizabeth-->
 
 <body>
-    <header>
-        <div id="divcont" class="d-flex align-items-center justify-content-center">
-            <h1 id="title" class="text-center">Produtos</h1>
+    <header class="topo">
+        <div class="topo-decoracao">
+            <h1 class="topo-titulo">PRODUTOS</h1>
         </div>
     </header>
 
-    <div class="container mt-5">
-        <!-- Parte do filtro de produtos -->
-        <div class="d-flex justify-content-center">
-            <form id="filtroForm">
-                <div id="filtroTitle" class="mb-4">
-                    <h2>Filtro</h2>
-                </div>
+    <section class="container">
+        <!-- Filtro de produtos -->
+        <div class="container-pesquisa">
+            <header id="filtroTitle">
+                <h2>Filtro</h2>
+            </header>
+            <form id="filtroForm" class="form-pesquisa">
+
                 <div class="row">
-                    <div class="columns column-wide">
+                    <div class="columns">
                         <label for="nome" class="form-label">Nome</label>
-                        <input type="text" class="form-control" id="nome">
+                        <input type="text" class="form-control" id="nome" placeholder="Digite o nome">
                     </div>
                     <div class="columns">
                         <label for="categorias" class="form-label">Categoria</label>
-                        <select class="form-control" name="Categoria" id="categorias">
+                        <select class="form-control" id="categorias">
                             <option value="">Todas</option>
                             <!-- Adicione outras opções aqui -->
                         </select>
                     </div>
                     <div class="columns">
-                        <label for="ordernar" class="form-label">Ordenar Por</label>
-                        <select class="form-control" name="Ordenar" id="ordernar">
+                        <label for="ordenar" class="form-label">Ordenar</label>
+                        <select class="form-control" id="ordenar">
                             <option value="asc">De A-Z</option>
                             <option value="desc">De Z-A</option>
                         </select>
@@ -46,55 +47,68 @@
                 <div class="row">
                     <div class="columns">
                         <label for="codigoProduto" class="form-label">Código de Barras</label>
-                        <input type="number" class="form-control" id="codigoProduto">
+                        <input type="number" class="form-control" id="codigoProduto"
+                            placeholder="Digite o código de barras">
                     </div>
                     <div class="columns">
                         <label for="valor" class="form-label">Valor</label>
-                        <input type="number" class="form-control" id="valor">
+                        <input type="number" class="form-control" id="valor" placeholder="Digite o valor">
                     </div>
                     <div class="columns">
                         <label for="dataCadastro" class="form-label">Data de Cadastro</label>
                         <input type="datetime-local" class="form-control" id="dataCadastro">
-                        <div class="buscar">
-                            <button type="submit" class="btn btn-primary btn-busca">Buscar</button>
-                        </div>
                     </div>
                 </div>
             </form>
-        </div>
 
-        <div class="d-flex justify-content-end mt-4">
-            <a id="addProduto" class="btn btn-success" href="../cadastros/cadastro_produtos.html">Adicionar Produto</a>
-            <a id="addProduto" class="btn btn-success" href="../tabelas/principal.html">Tela de compras</a>
         </div>
+    </section>
 
-        <div class="row mt-4">
-            <div class="col-12">
-                <table class="table table-striped">
+    <main>
+
+        <!-- Botão para adicionar produto -->
+        <div class="btn-adicionar">
+
+            <a id="addProduto" class="btn row" href="../cadastros/cadastro_produtos.html">Adicionar Produto</a>
+            <a class="btn row" href="../tabelas/tela_caixa.html">Tela de Compras</a>
+        </div>
+        <!-- Tabela de produtos -->
+        <section class="tabela-container">
+            <div class="tabela-fundo">
+                <table class="table">
                     <thead>
                         <tr>
-                            <th>id</th>
+                            <th>ID</th>
                             <th>Nome</th>
                             <th>Código</th>
-                            <th>categoria</th>
                             <th>Valor</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody id="productList">
                         <!-- Produtos serão inseridos aqui -->
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Código</th>
+                            <th>Categoria</th>
+                            <th>Valor</th>
+                            <th>Ações</th>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Código</th>
+                            <th>Categoria</th>
+                            <th>Valor</th>
+                            <th>Ações</th>
+                        </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="tabela_produto.js"></script>
-    <script>
-
-
-    </script>
+        </section>
+    </main>
+    <script src="../../frontend/tabela_produto_renderer.js"></script>
 </body>
 
 </html>
