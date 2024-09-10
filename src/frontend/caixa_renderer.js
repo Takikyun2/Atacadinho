@@ -39,12 +39,13 @@ document.addEventListener('DOMContentLoaded', function () {
       listaBusca.innerHTML = '';
 
       produtos.forEach((produto => {
+        const preco = parseFloat(produto.preco) || 0;
         const itemBusca = document.createElement('li');
-        itemBusca.innerHTML = `${produto.nome} - R$${produto.preco.toFixed(2)}`;
+        itemBusca.innerHTML = `${produto.nome} - R$${preco.toFixed(2)}`;
         itemBusca.classList.add('item-busca');
 
         itemBusca.addEventListener('click', async () => {
-          adicionarProdutoNaTabela(produto, quantidade, produto.preco * quantidade);
+          adicionarProdutoNaTabela(produto, quantidade, preco * quantidade);
           atualizarTabela();
           atualizarTotalGeral();
           listaBusca.innerHTML = '';
@@ -65,15 +66,17 @@ document.addEventListener('DOMContentLoaded', function () {
   function atualizarTabela() {
 
     const tabela = document.querySelector('.tabela-produtos')
+
     tabela.innerHTML = '';
 
     produtos.forEach((produto, index) => {
       const linha = document.createElement('tr');
+      const preco = parseFloat(produto.preco) || 0;
       linha.innerHTML = `
         <td>${index + 1}</td>
         <td>${produto.codBarra || 'N/A'}</td>
         <td>${produto.nome}</td>
-        <td>R$${produto.preco.toFixed(2)}</td>
+        <td>R$${preco.toFixed(2)}</td>
         <td>${produto.quantidade}</td>
         <td>R$${produto.total.toFixed(2)}</td>
     `;

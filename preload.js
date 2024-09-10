@@ -15,6 +15,6 @@ contextBridge.exposeInMainWorld('api', {
 
   // Metodos do CompraController
 
-  buscarProdutoPorNome: (nomeProduto) => ipcRenderer.invoke('buscar-produto-nome', { nomeProduto }),
-  buscarProdutosPorCodigo: (codigoBarras) => ipcRenderer.invoke('buscar-produto-codigo', { codigoBarras })
+  buscarProdutoPorNome: (args) => ipcRenderer.invoke('buscar-produto-nome', args),
+  buscarProdutosPorCodigo: (args) => ipcRenderer.invoke('buscar-produto-codigo', args)
 });
