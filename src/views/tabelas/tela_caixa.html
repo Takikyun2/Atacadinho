@@ -54,20 +54,23 @@
                             </thead>
                             <tbody class="tabela-produtos">
                                 <tr>
-                                    <td>1</td>
-                                    <td>001</td>
-                                    <td>Produto Exemplo</td>
-                                    <td>R$ 10,00</td>
-                                    <td>5</td>
-                                    <td>Unidade</td>
-                                    <td>R$ 50,00</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
                                 </tr>
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <form class="busca-form">
-                                        <td colspan="7"><input id="busca-input" class="input_tabela"
-                                                placeholder="Buscar Produtos..." type="text"></td>
+                                        <td colspan="7" class="busca-container">
+                                            <input id="busca-input" class="input_busca" placeholder="Buscar Produtos..."
+                                                type="text">
+                                            <input placeholder="Quantidade" type="number" id="quantidade-input"
+                                                class="input_busca">
+                                        </td>
                                         <ul id="listaBusca" class="lista-busca"></ul>
                                     </form>
                                 </tr>
@@ -76,13 +79,10 @@
                     </div>
                 </div>
                 <div class="quant-box">
-                    <div class="div-campo-quanti">
-                        <label for="descricao" id="quantidade-input" class="text-campo">Quantidade</label>
-                        <input placeholder=". . ." type="number" id="descricao" class="campo">
-                    </div>
+
                     <div class="total">
-                        <label for="total" class="text-total">Total</label>
-                        <input placeholder="R$" type="number" id="total" class="campo-total" disabled>
+                        <label for="totalGeral" class="text-total">Total</label>
+                        <input placeholder="R$" type="number" id="totalGeral" class="campo-total" disabled>
                         <button onclick="modal.showModal()" class="btn-total">Finalizar</button>
 
                         <!-- Modal Pagamentos-->

@@ -204,8 +204,8 @@ caption {
     text-align: left;
 }
 
-.input_tabela {
-    width: 97%;
+.input_busca {
+    width: 200px;
     height: 30px;
     padding-left: 10px;
     margin-left: 10px;
