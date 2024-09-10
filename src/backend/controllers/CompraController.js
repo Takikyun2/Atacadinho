@@ -2,17 +2,22 @@ const Produto = require('../models/Produto')
 
 class CompraController {
 
-  static async buscarProdutoPorNome(req, res) {
-    const { nomeProduto, quantidade } = req.body
+  static async buscarProdutoPorNome(args) {
+
+    console.log('Dados recebidos no backend: ', args)
+
+    const { nomeProduto, quantidade } = args;
 
     // ! Verificação e validacao dos dados
 
     if (!nomeProduto || typeof nomeProduto !== 'string') {
-      return res.status(400).send({ messsage: 'Nome do produto inválido' })
+      console.log('Nome do produto inválido', nomeProduto);
+      return { status: 400, messsage: 'Nome do produto inválido' };
     }
 
     if (!quantidade || typeof quantidade !== 'number' || quantidade <= 0) {
-      return res.status(400).send({ messsage: 'Quantidade inválida' })
+      console.log('Quantidade inválida', quantidade);
+      return { status: 400, messsage: 'Quantidade inválida' };
     }
 
     // & Busca dos produtos por nome
@@ -22,27 +27,31 @@ class CompraController {
       if (produtos.length > 0) {
         const produtoSelecionado = produtos[0];
         const total = produtoSelecionado.preco * quantidade;
-        return res.send({ produto: produtoSelecionado, total });
+        return { status: 200, produto: produtoSelecionado, total };
       } else {
-        return res.status(404).send({ message: 'Nenhum produto encontrado' });
+        return { status: 404, message: 'Nenhum produto encontrado' };
       }
     } catch (err) {
       console.error('Erro ao buscar produtos:', err.message);
-      return res.status(500).send({ message: 'Erro ao buscar produto' })
+      return { status: 500, message: 'Erro ao buscar produto' };
     }
   }
 
-  static async buscarProdutosPorCodigo(req, res) {
-    const { codigoBarras, quantidade } = req.body;
+  static async buscarProdutosPorCodigo(args) {
+
+    console.log('Dados recebidos no backend: ', args)
+    const { codigoBarras, quantidade } = args;
 
     // ! Verificação e validacao dos dados
 
     if (!codigoBarras || typeof codigoBarras !== 'string') {
-      return res.status(400).send({ message: 'Codigo de barras inválido' })
+      console.log('Nome do produto inválido', codigoBarras);
+      return { status: 400, message: 'Codigo de barras inválido' };
     }
 
     if (!quantidade || typeof quantidade !== 'number' || quantidade <= 0) {
-      return res.status(400).send({ message: 'Quantidade inválida' })
+      console.log('Quantidade inválida', quantidade);
+      return { status: 400, message: 'Quantidade inválida' };
     }
 
     // & Busca dos produtos por codigo de barras
@@ -51,13 +60,13 @@ class CompraController {
       const produto = await Produto.buscarPorCodigo(codigoBarras);
       if (produto) {
         const total = produto.preco * quantidade;
-        return res.send({ produto, total }); // retorna o produto e o total calculado
+        return { status: 200, produto, total }; // retorna o produto e o total calculado
       } else {
-        return res.status(404).send({ message: 'Nenhum produto encontrado' })
+        return { status: 404, message: 'Nenhum produto encontrado' };
       }
     } catch (err) {
       console.error('Erro ao buscar produtos:', err.message);
-      return res.status(500).send({ message: 'Erro ao buscar produto' })
+      return { status: 500, message: 'Erro ao buscar produto' };
     }
   }
 

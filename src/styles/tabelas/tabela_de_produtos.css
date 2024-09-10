@@ -1,163 +1,161 @@
-/*paciência*/
-
-body {
-    background-color: #D9C091;
-    margin: 0;
-    padding: 0;
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  background-color: #D9C091;
 }
 
-input,
-select {
-    border-radius: 5px !important;
-}
-
-
-/* & - Variaveis */
-
+/* Variáveis */
 :root {
-
-    /* TODO - Cores */
-
-    --cor-principal: #708C89;
-    --cor-secundaria: #D9C091;
-    --cor-cinza: #D9D9D9;
-    --cor-branca: #FFFFFF;
-
-    /* ! - Fontes */
-
-    --fonte-menor: 1rem;
-    --fonte-media: 2rem;
-    --fonte-maior: 3rem;
-
+  --cor-principal: #708C89;
+  --cor-secundaria: #D9C091;
+  --cor-cinza: #D9D9D9;
+  --cor-branca: #FFFFFF;
+  --fonte-menor: 1rem;
+  --fonte-media: 2rem;
+  --fonte-maior: 3rem;
 }
+
+/* nav-bar */
+
+.topo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.topo-decoracao {
+  background-color: #708C89;
+  margin: 10px;
+  height: 60px;
+  width: 95%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topo-titulo {
+  font-size: 40px;
+  color: #FFFFFF;
+  font-weight: 700;
+} 
+  /* Container Principal */
 
 .container {
-    max-width: 90%;
-    margin: 0 auto;
+  width: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }
 
-#filtroForm {
-    width: 100%;
-    max-width: 1420px;
-    /* Ajuste a largura máxima conforme necessário */
-    margin: 0 auto;
-    background-color: #D9D9D9;
+.container-pesquisa {
+  width: 95%;
+  background-color: var(--cor-cinza);
+  align-content: center;
+  justify-content: center;
+  
 }
+#filtroTitle {
+  background-color: var(--cor-principal);
+  width: 10%;
+  height: 50px;
+  text-align: center;
+  border-radius: 0px 0px 25px 0px;
+  justify-content: center;
+  align-content: center;
+
+}
+
+h2 {
+  margin: 0px;
+  font-size: 25px;
+
+}
+
+/* Layout Flexível para Formulário */
 
 .columns {
-    /* Usa flexbox para criar uma coluna com largura fixa */
-    flex: 0 0 33.3333%;
-    max-width: 33.3333%;
-    padding-left: 2rem;
-    padding-right: 2rem;
+  flex: 1;
+  padding: 0 20px;
 }
 
-.btn {
-    color: var(--cor-branca);
-    background-color: var(--cor-principal);
-    border-radius: 5px;
-    width: 200px;
-    height: 60px;
-    border: none;
-    text-decoration: none;
-    text-align: center;
-    font-size: 1.3rem;
-}
-
-.btn:hover {
-    background-color: #87A09D;
-}
-
-.btn-busca{
-width: 130px;
-}
-
-.buscar {
-    display: flex;
-    justify-content: end;
-    align-items: end;
-    margin-bottom: 20px;
-    margin-top: 12px;
-}
-
-.gerar {
-    display: flex;
-    margin-bottom: 20px;
-    margin-top: 12px;
-}
-
-.carousel-inner {
-    text-align: center;
-}
-
-#divcont {
-    background-color: #708c89;
-    width: 100vw;
-    height: 100px;
-}
-
-#title {
-    color: aliceblue;
-}
-
-#filtroTitle {
-    background-color: #708c89;
-    display: flex;
-    width: 125px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0px 0px 25px 0px;
-    /* Centraliza o texto verticalmente */
-
-}
-
-.buttonAddProduct {
-    display: flex;
-    background-color: #D9D9D9;
-    border-radius: 5px;
-    border: none;
-    align-items: center;
-    justify-content: center;
-    width: 175px;
-    height: 50px;
-    /* Alinha o botão ao final do contêiner */
-}
-
-.buttonAddProduct:hover {
-    background-color: #8eb5b1;
-    border: #D9D9D9 solid 2px;
-    transition: 0.5s;
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px;
+  justify-items: center;
+  align-items: center;
 }
 
 .form-control {
-    display: flex;
-    width: 100%;
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  margin-top: 5px;
 }
 
-.card {
-    background-color: #708c89;
+/* Botão de adicionar */
+.btn-adicionar{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-self: center;
+  justify-items: center;
+  align-items: center;
 }
 
-@media (max-width: 768px) {
-    #filtroForm {
-        width: 90%;
-    }
-
-    .btn {
-        width: 100%;
-    }
+.btn {
+  color: var(--cor-branca);
+  background-color: var(--cor-principal);
+  width: 300px;
+  height: 40px;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+  text-decoration: none;
 }
 
-@media (max-width: 576px) {
-    .container {
-        padding: 0 15px;
-    }
+.btn:hover {
+  background-color: #87A09D;
+}
 
-    #filtroForm {
-        width: 100%;
-    }
+/* Tabela */
+.tabela-container{
+  width: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  margin-top: 25px;
 
-    .carousel-item h3 {
-        font-size: 1.2rem;
-    }
+}
+
+.tabela-fundo{
+  width: 95%;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  border: 1px solid #000000;
+  text-align: left;
+}
+
+.table thead {
+  background-color: var(--cor-principal);
+  color: #000000;
+}
+
+#productList{
+  background-color: #C5A08B;
 }

@@ -1,5 +1,4 @@
 const { contextBridge, ipcRenderer } = require('electron');
-const { buscarProdutoPorNome, buscarProdutosPorCodigo } = require('./src/backend/controllers/CompraController');
 
 contextBridge.exposeInMainWorld('api', {
 
