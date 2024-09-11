@@ -37,6 +37,9 @@
   </li>
 </ul>
 
+<h2>Como acessar sua branch?</h2>
+<p>no terminal digite: <code>git checkout [nome da sua branch]</code></p>
+
 <h2>Faça mudanças e faça o commit delas</h2>
 <ul>
   <li><p>Logo apois fazer alteracoes no codigo acesse o terminal e digite <code>git status</code> para ver todas as alteracoes feitas por voce no projeto</p></li>
@@ -61,5 +64,9 @@
 <h2>Criando o pull request</h2>
 
 <p>Vá para o seu repositório no GitHub e você verá um botão dizendo "Compare & pull request". Clique nele e sucesso.</p>
+
+<h2>Atualizando minha branch com os codigos da branch principal usando Pull</h2>
+
+<p>Digamos que voce queira pegar os codigos principais e atualizar sua branch. No terminal digite: <code>git pull origin master</code></p>
 
 <h4>Para mais informações acesse e se vire: https://www.freecodecamp.org/portuguese/news/como-fazer-o-seu-primeiro-pull-request-no-github/</h4>
