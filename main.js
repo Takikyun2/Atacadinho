@@ -5,7 +5,6 @@ const ProdutoController = require('./src/backend/controllers/ProdutoController')
 const CategoriaController = require('./src/backend/controllers/CategoriaController')
 const CompraController = require('./src/backend/controllers/CompraController')
 
-
 /* 
   Função para criar e carregar a janela principal da aplicação:
   'const janela': Declara uma constante para armazenar a janela.
@@ -21,16 +20,17 @@ const CompraController = require('./src/backend/controllers/CompraController')
 */
 
 
+
 function carregar_janela() {
   const janela = new BrowserWindow({
     width: 1920,
     height: 1080,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      contextIsolation: true, //true
+      contextIsolation: true,
       enableRemoteModule: false,
       nodeIntegration: false,
-      webSecurity: false
+      webSecurity: true //false
     }
   });
 

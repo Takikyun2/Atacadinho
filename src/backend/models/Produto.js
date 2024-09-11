@@ -4,12 +4,13 @@
 const { pool } = require('../database/database');
 
 class Produto {
-  constructor(idproduto, nome, preco, unidade, sku, categoria, condicao, datahora) {
+  constructor(idproduto, nome, preco, unidade, sku, codbarra, categoria, condicao, datahora) {
     this.idproduto = idproduto;
     this.nome = nome;
     this.preco = preco;
     this.unidade = unidade;
     this.sku = sku;
+    this.codbarra = codbarra;
     this.categoria = categoria;
     this.condicao = condicao;
     this.datahora = datahora;
@@ -20,8 +21,8 @@ class Produto {
     try {
       conn = await pool.getConnection();
       const [res] = await conn.execute(
-        `INSERT INTO produtos (nome, preco, unidade, sku, categoria_id, condicao, datahora) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-        [produto.nome, produto.preco, produto.unidade, produto.sku, produto.categoria, produto.condicao, produto.datahora]
+        `INSERT INTO produtos (nome, preco, unidade, sku, codbarra,categoria_id, condicao, datahora) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [produto.nome, produto.preco, produto.unidade, produto.sku, produto.codbarra, produto.categoria, produto.condicao, produto.datahora]
       );
       return res; // res contém informações sobre a operação de inserção
     } finally {

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tela Principal</title>
+    <title>Caixa</title>
     <link rel="stylesheet" href="../../styles/tabelas/tela_caixa.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,11 +22,11 @@
             <section class="section-campo">
                 <div class="div-campo">
                     <label for="codigo" class="text-campo">Código</label>
-                    <input placeholder=". . ." type="number" id="codigo" class="campo">
+                    <input placeholder=". . ." type="number" id="codigo" class="campo" disabled>
                 </div>
                 <div class="div-campo">
                     <label for="valor-unitario" class="text-campo">V. Unitário</label>
-                    <input placeholder="R$" type="number" id="valor-unitario" class="campo">
+                    <input placeholder="R$" type="number" id="valor-unitario" class="campo" disabled>
                 </div>
                 <div class="div-campo">
                     <label for="total" class="text-campo">Total</label>
@@ -177,6 +177,7 @@
     <!-- script area/links -->
 
     <script src="../../frontend/caixa_renderer.js"></script>
+    <script src="../../features/atalhosTeclado.js"></script>
 </body>
 
 </html>

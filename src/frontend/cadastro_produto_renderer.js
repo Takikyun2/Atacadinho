@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       preco: document.querySelector('#price').value,
       unidade: document.querySelector('#unit').value,
       sku: document.querySelector('#cod-sku').value,
+      codbarra: document.querySelector('#CodigoBarras').value,
       categoria: document.querySelector('#category').value,
       condicao: document.querySelector('#condition').value,
       datahora: datahora

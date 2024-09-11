@@ -57,7 +57,7 @@ async function setupDatabase() {
         preco VARCHAR(200) NOT NULL,
         unidade VARCHAR(200) NOT NULL,
         sku VARCHAR(200) NOT NULL,
-        codBarra VARCHAR(200) NOT NULL,
+        codbarra VARCHAR(200) NOT NULL,
         categoria_id INT NOT NULL,
         condicao VARCHAR(200) NOT NULL,
         datahora DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,

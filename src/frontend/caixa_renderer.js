@@ -81,9 +81,22 @@ document.addEventListener('DOMContentLoaded', function () {
         <td>R$${produto.total.toFixed(2)}</td>
     `;
       tabela.appendChild(linha);
+      
+      atualizarInputsProduto(produto.codbarra, preco.toFixed(2),  produto.total.toFixed(2));
     });
   }
 
+  //funcao responsavel por iserir os dados nos inputs codigo, v.unitario e total  
+  function atualizarInputsProduto(codigo,valorUni,total){
+    inputCodigoBarra = document.getElementById("codigo");
+    inputValorUni = document.getElementById("valor-unitario");
+    inputTotal = document.getElementById("total");
+    //altera os valores dos inputs
+    inputCodigoBarra.value = codigo;
+    inputValorUni.value = valorUni;
+    inputTotal.value = total;
+
+  }
   function atualizarTotalGeral() {
     totalGeral = produtos.reduce((sum, produto) => sum + produto.total, 0);
     document.getElementById('totalGeral').value = totalGeral.toFixed(2);
