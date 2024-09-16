@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const preco = parseFloat(produto.preco) || 0;
       linha.innerHTML = `
         <td>${index + 1}</td>
-        <td>${produto.codBarra || 'N/A'}</td>
+        <td>${produto.codbarra || 'N/A'}</td>
         <td>${produto.nome}</td>
         <td>R$${preco.toFixed(2)}</td>
         <td>${produto.quantidade}</td>
@@ -97,9 +97,10 @@ document.addEventListener('DOMContentLoaded', function () {
     inputTotal.value = total;
 
   }
+
   function atualizarTotalGeral() {
     totalGeral = produtos.reduce((sum, produto) => sum + produto.total, 0);
-    document.getElementById('totalGeral').value = totalGeral.toFixed(2);
+    document.getElementById("totalGeral").value = totalGeral.toFixed(2);
   }
 
 })

@@ -95,7 +95,7 @@ select {
 
 .div-campo-quanti {
     background-color: #D9D9D9;
-    width: 250px;
+    width: 350px;
     height: 100px;
     margin-bottom: 15px;
     display: flex;
@@ -107,7 +107,7 @@ select {
 /* Finalizar Campo */
 .total {
     background-color: #708C89;
-    width: 850px;
+    width: 750px;
     height: 100px;
     margin-bottom: 15px;
     display: flex;
@@ -117,13 +117,13 @@ select {
 .text-total {
     flex: 0.6;
     text-align: center;
-    font-size: 60px;
+    font-size: 50px;
     color: #ffffff;
 }
 
 .campo-total {
     flex: 2;
-    width: 100%;
+    width: 1%;
     height: 45px;
     padding: 5px;
     font-size: 40px;
@@ -157,11 +157,13 @@ select {
 /* Tabela */
 .table-wrapper {
     max-height: 330px;
-    overflow-y: auto;
+    overflow: hidden;
     height: 350px;
     min-height: 300px;
     display: flex;
     flex-direction: column;
+    background-color: #E7D5B2;
+    position: relative;
 }
 
 .table-responsive {
@@ -174,6 +176,7 @@ table.tabela {
     width: 100%;
     min-width: 600px;
     border-spacing: 0;
+    flex-direction: column;
 }
 
 caption {
@@ -187,6 +190,7 @@ caption {
     position: sticky;
     top: 0;
     z-index: 3;
+    width: 98, 5%;
 }
 
 .tabela thead th {
@@ -200,22 +204,47 @@ caption {
 .tabela th,
 .tabela td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 10px;
     text-align: left;
+    word-wrap: break-word;
 }
 
-.input_busca {
-    width: 200px;
+.input_tabela {
+    width: 80%;
     height: 30px;
     padding-left: 10px;
-    margin-left: 10px;
+    margin-left: 1px;
     font-size: 20px;
 }
 
+.input-group {
+    display: flex;
+    gap: 10px;
+    /* Espaço entre os inputs */
+    align-items: center;
+}
+
 tbody {
+    flex: 1;
     max-height: 250px;
     overflow-y: auto;
     width: 100%;
+    margin-bottom: 300px;
+}
+
+tbody:empty {
+    background-color: #9a7070;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #a52d2d;
+}
+
+tbody:empty::before {
+    content: "Nenhum item disponível";
+    font-size: 20px;
+    color: #de2929;
 }
 
 tbody tr:hover td {
@@ -225,11 +254,17 @@ tbody tr:hover td {
 tbody td {
     background-color: #d7c7a8;
     border: 1px solid rgb(160, 160, 160);
-    padding: 10px;
+    padding: 8px;
+    /* Ajuste conforme necessário */
     text-align: left;
-    width: 150px;
     box-sizing: border-box;
+    word-wrap: break-word;
+    /* Para evitar estouro de texto */
+    line-height: 1.5;
+    /* Ajuste conforme necessário */
 }
+
+
 
 tbody tr:nth-child(even) {
     background-color: #f9f9f9;
@@ -241,13 +276,49 @@ tbody tr:hover {
 
 tfoot {
     background-color: #708C89;
+    /* Ajuste a cor conforme desejado */
     color: #ffffff;
+    /* Cor do texto */
     font-size: 25px;
+    /* Ajuste o tamanho da fonte conforme necessário */
     font-weight: 900;
-    height: 40px;
+    /* Ajuste o peso da fonte conforme necessário */
+    height: 50px;
+    /* Ajuste a altura conforme necessário */
+    border-top: 1px solid #ddd;
+    /* Linha superior */
     position: sticky;
+    /* Fica fixo no fundo do container */
     bottom: 0;
+    /* Alinha o rodapé na parte inferior */
+    width: 100%;
+    /* Garante que o rodapé ocupe toda a largura da tabela */
     z-index: 1;
+    /* Garante que o rodapé esteja sobre o conteúdo */
+}
+
+.tfooter-fixado {
+    margin-top: 20px;
+    background-color: #708C89;
+    /* Ajuste a cor conforme desejado */
+    color: #ffffff;
+    /* Cor do texto */
+    font-size: 25px;
+    /* Ajuste o tamanho da fonte conforme necessário */
+    font-weight: 900;
+    /* Ajuste o peso da fonte conforme necessário */
+    height: 50px;
+    /* Ajuste a altura conforme necessário */
+    border-top: 1px solid #ddd;
+    /* Linha superior */
+    position: sticky;
+    /* Fica fixo no fundo do container */
+    bottom: 0;
+    /* Alinha o rodapé na parte inferior */
+    width: 100%;
+    /* Garante que o rodapé ocupe toda a largura da tabela */
+    z-index: 1;
+    /* Garante que o rodapé esteja sobre o conteúdo */
 }
 
 /* Quantidade Box */
@@ -618,28 +689,30 @@ dialog {
     box-shadow: 0 0 0 2px rgba(38, 143, 255, 0.5);
 }
 
-/* lista de busca */
+/* lista de busca de produtos*/
 
 .busca-form {
     position: relative;
 }
 
 #listaBusca {
-    list-style: none;
-    width: 500px;
-    height: 150px;
-    background-color: blue;
-    position: absolute;
-    top: 90%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
     overflow: scroll;
+    list-style: none;
+    width: 260px;
+    height: 40px;
+    background-color: rgb(255, 255, 255);
+    z-index: 1;
     margin: 0;
+    border: solid 1px rgba(0, 0, 0, 0.55);
+    font-size: 20px;
 }
 
 #listaBusca li {
     padding: 10px;
     cursor: pointer;
     color: #373031;
+}
+
+#listaBusca::-webkit-scrollbar{
+    display: none;
 }
