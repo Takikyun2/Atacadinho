@@ -3,15 +3,13 @@ document.addEventListener('DOMContentLoaded', function () {
   // var principais
   let produtos = []; // Array para armazenar os produtos que vem do banco de dados
   let totalGeral = 0; // Variável para armazenar o total geral da compra
-  let listaBusca = document.querySelector('.lista-busca');
-  //buscar de produtos no input
-
+  let listaBusca = document.querySelector('.lista-busca'); // Variável para armazenar a lista de busca
 
   // quando o usuario digitar chama as funcoes responsaveis para adicionar, pesquisar e atualizar a tabela
   document.querySelector('#busca-input').addEventListener('input', async () => {
 
     const buscaInput = document.querySelector('#busca-input').value;
-    const quantidade = (document.querySelector('#quantidade-input').value || 1);
+    const quantidade = parseInt(document.querySelector('#quantidade-input').value) || 1;
 
     if (!buscaInput) {
       document.querySelector('#listaBusca').style.diplay = 'none';
@@ -45,7 +43,8 @@ document.addEventListener('DOMContentLoaded', function () {
         itemBusca.classList.add('item-busca');
 
         itemBusca.addEventListener('click', async () => {
-          adicionarProdutoNaTabela(produto, quantidade, preco * quantidade);
+          const quantidadeAtualizada = parseInt(document.querySelector('#quantidade-input').value) || 1;
+          adicionarProdutoNaTabela(produto, quantidadeAtualizada, preco * quantidadeAtualizada);
           atualizarTabela();
           atualizarTotalGeral();
           listaBusca.innerHTML = '';
@@ -81,20 +80,22 @@ document.addEventListener('DOMContentLoaded', function () {
         <td>R$${produto.total.toFixed(2)}</td>
     `;
       tabela.appendChild(linha);
-      
-      atualizarInputsProduto(produto.codbarra, preco.toFixed(2),  produto.total.toFixed(2));
+
+      atualizarInputsProduto(produto.codbarra, preco.toFixed(2), produto.total.toFixed(2), produto.nome);
     });
   }
 
   //funcao responsavel por iserir os dados nos inputs codigo, v.unitario e total  
-  function atualizarInputsProduto(codigo,valorUni,total){
+  function atualizarInputsProduto(codigo, valorUni, total, nome) {
     inputCodigoBarra = document.getElementById("codigo");
     inputValorUni = document.getElementById("valor-unitario");
     inputTotal = document.getElementById("total");
+    inputDescricao = document.getElementById("descricao");
     //altera os valores dos inputs
     inputCodigoBarra.value = codigo;
     inputValorUni.value = valorUni;
     inputTotal.value = total;
+    inputDescricao.value = nome;
 
   }
 
@@ -103,5 +104,13 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById("totalGeral").value = totalGeral.toFixed(2);
   }
 
+
+
+})
+
+document.getElementById('recebido').addEventListener('input', () => {
+  recebido = document.getElementById('recebido').value;
+  let troco = document.getElementById('recebido').value - document.getElementById('totalGeral').value;
+  document.getElementById('troco').value = troco.toFixed(2);
 })
 
