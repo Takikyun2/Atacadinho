@@ -338,6 +338,15 @@ tfoot {
     justify-content: flex-start;
 }
 
+.section-caixa {
+    background-color: #708C89;
+    padding: 30px;
+    display: grid;
+    gap: 3px;
+    justify-content: space-between;
+    width: 400px;
+}
+
 .section-botoes {
     background-color: #708C89;
     padding: 20px;
@@ -348,19 +357,8 @@ tfoot {
     height: 120px;
 }
 
-.section-caixa {
-    background-color: #708C89;
-    padding: 30px;
-    display: grid;
-    gap: 3px;
-    justify-content: space-between;
-    width: 400px;
-}
-
-.botao1,
-.botao2,
-.botao3,
-.botao4 {
+.section-botoes button,
+a {
     background-color: #c0c0c0;
     border: 2px solid #708C89;
     padding: 10px;
@@ -372,6 +370,8 @@ tfoot {
     align-items: center;
     transition: background-color 0.3s ease;
     transition: 0.5s;
+    text-decoration: none;
+    color: #373031;
 }
 
 .botao1:hover,
@@ -713,6 +713,6 @@ dialog {
     color: #373031;
 }
 
-#listaBusca::-webkit-scrollbar{
+#listaBusca::-webkit-scrollbar {
     display: none;
 }
