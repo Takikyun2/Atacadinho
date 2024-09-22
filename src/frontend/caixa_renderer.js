@@ -1,96 +1,163 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-  // var principais
-  let produtos = []; // Array para armazenar os produtos que vem do banco de dados
+  // & --- Variaveis globais ---
+  let produtos = JSON.parse(localStorage.getItem('produtos')) || []; // Array para armazenar os produtos que vem do banco de dados
   let totalGeral = 0; // Variável para armazenar o total geral da compra
   let listaBusca = document.querySelector('.lista-busca'); // Variável para armazenar a lista de busca
 
-  // quando o usuario digitar chama as funcoes responsaveis para adicionar, pesquisar e atualizar a tabela
-  document.querySelector('#busca-input').addEventListener('input', async () => {
 
-    const buscaInput = document.querySelector('#busca-input').value;
+  // & --- Eventos de botao ---
+  // Aqui cancela a compra e limpa os produtos   
+  document.getElementById('btn-cancelar').addEventListener('click', () => {
+    produtos = []; // Limpa a lista de produtos
+    localStorage.removeItem('produtos'); // Remove do localStorage
+    atualizarTabela();
+    atualizarTotalGeral();
+  });
+
+
+  // & --- Eventos de entrada ---
+  // quando o usuario digitar o codigo de barras do produto chama as funcoes responsaveis para adicionar, pesquisar e atualizar a tabela
+  document.querySelector('#codigo-barras-input').addEventListener('input', debounce(buscarProdutos, 100))
+
+  // quando o usuario digitar o nome do produto chama as funcoes responsaveis para adicionar, pesquisar e atualizar a tabela
+  document.querySelector('#busca-input').addEventListener('input', debounce(buscarProdutos, 100));
+
+  // funcão para mostrar os produtos buscados
+
+  // & --- Funções de busca ---
+  async function buscarProdutos() {
+
+    // variaveis para armazenar os valores dos inputs
+
+    const buscaInput = document.querySelector('#busca-input').value.trim();
+    const codigoBarraInput = document.querySelector('#codigo-barras-input').value.trim();
     const quantidade = parseInt(document.querySelector('#quantidade-input').value) || 1;
 
-    if (!buscaInput) {
-      document.querySelector('#listaBusca').style.diplay = 'none';
+    if (!buscaInput && !codigoBarraInput) { // verifica se os inputs estao vazios
       listaBusca.innerHTML = '';
       return;
     }
 
-    let resposta; // variavel para armazenar a resposta que vem do banco
+    let resposta; // variavel para armazenar a resposta da API
+
     try {
-      resposta = await window.api.buscarProdutoPorNome({ nomeProduto: buscaInput, quantidade: quantidade });
+      if (codigoBarraInput) {
+        resposta = await window.api.buscarProdutosPorCodigo({ codigoBarras: codigoBarraInput, quantidade });
+      } else if (buscaInput) {
+        resposta = await window.api.buscarProdutoPorNome({ nomeProduto: buscaInput, quantidade });
+      }
+
+      console.log('Resposta da busca: ', resposta);
+
+      if (resposta.status === 200 && resposta.produto) {
+        mostrarPesquisa(Array.isArray(resposta.produto) ? resposta.produto : [resposta.produto]);
+      } else {
+        mostrarMensagemNenhumResultado();
+      }
     } catch (error) {
-      console.error('Erro ao buscar por nome', error)
-      return;
+      console.error('Erro ao buscar:', error);
     }
 
-    console.log(resposta); // mostra a resposta no console
 
-    if (resposta.status === 200 && resposta.produto) {
-      mostrarPesquisa([resposta.produto]) // se tiver resposta chama a funcao de busca
-    } else {
-      listaBusca.innerHTML = '';
-    }
 
-    function mostrarPesquisa(produtos) {
+    function mostrarPesquisa(produtos) { // função para mostrar os produtos pesquisados em sugestoes
       listaBusca.innerHTML = '';
 
-      produtos.forEach((produto => {
-        const preco = parseFloat(produto.preco) || 0;
-        const itemBusca = document.createElement('li');
-        itemBusca.innerHTML = `${produto.nome} - R$${preco.toFixed(2)}`;
-        itemBusca.classList.add('item-busca');
+      if (produtos.length === 0) { // verifica se o array de produtos for vazio
+        mostrarMensagemNenhumResultado();
+        return;
+      }
 
-        itemBusca.addEventListener('click', async () => {
-          const quantidadeAtualizada = parseInt(document.querySelector('#quantidade-input').value) || 1;
-          adicionarProdutoNaTabela(produto, quantidadeAtualizada, preco * quantidadeAtualizada);
-          atualizarTabela();
-          atualizarTotalGeral();
-          listaBusca.innerHTML = '';
-          document.querySelector('#busca-input').value = '';
+
+      produtos.forEach((produto => { // percorre o array de produtos
+        const preco = parseFloat(produto.preco) || 0; // pega o preco do produto
+        const itemBusca = document.createElement('li'); // cria um item de busca
+        itemBusca.innerHTML = `${produto.nome} - R$${preco.toFixed(2)}`; // adiciona o nome do produto e o preco
+        itemBusca.classList.add('item-busca'); // adiciona uma classe CSS
+
+        itemBusca.addEventListener('click', async () => { // adiciona o evento de clique na lista de busca
+          const quantidadeAtualizada = parseInt(document.querySelector('#quantidade-input').value) || 1; // pega a quantidade informada pelo usuario
+          adicionarProdutoNaTabela(produto, quantidadeAtualizada, preco * quantidadeAtualizada); // adiciona o item na tabela
+          atualizarTabela(); // atualiza a tabela
+          atualizarTotalGeral(); // atualiza o total
+          limparCamposBusca(); // limpa os campos
         })
 
-        listaBusca.appendChild(itemBusca);
+        listaBusca.appendChild(itemBusca); // adiciona o item de busca
 
       }))
     }
-
-  });
-
-  function adicionarProdutoNaTabela(produto, quantidade, total) {
-    produtos.push({ ...produto, quantidade, total });
   }
 
-  function atualizarTabela() {
+  function mostrarMensagemNenhumResultado() { // função para mostrar a mensagem de nenhum resultado encontrado
+    const itemNaoEncontrado = document.createElement('li');
+    itemNaoEncontrado.textContent = 'Nenhum produto encontrado para sua pesquisa.';
+    itemNaoEncontrado.classList.add('item-busca', 'nenhum-resultado');
+    listaBusca.appendChild(itemNaoEncontrado);
+  }
 
-    const tabela = document.querySelector('.tabela-produtos')
+  function adicionarProdutoNaTabela(produto, quantidade, total) { // funcao para adicionar o item na tabela
+    const produtoExistente = produtos.find(p => p.codbarra === produto.codbarra); // verifica se o item ja existe na tabela
 
-    tabela.innerHTML = '';
+    if (produtoExistente) {
+      produtoExistente.quantidade += quantidade; // se o item ja existe, adiciona a quantidade
+      produtoExistente.total += total; // se o item ja existe, adiciona o total
+    } else {
+      produtos.push({ ...produto, quantidade, total }); // se o item ainda nao existe, adiciona-o
+    }
 
-    produtos.forEach((produto, index) => {
-      const linha = document.createElement('tr');
-      const preco = parseFloat(produto.preco) || 0;
-      linha.innerHTML = `
+    localStorage.setItem('produtos', JSON.stringify(produtos));
+  }
+
+  function atualizarTabela() { // funcao para atualizar a tabela
+
+    const tabela = document.querySelector('.tabela-produtos') // seleciona a tabela
+
+    tabela.innerHTML = ''; // limpa a tabela
+
+    produtos.forEach((produto, index) => { // percorre o array de produtos
+      const linha = document.createElement('tr'); // cria uma linha na tabela
+      const preco = parseFloat(produto.preco) || 0; // pega o preco do produto
+      linha.innerHTML = ` 
         <td>${index + 1}</td>
         <td>${produto.codbarra || 'N/A'}</td>
         <td>${produto.nome}</td>
         <td>R$${preco.toFixed(2)}</td>
         <td>${produto.quantidade}</td>
         <td>R$${produto.total.toFixed(2)}</td>
-    `;
+        <td><button class="btn-remover" data-index="${index}">Remover</button></td>
+    `; // adiciona os dados da linha na tabela
       tabela.appendChild(linha);
 
-      atualizarInputsProduto(produto.codbarra, preco.toFixed(2), produto.total.toFixed(2), produto.nome);
+      linha.querySelector('.btn-remover').addEventListener('click', () => {
+        removerProduto(index);
+      });
+
+      atualizarInputsProduto(produto.codbarra, preco.toFixed(2), produto.total.toFixed(2), produto.nome); // atualiza os inputs da tabela
     });
+  }
+
+  // Função para remover um produto da tabela
+
+  function removerProduto(index) {
+    // Remove o produto da lista
+    produtos.splice(index, 1);
+
+
+    localStorage.setItem('produtos', JSON.stringify(produtos)); // Atualiza o localStorage
+
+    // Atualiza a tabela e o total geral
+    atualizarTabela();
+    atualizarTotalGeral();
   }
 
   //funcao responsavel por iserir os dados nos inputs codigo, v.unitario e total  
   function atualizarInputsProduto(codigo, valorUni, total, nome) {
-    inputCodigoBarra = document.getElementById("codigo");
-    inputValorUni = document.getElementById("valor-unitario");
-    inputTotal = document.getElementById("total");
-    inputDescricao = document.getElementById("descricao");
+    const inputCodigoBarra = document.getElementById("codigo");
+    const inputValorUni = document.getElementById("valor-unitario");
+    const inputTotal = document.getElementById("total");
+    const inputDescricao = document.getElementById("descricao");
     //altera os valores dos inputs
     inputCodigoBarra.value = codigo;
     inputValorUni.value = valorUni;
@@ -104,13 +171,29 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById("totalGeral").value = totalGeral.toFixed(2);
   }
 
+  // Função para limpar os campos de busca após selecionar um produto
+  function limparCamposBusca() {
+    document.querySelector('#busca-input').value = '';
+    document.querySelector('#quantidade-input').value = '';
+    document.querySelector('#codigo-barras-input').value = '';
+    listaBusca.innerHTML = ''; // Limpa a lista de busca
+  }
 
+  function debounce(func, wait) {
+    let timeout;
+    return function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait)
+    };
+  }
 
+  atualizarTabela();
 })
 
 document.getElementById('recebido').addEventListener('input', () => {
-  recebido = document.getElementById('recebido').value;
-  let troco = document.getElementById('recebido').value - document.getElementById('totalGeral').value;
+  const recebido = parseFloat(document.getElementById('recebido').value) || 0;
+  totalGeral = parseFloat(document.getElementById("totalGeral").value) || 0;
+  const troco = recebido - totalGeral;
   document.getElementById('troco').value = troco.toFixed(2);
 })
 

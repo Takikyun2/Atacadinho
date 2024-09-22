@@ -45,7 +45,7 @@ class CompraController {
     // ! Verificação e validacao dos dados
 
     if (!codigoBarras || typeof codigoBarras !== 'string') {
-      console.log('Nome do produto inválido', codigoBarras);
+      console.log('Codigo do produto inválido', codigoBarras);
       return { status: 400, message: 'Codigo de barras inválido' };
     }
 

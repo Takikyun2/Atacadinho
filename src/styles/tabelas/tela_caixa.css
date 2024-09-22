@@ -689,6 +689,24 @@ dialog {
     box-shadow: 0 0 0 2px rgba(38, 143, 255, 0.5);
 }
 
+.btn-remover {
+    color: var(--cor-branca);
+    background-color: var(--cor-principal);
+    width: 100px;
+    height: auto;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    text-decoration: none;
+}
+
+.btn-remover:hover {
+    background-color: #87A09D;
+}
+
 /* lista de busca de produtos*/
 
 .busca-form {

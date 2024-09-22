@@ -22,19 +22,19 @@
             <section class="section-campo">
                 <div class="div-campo">
                     <label for="codigo" class="text-campo">Código</label>
-                    <input placeholder=". . ." type="number" id="codigo" class="campo">
+                    <input placeholder=". . ." type="number" id="codigo" class="campo" disabled>
                 </div>
                 <div class="div-campo">
                     <label for="valor-unitario" class="text-campo">V. Unitário</label>
-                    <input placeholder="R$" type="number" id="valor-unitario" class="campo">
+                    <input placeholder="R$" type="number" id="valor-unitario" class="campo" disabled>
                 </div>
                 <div class="div-campo">
                     <label for="total" class="text-campo">Total</label>
-                    <input placeholder="R$" type="number" id="total" class="campo">
+                    <input placeholder="R$" type="number" id="total" class="campo" disabled>
                 </div>
                 <div class="div-campo">
                     <label for="descricao" class="text-campo">Descrição</label>
-                    <input placeholder=". . ." type="text" id="descricao" class="campo">
+                    <input placeholder=". . ." type="text" id="descricao" class="campo" disabled>
                 </div>
             </section>
             <section>
@@ -50,18 +50,22 @@
                                     <th>Preço</th>
                                     <th>Quant.</th>
                                     <th>Total</th>
+                                    <th>ações</th>
                                 </tr>
                             </thead>
                             <tbody class="tabela-produtos">
                             </tbody>
                             <tfoot class="tfooter-fixado">
                                 <tr>
-                                    <td colspan="6" class="rodape-tabela">
+                                    <td colspan="7" class="rodape-tabela">
                                         <!-- Use o colspan com valor correspondente ao número de colunas -->
 
                                         <div class="input-group">
                                             <input id="busca-input" class="input_tabela"
                                                 placeholder="Buscar Produtos..." type="text">
+
+                                            <input id="codigo-barras-input" type="text" style="display: none;">
+
                                             <input placeholder="Quantidade..." type="number" id="quantidade-input"
                                                 class="campo">
                                         </div>
@@ -155,7 +159,7 @@
 
                     <div class="botao-group">
                         <button class="botao2" tabindex="0">F3 - CAIXA</button>
-                        <button class="botao3" tabindex="0">F4 - CANCELAR</button>
+                        <button id="btn-cancelar" class="botao3" tabindex="0">F4 - CANCELAR</button>
                     </div>
                     <button class="botao4" tabindex="0">F5 - RELATÓRIOS</button>
                 </div>

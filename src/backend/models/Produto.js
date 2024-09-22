@@ -108,7 +108,7 @@ class Produto {
     let conn;
     try {
       conn = await pool.getConnection();
-      const [res] = await conn.execute('SELECT * FROM produtos WHERE codBarra LIKE ?', [codigoBarras]);
+      const [res] = await conn.execute('SELECT * FROM produtos WHERE codbarra = ?', [codigoBarras]);
       return res;
     } catch (error) {
       console.error('Erro ao realizar a consulta código de barras:', error);
