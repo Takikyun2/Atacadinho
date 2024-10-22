@@ -11,6 +11,9 @@
 <li><p>Qualquer dúvida pode perguntar a alguém que tenha mais conhecimento que você, perguntar não machuca, não tenha medo!</p></li>
 </ul>
 
+<h4>Stack: node.js, javascript, css, html, bootstrap</h4>
+<p>obs: programa feito em electron</p>
+
 # Usando o Git e Github no projeto
 
 <h2>Como clonar o repositorio ?</h2>
