@@ -78,8 +78,8 @@ async function setupDatabase() {
           IF count_categoria = 0 THEN
               -- Inserir os valores padrão
               INSERT INTO categoria (categoriaproduto)
-              VALUES ('Frios'), ('Legumes'), ('Bebidas'), ('Materiais de limpeza'), 
-              ('Padaria'), ('Laticínios'), ('Hortifruti'), ('Açougue');
+              VALUES ('Açougue'), ('Frios e laticínios'), ('Adega e bebidas'), ('Higiene e limpeza'), 
+              ('Hortifruti e mercearia'), ('Padaria'), ('Enlatados'), ('Cereais'), ('Rotisseria');
           END IF;
       END
     `);
