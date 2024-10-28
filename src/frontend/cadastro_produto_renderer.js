@@ -15,9 +15,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       // Adiciona as opções ao select
       categorias.forEach(categoria => {
+        console.log(categoria);
         let option = document.createElement('option');
-        option.value = categoria.idcategoria; // Define o valor como o ID da categoria
-        option.textContent = categoria.categoriaproduto; // Define o texto como o nome da categoria
+        option.value = categoria._id; // Define o valor como o ID da categoria
+        option.textContent = categoria.nome; // Define o texto como o nome da categoria
         categorySelect.appendChild(option);
       });
     } catch (error) {

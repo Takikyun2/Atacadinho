@@ -1,6 +1,5 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron')
 const path = require('path')
-const { createDataBaseIfNotExists, setupDatabase } = require('./src/backend/database/database')
 const ProdutoController = require('./src/backend/controllers/ProdutoController')
 const CategoriaController = require('./src/backend/controllers/CategoriaController')
 const CompraController = require('./src/backend/controllers/CompraController')
@@ -33,13 +32,11 @@ function carregar_janela() {
       webSecurity: true //false
     }
   });
-
+  janela.openDevTools()
   janela.loadFile('src/views/cadastros/cadastro_produtos.html');
 }
 
 app.whenReady().then(async () => {
-  await createDataBaseIfNotExists();
-  await setupDatabase();
   carregar_janela();
   criarMenu();
 });

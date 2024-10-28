@@ -1,99 +1,105 @@
-const mariadb = require('mysql2/promise');
+const mongoose = require('mongoose');
 
-//Configuração da conexão com mariaDB
-
-const pool = mariadb.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'atacadinho',
-  connectionLimit: 5
+// Conectar ao banco de dados
+mongoose.connect('mongodb://localhost:27017/atacadinho', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 
-/* Função createDataBaseIfNotExists: 
-Cria uma conexão inicial sem especificar um banco de dados.
-Executa a consulta SQL para criar o banco de dados se ele ainda não existir.
-Fecha a conexão após a operção.
- */
+// Esquema da Categoria
+const categoriaSchema = new mongoose.Schema({
+  nome: {
+    type: String,
+    required: true,
+  },
+}, {
+  collection: 'categorias',
+  timestamps: true, // Para 'criadoEm' e 'atualizadoEm'
+});
 
-async function createDataBaseIfNotExists() {
-  let conn;
-  try {
-    conn = await mariadb.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: ''
-    });
-    await conn.query(`CREATE DATABASE IF NOT EXISTS atacadinho`);
-  } catch (err) {
-    console.error('Erro ao criar o banco de dados: ', err);
-  } finally {
-    if (conn) conn.end();
-  }
-}
+// Modelo da Categoria
+const Categoria = mongoose.model('Categoria', categoriaSchema);
 
-/* 
-  Função assíncrona para configurar o banco de dados:
-  'let conn': Declara uma
-*/
-async function setupDatabase() {
-  let conn;
-  try {
-    conn = await pool.getConnection();
+// Esquema do Produto
+const produtoSchema = new mongoose.Schema({
+  nome: {
+    type: String,
+    required: true,
+  },
+  preco: {
+    type: mongoose.Schema.Types.Decimal128,
+    required: true,
+  },
+  unidade: {
+    type: String,
+    required: true,
+  },
+  sku: {
+    type: String,
+    required: true,
+  },
+  codigoBarras: {
+    type: String,
+    required: true,
+  },
+  categoria: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Categoria',
+    required: true,
+  },
+  ativo: {
+    type: Boolean,
+    required: true,
+  },
+}, {
+  collection: 'produtos',
+  timestamps: { createdAt: 'criadoEm', updatedAt: 'atualizadoEm' },
+});
 
-    // Eduardo: Criação da tabela categoria (deve ser criada antes de produtos)
-    await conn.query(`
-      CREATE TABLE IF NOT EXISTS categoria (
-        idcategoria INT AUTO_INCREMENT PRIMARY KEY,
-        categoriaproduto VARCHAR(255) NOT NULL
-      )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-    `);
+// Modelo do Produto
+const Produto = mongoose.model('Produto', produtoSchema);
 
-    // Eduardo: Criação da tabela produtos (agora a tabela categoria já existe)
-    await conn.query(`
-      CREATE TABLE IF NOT EXISTS produtos (
-        idproduto INT AUTO_INCREMENT PRIMARY KEY,
-        nome VARCHAR(200) NOT NULL,
-        preco VARCHAR(200) NOT NULL,
-        unidade VARCHAR(200) NOT NULL,
-        sku VARCHAR(200) NOT NULL,
-        codbarra VARCHAR(200) NOT NULL,
-        categoria_id INT NOT NULL,
-        condicao VARCHAR(200) NOT NULL,
-        datahora DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-        FOREIGN KEY (categoria_id) REFERENCES categoria(idcategoria)
-      )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-    `);
+// Esquema do Papel
+const papelSchema = new mongoose.Schema({
+  nome: {
+    type: String,
+    required: true,
+  },
+}, {
+  collection: 'papeis',
+  timestamps: true,
+});
 
-    // Eduardo: Inserção de dados na tabela categoria
-    await conn.query(`
-      CREATE PROCEDURE IF NOT EXISTS CheckAndInsertCategoria()
-      BEGIN
-          DECLARE count_categoria INT;
+// Modelo do Papel
+const Papel = mongoose.model('Papel', papelSchema);
 
-          -- Contar o número de registros na tabela categoria
-          SELECT COUNT(*) INTO count_categoria FROM categoria;
+// Esquema do Usuário
+const usuarioSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+  },
+  senha: {
+    type: String,
+    required: true,
+  },
+  papel: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Papel',
+    required: true,
+  },
+}, {
+  collection: 'usuarios',
+  timestamps: { createdAt: 'criadoEm', updatedAt: 'atualizadoEm' },
+});
 
-          -- Verificar se a tabela está vazia
-          IF count_categoria = 0 THEN
-              -- Inserir os valores padrão
-              INSERT INTO categoria (categoriaproduto)
-              VALUES ('Frios'), ('Legumes'), ('Bebidas'), ('Materiais de limpeza'), 
-              ('Padaria'), ('Laticínios'), ('Hortifruti'), ('Açougue');
-          END IF;
-      END
-    `);
+// Modelo do Usuário
+const Usuario = mongoose.model('Usuario', usuarioSchema);
 
-    // Chamar a procedure
-    await conn.query(`CALL CheckAndInsertCategoria();`);
-
-
-  } catch (err) {
-    console.error('Erro ao configurar o banco de dados:', err);
-  } finally {
-    if (conn) conn.release(); // Liberar a conexão de volta para o pool
-  }
-}
-
-
-module.exports = { pool, createDataBaseIfNotExists, setupDatabase };
+// Exportando os modelos
+module.exports = {
+  Categoria,
+  Produto,
+  Papel,
+  Usuario,
+};

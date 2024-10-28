@@ -1,4 +1,4 @@
-const Produto = require('../models/Produto')
+const { Produto } = require("../database/database");
 
 class CompraController {
 
@@ -23,7 +23,7 @@ class CompraController {
     // & Busca dos produtos por nome
 
     try {
-      const produtos = await Produto.buscarPorNome(nomeProduto);
+      const produtos = await Produto.find({nome: nomeProduto});
       if (produtos.length > 0) {
         const produtoSelecionado = produtos[0];
         const total = produtoSelecionado.preco * quantidade;
@@ -57,7 +57,7 @@ class CompraController {
     // & Busca dos produtos por codigo de barras
 
     try {
-      const produto = await Produto.buscarPorCodigo(codigoBarras);
+      const produto = await Produto.find({codigoBarras});
       if (produto) {
         const total = produto.preco * quantidade;
         return { status: 200, produto, total }; // retorna o produto e o total calculado

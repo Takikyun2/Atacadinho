@@ -9,10 +9,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         productList.innerHTML = ''; // Limpa a tabela antes de preencher
   
         if (produtos.length > 0) {
-          produtos.forEach(produto => {
-            const idProduto = produto.idproduto || 'Não definido';
+          produtos.forEach(produto => { 
+            console.log(produto)
+            const idProduto = produto._id || 'Não definido';
             const nome = produto.nome || 'Não definido';
-            const codigo = produto.codbarra || 'Não definido';
+            const codigo = produto.codigoBarras || 'Não definido';
             const preco = parseFloat(produto.preco) || 0;
             const row = document.createElement('tr');
             
