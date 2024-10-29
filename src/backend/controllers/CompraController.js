@@ -23,7 +23,13 @@ class CompraController {
     // & Busca dos produtos por nome
 
     try {
-      const produtos = await Produto.find({nome: nomeProduto});
+      const listaProdutos = await Produto.find({ nome: nomeProduto }).lean();
+      const produtos = listaProdutos.map(produto => {
+        return {
+          ...produto,
+          preco: parseFloat(produto.preco.toString()) // Convert Decimal128 to float
+        };
+      });
       if (produtos.length > 0) {
         const produtoSelecionado = produtos[0];
         const total = produtoSelecionado.preco * quantidade;
@@ -57,7 +63,7 @@ class CompraController {
     // & Busca dos produtos por codigo de barras
 
     try {
-      const produto = await Produto.find({codigoBarras});
+      const produto = await Produto.find({ codigoBarras });
       if (produto) {
         const total = produto.preco * quantidade;
         return { status: 200, produto, total }; // retorna o produto e o total calculado
