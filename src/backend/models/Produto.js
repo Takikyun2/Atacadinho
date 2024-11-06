@@ -80,7 +80,7 @@ class Produto {
     let conn;
     try {
       conn = await pool.getConnection();
-      const [res] = await conn.execute('DELETE FROM produtos WHERE idproduto = ?', [idproduto]);
+      const [res] = await conn.execute('DELETE FROM produtos WHERE id_produto = ?', [idproduto]);
       return res; // res contém informações sobre a operação de remoção
     } catch (error) {
       console.error('Erro ao realizar a delecao:', error);

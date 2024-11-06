@@ -52,7 +52,7 @@ async function setupDatabase() {
     // Eduardo: Criação da tabela produtos (agora a tabela categoria já existe)
     await conn.query(`
       CREATE TABLE IF NOT EXISTS produtos (
-        idproduto INT AUTO_INCREMENT PRIMARY KEY,
+        id_produto INT AUTO_INCREMENT PRIMARY KEY,
         nome VARCHAR(200) NOT NULL,
         preco VARCHAR(200) NOT NULL,
         unidade VARCHAR(200) NOT NULL,
@@ -78,14 +78,69 @@ async function setupDatabase() {
           IF count_categoria = 0 THEN
               -- Inserir os valores padrão
               INSERT INTO categoria (categoriaproduto)
-              VALUES ('Frios'), ('Legumes'), ('Bebidas'), ('Materiais de limpeza'), 
-              ('Padaria'), ('Laticínios'), ('Hortifruti'), ('Açougue');
+              VALUES ('Açougue'), ('Frios e laticínios'), ('Adega e bebidas'), ('Higiene e limpeza'), 
+              ('Hortifruti e mercearia'), ('Padaria'), ('Enlatados'), ('Cereais'), ('Rotisseria');
           END IF;
       END
     `);
 
     // Chamar a procedure
     await conn.query(`CALL CheckAndInsertCategoria();`);
+
+    await conn.query(`
+      CREATE TABLE IF NOT EXISTS login (
+        id_login INT AUTO_INCREMENT PRIMARY KEY,
+        user VARCHAR(255),
+        senha VARCHAR(255),
+        datahora DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+      )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    `);
+
+    await conn.query(`
+      CREATE TABLE IF NOT EXISTS caixa (
+        id_caixa INT AUTO_INCREMENT PRIMARY KEY,
+        data_abertura DATE,
+        data_fechamento DATE,
+        valor_inicial FLOAT,
+        valor_final FLOAT,
+        observacoes VARCHAR(255),
+        login_id INT,
+        FOREIGN KEY (login_id) REFERENCES login(id_login)
+      )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    `);
+
+
+    await conn.query(`
+      CREATE TABLE IF NOT EXISTS tipo_pagamento (
+        id_tipo_pagamento INT AUTO_INCREMENT PRIMARY KEY,
+        descricao VARCHAR(255),
+        datahora DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+      )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    `);
+
+    await conn.query(`
+      CREATE TABLE IF NOT EXISTS vendas (
+        id_venda INT AUTO_INCREMENT PRIMARY KEY,
+        tipo_pagamento_id INT NOT NULL,
+        valor_total FLOAT NOT NULL,
+        descricao VARCHAR(255),
+        caixa_id INT NOT NULL,
+        datahora DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        FOREIGN KEY (caixa_id) REFERENCES caixa(id_caixa),
+        FOREIGN KEY (tipo_pagamento_id) REFERENCES tipo_pagamento(id_tipo_pagamento)
+      )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    `);
+
+    await conn.query(`
+      CREATE TABLE IF NOT EXISTS produto_vendas (
+        venda_id INT PRIMARY KEY,
+        produto_id INT NOT NULL,
+        quantidade INT NOT NULL,
+        valor_total_produtos FLOAT NOT NULL,
+        FOREIGN KEY (produto_id) REFERENCES produtos(id_produto),
+        FOREIGN KEY (venda_id) REFERENCES vendas(id_venda)
+      )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    `);
 
 
   } catch (err) {
