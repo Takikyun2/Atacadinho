@@ -30,12 +30,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Adicionar produto ao servidor
   document.querySelector('#form-produto').addEventListener('submit', async (event) => {
+    event.preventDefault();
 
     const datahora = 302020
 
     const produto = { // Eduardo: essa função manda os produtos
       nome: document.querySelector('#product-name').value,
       preco: document.querySelector('#price').value,
+      marca: document.querySelector('#marca-produto').value,
+      fornecedor: document.querySelector('#produto-fornecedor').value,
       unidade: document.querySelector('#unit').value,
       sku: document.querySelector('#cod-sku').value,
       codbarra: document.querySelector('#CodigoBarras').value,
@@ -43,6 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       condicao: document.querySelector('#condition').value,
       datahora: datahora
     };
+
 
     try {
       const result = await window.api.adicionarProduto(produto);

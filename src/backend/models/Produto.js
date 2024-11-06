@@ -4,10 +4,12 @@
 const { pool } = require('../database/database');
 
 class Produto {
-  constructor(idproduto, nome, preco, unidade, sku, codbarra, categoria, condicao, datahora) {
-    this.idproduto = idproduto;
+  constructor(id_produto, nome, preco, marca, fornecedor, unidade, sku, codbarra, categoria, condicao, datahora) {
+    this.id_produto = id_produto;
     this.nome = nome;
     this.preco = preco;
+    this.marca = marca;
+    this.fornecedor = fornecedor;
     this.unidade = unidade;
     this.sku = sku;
     this.codbarra = codbarra;
@@ -21,8 +23,8 @@ class Produto {
     try {
       conn = await pool.getConnection();
       const [res] = await conn.execute(
-        `INSERT INTO produtos (nome, preco, unidade, sku, codbarra,categoria_id, condicao, datahora) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        [produto.nome, produto.preco, produto.unidade, produto.sku, produto.codbarra, produto.categoria, produto.condicao, produto.datahora]
+        `INSERT INTO produtos (nome, preco, marca, fornecedor, unidade, sku, codbarra,categoria_id, condicao, datahora) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)`,
+        [produto.nome, produto.preco, produto.marca, produto.fornecedor, produto.unidade, produto.sku, produto.codbarra, produto.categoria, produto.condicao, produto.datahora]
       );
       return res; // res contém informações sobre a operação de inserção
     } finally {
@@ -45,11 +47,11 @@ class Produto {
     }
   }
 
-  static async buscarPorId(idproduto) {
+  static async buscarPorId(id_produto) {
     let conn;
     try {
       conn = await pool.getConnection();
-      const [rows] = await conn.execute('SELECT * FROM produtos WHERE idproduto = ?', [idproduto]);
+      const [rows] = await conn.execute('SELECT * FROM produtos WHERE id_produto = ?', [id_produto]);
       return rows[0]; // retorna o primeiro (e esperado único) resultado
     } catch (error) {
       console.error('Erro ao realizar a consulta:', error);
@@ -59,13 +61,13 @@ class Produto {
     }
   }
 
-  static async atualizar(idproduto, novosDados) {
+  static async atualizar(id_produto, novosDados) {
     let conn;
     try {
       conn = await pool.getConnection();
       const [res] = await conn.execute(
-        `UPDATE produtos SET nome = ?, preco = ?, unidade = ?, sku = ?, categoria_id = ?, condicao = ? WHERE idproduto = ?`,
-        [novosDados.nome, novosDados.preco, novosDados.unidade, novosDados.sku, novosDados.categoria, novosDados.condicao, idproduto]
+        `UPDATE produtos SET nome = ?, preco = ?,marca = ?, fornecedor = ?, unidade = ?, sku = ?, categoria_id = ?, condicao = ? WHERE id_produto = ?`,
+        [novosDados.nome, novosDados.preco, novosDados.marca, novosDados.fornecedor, novosDados.unidade, novosDados.sku, novosDados.categoria, novosDados.condicao, id_produto]
       );
       return res; // res contém informações sobre a operação de atualização
     } catch (error) {
@@ -76,11 +78,11 @@ class Produto {
     }
   }
 
-  static async remover(idproduto) {
+  static async remover(id_produto) {
     let conn;
     try {
       conn = await pool.getConnection();
-      const [res] = await conn.execute('DELETE FROM produtos WHERE id_produto = ?', [idproduto]);
+      const [res] = await conn.execute('DELETE FROM produtos WHERE id_produto = ?', [id_produto]);
       return res; // res contém informações sobre a operação de remoção
     } catch (error) {
       console.error('Erro ao realizar a delecao:', error);
