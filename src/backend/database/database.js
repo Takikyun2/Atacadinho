@@ -118,6 +118,27 @@ async function setupDatabase() {
       )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     `);
 
+    // Eduardo: Inserção de dados na tabela Tipo de Pagamento
+    await conn.query(`
+      CREATE PROCEDURE IF NOT EXISTS CheckAndInsertTipoPagamento()
+      BEGIN
+          DECLARE count_tipo_pagamento INT;
+
+          -- Contar o número de registros na tabela tipo_pagamento
+          SELECT COUNT(*) INTO count_tipo_pagamento FROM tipo_pagamento;
+
+          -- Verificar se a tabela está vazia
+          IF count_tipo_pagamento = 0 THEN
+              -- Inserir os valores padrão
+              INSERT INTO tipo_pagamento (descricao)
+              VALUES ('Pix'), ('Cartão de Crédito'), ('Cartão de Débito'), ('Dinheiro')
+          END IF;
+      END
+    `);
+
+    // Chamar a procedure
+    await conn.query(`CALL CheckAndInsertTipoPagamento();`);
+
     await conn.query(`
       CREATE TABLE IF NOT EXISTS vendas (
         id_venda INT AUTO_INCREMENT PRIMARY KEY,
