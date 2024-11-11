@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   
         if (produtos.length > 0) {
           produtos.forEach(produto => {
-            const idProduto = produto.idproduto || 'Não definido';
+            
+            const idProduto = produto.id_produto || 'Não definido';
             const nome = produto.nome || 'Não definido';
             const codigo = produto.codbarra || 'Não definido';
             const preco = parseFloat(produto.preco) || 0;

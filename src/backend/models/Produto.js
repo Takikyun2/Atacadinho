@@ -4,8 +4,8 @@
 const { pool } = require('../database/database');
 
 class Produto {
-  constructor(id_produto, nome, preco, marca, fornecedor, unidade, sku, codbarra, categoria, condicao, datahora) {
-    this.id_produto = id_produto;
+  constructor(idproduto, nome, preco, marca, fornecedor, unidade, sku, codbarra, categoria, condicao, datahora) {
+    this.idproduto = idproduto;
     this.nome = nome;
     this.preco = preco;
     this.marca = marca;

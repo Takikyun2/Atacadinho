@@ -32,21 +32,25 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.querySelector('#form-produto').addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    const datahora = 302020
+    //Pega a data atual do aparelho e converte para o formato do mysql datetime
+    const datahora = new Date()
+    const dataHoraFormatada = datahora.toISOString().split('T')[0] + ' '
+    + datahora.toTimeString().split(' ')[0];
+    
 
     const produto = { // Eduardo: essa função manda os produtos
       nome: document.querySelector('#product-name').value,
       preco: document.querySelector('#price').value,
-      marca: document.querySelector('#marca-produto').value,
-      fornecedor: document.querySelector('#produto-fornecedor').value,
+      marca: 'teste'/* document.querySelector('#marca-produto').value */,
+      fornecedor: 'teste'/* document.querySelector('#produto-fornecedor').value */,
       unidade: document.querySelector('#unit').value,
       sku: document.querySelector('#cod-sku').value,
       codbarra: document.querySelector('#CodigoBarras').value,
       categoria: document.querySelector('#category').value,
-      condicao: document.querySelector('#condition').value,
-      datahora: datahora
+      condicao: 1/* document.querySelector('#condition').value */,
+      datahora: dataHoraFormatada
     };
-
+    
 
     try {
       const result = await window.api.adicionarProduto(produto);

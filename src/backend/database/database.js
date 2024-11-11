@@ -55,11 +55,13 @@ async function setupDatabase() {
         id_produto INT AUTO_INCREMENT PRIMARY KEY,
         nome VARCHAR(200) NOT NULL,
         preco VARCHAR(200) NOT NULL,
+        marca VARCHAR(200) NOT NULL,
+        fornecedor VARCHAR(200) NOT NULL,
         unidade VARCHAR(200) NOT NULL,
         sku VARCHAR(200) NOT NULL,
         codbarra VARCHAR(200) NOT NULL,
         categoria_id INT NOT NULL,
-        condicao VARCHAR(200) NOT NULL,
+        condicao BOOLEAN NOT NULL,
         datahora DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
         FOREIGN KEY (categoria_id) REFERENCES categoria(idcategoria)
       )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -131,7 +133,7 @@ async function setupDatabase() {
           IF count_tipo_pagamento = 0 THEN
               -- Inserir os valores padrão
               INSERT INTO tipo_pagamento (descricao)
-              VALUES ('Pix'), ('Cartão de Crédito'), ('Cartão de Débito'), ('Dinheiro')
+              VALUES ('Pix'), ('Cartão de Crédito'), ('Cartão de Débito'), ('Dinheiro');
           END IF;
       END
     `);
