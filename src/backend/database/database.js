@@ -101,8 +101,8 @@ async function setupDatabase() {
     await conn.query(`
       CREATE TABLE IF NOT EXISTS caixa (
         id_caixa INT AUTO_INCREMENT PRIMARY KEY,
-        data_abertura DATE,
-        data_fechamento DATE,
+        data_abertura DATETIME,
+        data_fechamento DATETIME,
         valor_inicial FLOAT,
         valor_final FLOAT,
         observacoes VARCHAR(255),

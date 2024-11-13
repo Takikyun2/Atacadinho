@@ -4,6 +4,7 @@ const { createDataBaseIfNotExists, setupDatabase } = require('./src/backend/data
 const ProdutoController = require('./src/backend/controllers/ProdutoController')
 const CategoriaController = require('./src/backend/controllers/CategoriaController')
 const CompraController = require('./src/backend/controllers/CompraController')
+const CaixaController  = require('./src/backend/controllers/CaixaController')
 
 /* 
   Função para criar e carregar a janela principal da aplicação:
@@ -103,6 +104,43 @@ ipcMain.handle('buscar-produto-nome', async (event, args) => {
 
 ipcMain.handle('buscar-produto-codigo', async (event, args) => {
   return await CompraController.buscarProdutosPorCodigo(args);
+});
+
+// Metodos do CaixaController
+
+ipcMain.handle('adicionar-registro-caixa', async (event, caixa) => {
+  try {
+    await CaixaController.adicionarRegistroDeCaixa(caixa);
+    return { sucesso: true };
+  } catch (err) {
+    return { sucesso: false, erro: err.message }
+  }
+});
+
+ipcMain.handle('listar-registros-caixa', async () => { 
+  try {
+    return await CaixaController.listarRegistrosCaixa();
+  } catch (err) {
+    return { erro: err.message };
+  }
+});
+
+ipcMain.handle('atualizar-registro-caixa', async (event, newCaixa) => {
+  try {
+    await ProdutoController.atualizarProduto(newCaixa)
+    return { sucesso: true, caixa: caixaAtualizado };
+  } catch (err) {
+    return { sucesso: false, erro: err.message };
+  }
+})
+
+ipcMain.handle('remover-registro-caixa', async (event, id_caixa) => {
+  try {
+    await CaixaController.removerRegistroCaixa(id_caixa);
+    return { sucesso: true };
+  } catch (err) {
+    return { sucesso: false, erro: err.message };
+  }
 });
 
 // ? - Produtos Ipc end
