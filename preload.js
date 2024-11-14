@@ -27,4 +27,8 @@ contextBridge.exposeInMainWorld('api', {
   atualizarRegistrosCaixa: (newCaixa) => ipcRenderer.invoke('atualizar-registro-caixa',  newCaixa),
  
   removerRegistroCaixa: (id_caixa) => ipcRenderer.invoke('remover-registro-caixa', id_caixa),
+
+  // Metodos do VendasController
+  adicionarRegistrosDeVendas: (venda, produtosDaVenda) => ipcRenderer.invoke('adicionar-registro-venda', venda, produtosDaVenda),
+
 });

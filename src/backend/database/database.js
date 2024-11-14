@@ -148,13 +148,13 @@ async function setupDatabase() {
         descricao VARCHAR(255),
         caixa_id INT NOT NULL,
         datahora DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-        FOREIGN KEY (caixa_id) REFERENCES caixa(id_caixa),
+        FOREIGN KEY (caixa_id) REFERENCES caixa(id_caixa)
       )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     `);
 
     await conn.query(`
       CREATE TABLE IF NOT EXISTS produto_vendas (
-        venda_id INT PRIMARY KEY,
+        venda_id INT NOT NULL,
         produto_id INT NOT NULL,
         quantidade INT NOT NULL,
         valor_total_produtos FLOAT NOT NULL,
@@ -166,7 +166,7 @@ async function setupDatabase() {
     // Tabela referencial para os tipos de pagamento, de vendas para tipo de pagamento, com uma relação de um para muitos
     await conn.query(`
       CREATE TABLE IF NOT EXISTS vendas_tipo_pagamento (
-        venda_id INT PRIMARY KEY,
+        venda_id INT NOT NULL,
         tipo_pagamento_id INT NOT NULL,
         valor FLOAT NOT NULL,
         FOREIGN KEY (tipo_pagamento_id) REFERENCES tipo_pagamento(id_tipo_pagamento),

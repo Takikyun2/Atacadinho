@@ -5,6 +5,7 @@ const ProdutoController = require('./src/backend/controllers/ProdutoController')
 const CategoriaController = require('./src/backend/controllers/CategoriaController')
 const CompraController = require('./src/backend/controllers/CompraController')
 const CaixaController  = require('./src/backend/controllers/CaixaController')
+const VendasController = require('./src/backend/controllers/VendaController')
 
 /* 
   Função para criar e carregar a janela principal da aplicação:
@@ -142,6 +143,18 @@ ipcMain.handle('remover-registro-caixa', async (event, id_caixa) => {
     return { sucesso: false, erro: err.message };
   }
 });
+
+
+// Metodos do vendasController
+ipcMain.handle('adicionar-registro-venda', async (event,venda, produtosDaVenda) => {
+  try {
+    await VendasController.adicionarRegistrosDeVendas(venda, produtosDaVenda)
+    return { sucesso: true };
+  } catch (err) {
+    return { sucesso: false, erro: err.message }
+  }
+});
+
 
 // ? - Produtos Ipc end
 
