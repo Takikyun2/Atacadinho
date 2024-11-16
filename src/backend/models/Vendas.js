@@ -1,57 +1,67 @@
 const { pool } = require('../database/database');
- 
-class Vendas {
 
-  static async adicionarRegistrosDeVendas(venda, produtosDaVenda) {    
+class Vendas {
+  static async adicionarRegistrosDeVendas(venda, produtosDaVenda, tiposPagamentos) {
     let conn;
     try {
-        console.log(venda);
-        console.log(produtosDaVenda);
-        
-        const {valor_total, descricao, caixa_id, datahora} = venda
- 
+      const { valor_total, descricao, caixa_id, datahora } = venda;
+
+      // Validações básicas
+      if (!valor_total || !caixa_id || !datahora) {
+        throw new Error("Dados da venda estão incompletos.");
+      }
+
+      if (!Array.isArray(produtosDaVenda) || !Array.isArray(tiposPagamentos)) {
+        throw new Error("Produtos ou tipos de pagamento devem ser arrays.");
+      }
+
       conn = await pool.getConnection();
-      let [res] = await conn.execute(
+
+      // Inserir a venda na tabela "vendas"
+      const [res] = await conn.execute(
         `INSERT INTO vendas (valor_total, descricao, caixa_id, datahora) VALUES (?, ?, ?, ?)`,
-        [
-            valor_total,
-            descricao,
-            caixa_id,
-            datahora
-        ]
+        [valor_total, descricao, caixa_id, datahora]
       );
-      //Pega o ultimo id da venda cadastrada no DB
+
       const lastId = res.insertId;
-      console.log(lastId);
+      console.log("Venda inserida com ID:", lastId);
 
-      //Percorre o array de objetos com os produtos da venda e manda cada produto para a funcao que adiciona no DB
-      produtosDaVenda.forEach(async produto => await adicionarProdutosDaVenda(produto))
+      // Inserir produtos da venda
+      for (const produto of produtosDaVenda) {
+        const { produto_id, quantidade, valor_total_produtos } = produto;
 
-      //funcao responsavel por inserir individalmente cada produto da venda na tabela de produto_vendas
-      async function adicionarProdutosDaVenda(produto){
+        if (!produto_id || !quantidade || !valor_total_produtos) {
+          throw new Error("Dados do produto estão incompletos.");
+        }
 
-        let {produto_id, quantidade, valor_total_produtos} = produto
-
-        console.log(produto_id, quantidade, valor_total_produtos);
-        
-
-        [res] = await conn.execute(
+        await conn.execute(
           `INSERT INTO produto_vendas (venda_id, produto_id, quantidade, valor_total_produtos) VALUES (?, ?, ?, ?)`,
-          [
-            lastId, produto_id, quantidade, valor_total_produtos
-          ]
+          [lastId, produto_id, quantidade, valor_total_produtos]
         );
       }
-      
-      return res; // res contém informações sobre a operação de inserção
-    } finally {
-      if (conn) conn.release();
-    }
-    
 
+      // Inserir tipos de pagamento
+      for (const tipoDePagamento of tiposPagamentos) {
+        const { tipo_pagamento_id, valor } = tipoDePagamento;
+
+        if (!tipo_pagamento_id || !valor) {
+          throw new Error("Dados do tipo de pagamento estão incompletos.");
+        }
+
+        await conn.execute(
+          `INSERT INTO vendas_tipo_pagamento (venda_id, tipo_pagamento_id, valor) VALUES (?, ?, ?)`,
+          [lastId, tipo_pagamento_id, valor]
+        );
+      }
+
+      return { success: true, venda_id: lastId };
+    } catch (error) {
+      console.error("Erro ao registrar venda:", error.message);
+      throw error; // Repassa o erro para ser tratado em outro lugar
+    } finally {
+      if (conn) conn.release(); // Libera a conexão do pool
+    }
   }
- 
- 
 }
- 
+
 module.exports = Vendas;

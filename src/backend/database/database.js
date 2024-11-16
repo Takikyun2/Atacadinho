@@ -94,7 +94,9 @@ async function setupDatabase() {
         id_login INT AUTO_INCREMENT PRIMARY KEY,
         user VARCHAR(255),
         senha VARCHAR(255),
-        datahora DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+        status BOOLEAN DEFAULT TRUE NOT NULL,
+        datahoraupdate DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        datahoraregistro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
       )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     `);
 
