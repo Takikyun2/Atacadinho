@@ -8,12 +8,12 @@ class Login {
         try {
             console.log(login);
             
-            const { user, senha, status } = login;
+            const { nomeCompleto, user, senha, cpf } = login;
      
             conn = await pool.getConnection();
             const [res] = await conn.execute(
-                `INSERT INTO login (user, senha, status) VALUES (?, ?, ?)`,
-                [user, senha, status]
+                `INSERT INTO login ( nomecompleto ,user, senha, cpf) VALUES (?, ?, ?, ?)`,
+                [nomeCompleto , user, senha, cpf]
             );
             return res; // Retorna informações sobre a inserção
         } finally {
@@ -40,14 +40,13 @@ class Login {
     static async validarLogin(login) {
         let conn;
         try {
-            console.log(login);
+            /* console.log(login); */
             
-            const { user, senha, status } = login;
+            const { user, senha} = login;
     
-            if (status === true) { // Verifica se o status é verdadeiro
                 conn = await pool.getConnection();
                 const [res] = await conn.execute(
-                    `SELECT id_login, user, status FROM login WHERE user = ? AND senha = ?`,
+                    `SELECT id_login, nomecompelto, user, cpf, status FROM login WHERE user = ? AND senha = ?`,
                     [user, senha]
                 );
 
@@ -57,10 +56,7 @@ class Login {
                 }
 
                 return res; // Retorna o resultado da consulta
-            } else {
-                console.log("O usuário está desligado e não tem permissão para logar!");
-                return null; // Interrompe a execução da função
-            }
+          
         } finally {
             if (conn) conn.release(); // Libera a conexão, se aberta
         }
@@ -68,14 +64,14 @@ class Login {
 
     // Atualizar informações de login
     static async atualizarLogin(newLogin) {
-        const { id_login, user, senha, status, datahoraupdate } = newLogin;
+        const { id_login, nomeCompleto, user, senha, cpf, status, datahoraupdate } = newLogin;
 
         let conn;
         try {
             conn = await pool.getConnection();
             const [res] = await conn.execute(
-                `UPDATE login SET user = ?, senha = ?, status = ?, datahoraupdate = ? WHERE id_login = ?`,
-                [user, senha, status, datahoraupdate, id_login]
+                `UPDATE login SET nomecompleto = ?, user = ?, senha = ?, cpf = ?, status = ?, datahoraupdate = ? WHERE id_login = ?`,
+                [nomeCompleto, user, senha, cpf, status, datahoraupdate, id_login]
             );
             return res; // Retorna informações sobre a atualização
         } catch (error) {

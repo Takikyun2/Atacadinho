@@ -1,6 +1,6 @@
 
 // Importa o modelo Login, que contém as operações de interação com o banco de dados
-const Login = require('../models/Login')
+const Login = require('../models/login')
 
 class LoginController {
 
