@@ -23,7 +23,7 @@
   <li>Segundo passo: <p>Com o terminal aberto digite o seguinte: <code>git clone https://github.com/Takikyun2/Atacadinho.git</code></p>
     <p>Se voce nao estiver logado no github, uma janela de login sera aberta preencha os campos com seus dados e retorne ao vs code e espere ate que o precesso seja terminado</p>
     <p>Caso tudo tenha dado certo voce tera o projeto na raiz da sua pasta</p>
-    <p>Agora abra a pasta do projeto usando <code>cd Atacadinho</code> </p>
+    <p>Agora abra a pasta do projeto usando <code>cd Atacadinho</code> e instale as dependencias do projeto usando <code> npm i </code> </p>
   </li>
 </ul>
 
