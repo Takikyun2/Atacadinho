@@ -17,7 +17,7 @@ class LoginController {
 
     // Método estático para listar todos os logins
     static async listarLogins() {
-        try {
+        try { 
             // Chama o método 'listarLogins' do modelo Login para obter todos os logins
             await Login.listarLogins();
         } catch (err) {
