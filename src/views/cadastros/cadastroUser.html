@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos | ATACADINHO</title>
+    <link rel="stylesheet" href="../../styles/cadastros/cadastroUser.css">
+</head>
+<body>
+    <!-- Cabeçalho do Site -->
+    <header class="container-header">
+        <img src="../../assets/img/senac_logo.png" alt="Logo do Senac">
+        <hr>
+        <p>ATACADINHO</p>
+        <div class="botoes-navegacao">
+            <hr>
+            <a href="/produtos_atacadinho/produtos.html">
+                <button class="botao-navegacao" title="Produtos (F1)">PRODUTOS (F1)</button>
+            </a>
+            <hr>
+            <a href="/login_atacadinho/login.html">
+                <button class="botao-navegacao" title="Vendas-PVD (F2)">LOGIN (F2)</button>
+            </a>
+            <hr>
+            <a href="/relatorios_atacadinho/relatorios.html">
+                <button class="botao-navegacao" title="Relatórios (F3)">RELATÓRIOS (F3)</button>
+            </a>
+            <hr>
+            <a href="/cadastro_atacadinho/cadastro.html">
+                <button class="botao-navegacao" title="Cadastro Usuários">CADASTRO (F9)</button>
+            </a>
+            <hr>
+        </div>
+        <div class="header-icons">
+            <button class="icon minimize" title="Minimizar" aria-label="Minimizar">—</button>
+            <button class="icon maximize" title="Maximizar/Restaurar" aria-label="Maximizar/Restaurar">□</button>
+            <button class="icon close" title="Fechar" aria-label="Fechar">×</button>
+        </div>
+    </header>
+
+    <main class="container-principal">
+        <header>
+            <h1>Cadastro do Usuário</h1>
+        </header>
+    
+        <form class="formulario-cadastro-usuario">
+            <section class="lado-esquerdo">
+                <div class="campo">
+                    <label for="campo-nome-completo" class="campo-nome">Nome Completo:</label>
+                    <input type="text" id="campo-nome-completo" name="nome-completo" placeholder="Digite seu nome completo">
+                </div>
+                <div class="campo">
+                    <label for="campo-email" class="campo-email">E-mail:</label>
+                    <input type="email" id="campo-email" name="email" placeholder="exemplo@gmail.com">
+                </div>
+                <div class="campo">
+                    <label for="campo-senha" class="campo-usuario">Usuário:</label>
+                    <input type="text" id="campo-usuario" name="usuario" placeholder="Digite seu usuário">
+                </div>
+                <div class="campo">
+                    <label for="campo-senha" class="campo-senha">Senha:</label>
+                    <input type="password" id="campo-senha" name="senha" placeholder="Digite sua senha">
+                </div> 
+                <div class="campo">
+                    <label for="campo-cargo" class="campo-cargo">Cargo:</label>
+                    <select id="campo-cargo" name="cargo">
+                        <option disabled selected>Selecione seu Cargo</option>
+                        <option value="vendedor">Vendedor</option>
+                        <option value="gerente">Gerente</option>
+                        <option value="administrador">Administrador</option>
+                    </select>
+                </div>
+            </section>
+    
+            <div class="lado-direito">
+                <div class="campo">
+                    <label for="campo-cpf" class="campo-cpf">CPF:</label>
+                    <input type="text" id="campo-cpf" name="cpf" placeholder="000.000.000-00">
+                </div>
+                <div class="campo">
+                    <label for="campo-confirme-senha" class="campo-confirmar">Confirme a Senha:</label>
+                    <input type="password" id="campo-confirme-senha" name="confirme-senha" placeholder="Confirme sua senha">
+                </div>
+                <div class="campo">
+                    <label for="campo-data-cadastramento">Data de Cadastramento:</label>
+                    <input type="date" id="campo-data-cadastramento" name="data-cadastramento" value="2024-11-13">
+                </div>
+            </div>
+    
+            
+        </form>
+        <div class="grupo-botoes">
+            <button type="submit" class="botao botao-salvar">Salvar - F5</button>
+            <button type="reset" class="botao botao-limpar" id="limparBtn">Limpar Tela - F3</button>
+            <button type="button" class="botao botao-cancelar"><a href="../user/login.html" style="text-decoration: none; color: #000;">Cancelar - F4</a></button>
+        </div>
+    </main>
+    
+    <script>
+        document.getElementById("limparBtn").addEventListener("click", function() {
+            let inputs = document.querySelectorAll("input, select");
+            inputs.forEach(function(input) {
+                if (input.type === "radio" || input.type === "checkbox") {
+                    input.checked = false;  
+                } else {
+                    input.value = ""; 
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

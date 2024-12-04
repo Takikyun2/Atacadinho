@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios - ATACADINHO</title>
+    <link rel="stylesheet" href="../../styles/registros/relatorios.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Cabeçalho do Site -->
+    <header class="container-header">
+        <img src="../../assets/img/senac_logo.png" alt="Logo do Senac">
+        <hr>
+        <p>ATACADINHO</p>
+        <div class="botoes-navegacao">
+            <hr>
+            <a href="/produtos_atacadinho/produtos.html">
+                <button class="botao-navegacao" title="Produtos (F1)">PRODUTOS (F1)</button>
+            </a>
+            <hr>
+            <a href="/login_atacadinho/login.html">
+                <button class="botao-navegacao" title="Vendas-PVD (F2)">LOGIN (F2)</button>
+            </a>
+            <hr>
+            <a href="/relatorios_atacadinho/relatorios.html">
+                <button class="botao-navegacao" title="Relatórios (F3)">RELATÓRIOS (F3)</button>
+            </a>
+            <hr>
+            <a href="/cadastro_atacadinho/cadastro.html">
+                <button class="botao-navegacao" title="Cadastro Usuários">CADASTRO (F9)</button>
+            </a>
+            <hr>
+        </div>
+        <div class="header-icons">
+            <button class="icon minimize" title="Minimizar" aria-label="Minimizar">—</button>
+            <button class="icon maximize" title="Maximizar/Restaurar" aria-label="Maximizar/Restaurar">□</button>
+            <button class="icon close" title="Fechar" aria-label="Fechar">×</button>
+        </div>
+    </header>
+    
+
+<!-- Tpitulo Relatórios junto com os botões que muda para as outras tabelas -->
+    <main class="container-principal">
+        <section class="container-btn">
+            <p>Relatórios</p>
+            <nav>
+                <ul>
+                    <li class="btn-relatorio">
+                        <button id="caixa_atual">Caixa Atual</button>
+                    </li>
+                    <li class="btn-relatorio">
+                        <button id="caixas_anteriores">Caixas Anteriores</button>
+                    </li>
+                    <li class="btn-relatorio">
+                        <button id="vendas">Vendas</button>
+                    </li>
+                    <li class="btn-relatorio">
+                        <button id="extrato">Extrato</button>
+                    </li>
+                    <li class="btn-relatorio">
+                        <button id="produtos">Produtos</button>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+
+        <!-- Filtro da tabela -->
+        <section class="container-filtro">
+            <select id="filtro" name="filtro">
+                <option disabled selected>Filtro</option>
+                <option value="data">Data</option>
+                <option value="produto">Produto</option>
+                <option value="codigo">Código</option>
+                <option value="vendedor">Vendedor(a)</option>
+            </select>
+            <input type="text" id="input-filtro" name="input-filtro" placeholder="Pesquisa..">
+        </section>
+
+       <!-- Tabela 1 de Vendas -->
+        <section class="container-tabela">
+        </section>
+
+        <!--* ------------------ GRÁFICO E CAMPO DE RESUMO ------------------->
+         <section class="container-grafico-resumo">
+            <section class="container-grafico">
+                <canvas id="salesChart"></canvas>
+              </section>
+
+           <!-- Resumo -->
+                <article class="modal" >
+                    <header class="modal-cabecalho">
+                        <h2>Movimentação</h2>
+                    </header>
+                    <section class="modal-corpo">
+                        <div class="item-venda">
+                            <div class="detalhes-venda">
+                                <span class="ponto-azul"></span>
+                                <span class="valor-venda">R$ 150,00</span>
+                                <span class="hora-venda">10:00</span>
+                            </div>
+                            <span class="forma-pagamento">Pix</span>
+                            <span class="forma-pagamento">Caixa Aberto</span>
+                            <hr>
+                        </div>
+                        <div class="item-retirada">
+                            <div class="detalhes-retirada">
+                                <span class="ponto-vermelho"></span>
+                                <span class="valor-retirada">- R$ 40,00</span>
+                                <span class="hora-retirada">11:30</span>
+                            </div>
+                            <span class="motivo-retirada">Retirada para troco</span>
+                            <hr>
+                        </div>
+                        <div class="item-retirada">
+                            <div class="detalhes-retirada">
+                                <span class="ponto-vermelho"></span>
+                                <span class="valor-retirada">- R$ 40,00</span>
+                                <span class="hora-retirada">11:30</span>
+                            </div>
+                            <span class="motivo-retirada">Retirada para troco</span>
+                            <hr>
+                        </div>
+                        <div class="item-venda">
+                            <div class="detalhes-venda">
+                                <span class="ponto-azul"></span>
+                                <span class="valor-venda">R$ 100,00</span>
+                                <span class="hora-venda">12:00</span>
+                            </div>
+                            <span class="forma-pagamento">Dinheiro</span>
+                            <hr>
+                        </div>
+                        <div class="item-venda">
+                            <div class="detalhes-venda">
+                                <span class="ponto-azul"></span>
+                                <span class="valor-venda">R$ 100,00</span>
+                                <span class="hora-venda">12:00</span>
+                            </div>
+                            <span class="forma-pagamento">Dinheiro</span>
+                            <hr>
+                        </div>
+                        <div class="item-venda">
+                            <div class="detalhes-venda">
+                                <span class="ponto-azul"></span>
+                                <span class="valor-venda">R$ 100,00</span>
+                                <span class="hora-venda">12:00</span>
+                            </div>
+                            <span class="forma-pagamento">Dinheiro</span>
+                            <hr>
+                        </div>
+                        <div class="item-venda">
+                            <div class="detalhes-venda">
+                                <span class="ponto-azul"></span>
+                                <span class="valor-venda">R$ 100,00</span>
+                                <span class="hora-venda">12:00</span>
+                            </div>
+                            <span class="forma-pagamento">Dinheiro</span>
+                            <hr>
+                        </div>
+                        <div class="item-venda">
+                            <div class="detalhes-venda">
+                                <span class="ponto-azul"></span>
+                                <span class="valor-venda">R$ 100,00</span>
+                                <span class="hora-venda">12:00</span>
+                            </div>
+                            <span class="forma-pagamento">Dinheiro</span>
+                            <hr>
+                        </div>
+                        <div class="item-venda">
+                            <div class="detalhes-venda">
+                                <span class="ponto-azul"></span>
+                                <span class="valor-venda">R$ 100,00</span>
+                                <span class="hora-venda">12:00</span>
+                            </div>
+                            <span class="forma-pagamento">Dinheiro</span>
+                            <hr>
+                        </div>
+                        <div class="item-venda">
+                            <div class="detalhes-venda">
+                                <span class="ponto-azul"></span>
+                                <span class="valor-venda">R$ 100,00</span>
+                                <span class="hora-venda">12:00</span>
+                            </div>
+                            <span class="forma-pagamento">Dinheiro</span>
+                            <hr>
+                        </div>
+                    </section>
+                    <footer class="modal-rodape">
+                        <span>Total de Vendas: R$ 250,00</span><br>
+                        <span>Total de Retiradas: - R$ 80,00</span>
+                    </footer>
+                </article>
+         </section>
+
+
+         <!-- * -------------------------- GRÁFICO DE PIZZA ---------------------- -->
+          <section class="container-pizza">
+            <section>
+                <canvas id="myPieChart" width="400" height="400"></canvas>
+             </section>
+
+              <!-- Resumo -->
+              <article class="modal" >
+                <header class="modal-cabecalho">
+                    <h2>Extrato</h2>
+                </header>
+                <section class="modal-corpo">
+                    <div class="item-venda">
+                        <div class="detalhes-venda">
+                            <span class="ponto-azul"></span>
+                            <span class="valor-venda">R$ 850,00</span>
+                            <span class="hora-venda">10:00</span>
+                        </div>
+                        <span class="forma-pagamento">Pix</span>
+                        <hr>
+                    </div>
+                    <div class="item-venda">
+                        <div class="detalhes-venda">
+                            <span class="ponto-azul"></span>
+                            <span class="valor-venda">R$ 600,00</span>
+                            <span class="hora-venda">12:00</span>
+                        </div>
+                        <span class="forma-pagamento">Dinheiro</span>
+                        <hr>
+                    </div>
+                    <div class="item-venda">
+                        <div class="detalhes-venda">
+                            <span class="ponto-azul"></span>
+                            <span class="valor-venda">R$ 500,00</span>
+                            <span class="hora-venda">12:00</span>
+                        </div>
+                        <span class="forma-pagamento">Débito</span>
+                        <hr>
+                    </div>
+                    <div class="item-venda">
+                        <div class="detalhes-venda">
+                            <span class="ponto-azul"></span>
+                            <span class="valor-venda">R$ 400,00</span>
+                            <span class="hora-venda">12:00</span>
+                        </div>
+                        <span class="forma-pagamento">Crédito</span>
+                        <hr>
+                    </div>
+                    <div class="item-venda">
+                        <div class="detalhes-venda">
+                            <span class="ponto-azul"></span>
+                            <span class="valor-venda">R$ 800,00</span>
+                            <span class="hora-venda">12:00</span>
+                        </div>
+                        <span class="forma-pagamento">Boleto</span>
+                        <hr>
+                    </div>
+                </section>
+                <footer class="modal-rodape">
+                    <span>Total de Vendas: R$ 250,00</span><br>
+                    <span>Total de Retiradas: - R$ 80,00</span>
+                </footer>
+            </article>
+     </section>       
+
+     <!-- * -------------------------- GRÁFICO DE TRANSAÇÕES ------------------------- -->
+
+     <section class="container-transacoes">
+        <section>
+            <canvas class="transacoes-grafico" id="myChart" width="400" height="200"></canvas>
+         </section>
+
+           <!-- Resumo -->
+           <article class="modal" >
+            <header class="modal-cabecalho">
+                <h2>Transações</h2>
+            </header>
+            <section class="modal-corpo">
+                <div class="item-venda">
+                    <div class="detalhes-venda">
+                        <span class="ponto-azul"></span>
+                        <span class="valor-venda">Congelados</span>
+                    </div>
+                    <span class="forma-pagamento">R$ 850,00</span>
+                    <hr>
+                </div>
+                <div class="item-venda">
+                    <div class="detalhes-venda">
+                        <span class="ponto-azul"></span>
+                        <span class="valor-venda">Limpeza</span>
+                    </div>
+                    <span class="forma-pagamento">R$ 850,00</span>
+                    <hr>
+                </div>
+                <div class="item-venda">
+                    <div class="detalhes-venda">
+                        <span class="ponto-azul"></span>
+                        <span class="valor-venda">Frutas e Legumes</span>
+                    </div>
+                    <span class="forma-pagamento">R$ 850,00</span>
+                    <hr>
+                </div>
+                <div class="item-venda">
+                    <div class="detalhes-venda">
+                        <span class="ponto-azul"></span>
+                        <span class="valor-venda">Laticínios</span>
+                    </div>
+                    <span class="forma-pagamento">R$ 850,00</span>
+                    <hr>
+                </div>
+                <div class="item-venda">
+                    <div class="detalhes-venda">
+                        <span class="ponto-azul"></span>
+                        <span class="valor-venda">Padaria</span>
+                    </div>
+                    <span class="forma-pagamento">R$ 850,00</span>
+                    <hr>
+                </div>
+                
+            </section>
+            <footer class="modal-rodape">
+                <span>Total de Vendas: R$ 250,00</span><br>
+                <span>Total de Retiradas: - R$ 80,00</span>
+            </footer>
+        </article>
+     </section>
+
+     
+
+
+
+</main>
+    <script src="../../frontend/relatorios.js"></script>
+</body>
+</html>

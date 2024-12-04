@@ -1,0 +1,306 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+}
+
+/** Header de Relatórios */
+.container-header {
+    display: flex;
+    align-items: center;
+    background-color: #004A8D;
+    padding: 10px 34px;
+    color: white;
+    width: 100%;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+.container-header img {
+    width: 38px;
+    height: 25px;
+    margin-right: 20px;
+}
+
+.container-header hr {
+    height: 24px;
+    width: 1px;
+    background-color: white;
+    border: none;
+    margin: 0 20px;
+}
+
+.container-header p {
+    width: 160px;
+    height: 15px;
+    font-size: 16px;
+    margin: 0;
+    text-align: left;
+    margin-bottom: 4px;
+}
+
+/** Botões do centro */
+
+.botoes-navegacao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.botoes-navegacao .botao-navegacao {
+    background-color: #004A8D;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.5s;
+}
+
+.botoes-navegacao .botao-navegacao:hover {
+    background-color: #366da1;
+}
+
+.botoes-navegacao hr {
+    height: 24px;
+    width: 1px;
+    background-color: white;
+    border: none;
+}
+
+/** Ícones do Header de minimizar, maximizar e fechar */
+.header-icons {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.header-icons .icon {
+    cursor: pointer;
+    color: white;
+    font-size: 25px;
+    width: 11px;
+    height: 11px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    background: transparent;
+}
+
+.header-icons .icon.maximize {
+    position: relative;
+    top: -3px;
+    font-size: 27px;
+}
+
+.header-icons .icon.close {
+    position: relative;
+    font-size: 27px;
+    top: -2.3px;
+    font-weight: 300;
+}
+
+.header-icons .minimize:hover {
+    color: #c4c4c4;
+}
+
+.header-icons .maximize:hover {
+    color: #c4c4c4;
+}
+
+.header-icons .close:hover {
+    color: #ff5c5c;
+}
+
+/* PÁGINA INTEIRA */
+
+.container-principal {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+main header {
+    width: 300px;
+    height: 56px;
+    font-size: 12px;
+    margin-top: 40px;
+    text-align: left;
+    font-weight: 600;
+    color: #222222;
+    text-decoration: underline #FDC280;
+}
+
+.container-btn h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #222222;
+    text-transform: uppercase;
+    border-bottom: 2px solid #FDC280;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.formulario-cadastro-usuario {
+    margin-top: 20px;
+    margin-left: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px; 
+    justify-content: space-between;
+}
+
+.lado-esquerdo,
+.lado-direito {
+    flex: 1;
+    min-width: 300px;
+}
+
+.lado-direito {
+    margin-left: 50px; 
+}
+
+.campo {
+    margin-bottom: 20px;
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333333;
+}
+
+/** ----------------- visual dos inputs ---------------------*/
+
+#campo-nome-completo, #campo-email{
+    width: 500px;
+}
+
+#campo-cargo{
+    width: 300px;
+}
+
+/** Label e input de cada um pra ficar que nem o figma */
+
+#nome-completo{
+    width: 40px;
+}
+
+.campo-email{
+    margin-left: 70px;
+}
+.campo-usuario{
+    margin-left: 60px;
+}
+.campo-senha{
+    margin-left: 70px;
+}
+.campo-cargo{
+    margin-left: 70px;
+}
+.campo-cpf{
+    margin-left: 140px;
+}
+.campo-confirmar{
+    margin-left: 40px;
+}
+
+
+/** ----------------- visual dos inputs ---------------------*/
+.campo input, 
+.campo select {
+    width: 276px;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px; 
+    outline: none;
+    transition: border-color 0.3s, background-color 0.3s, box-shadow 0.3s;
+    background-color: #f9f9f9; 
+    color: #333333;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.campo input:focus, 
+.campo select:focus {
+    border-color: #004A8D;
+    background-color: #ffffff; 
+    box-shadow: 0 0 5px rgba(0, 74, 141, 0.3); 
+}
+
+.campo input:active, 
+.campo select:active {
+    background-color: #e6e6e6; 
+    border-color: #333333; 
+}
+
+.campo input::placeholder, 
+.campo select::placeholder {
+    color: #aaaaaa; 
+    font-style: italic;
+}
+
+.campo input:disabled, 
+.campo select:disabled {
+    background-color: #f0f0f0;
+    color: #999999;
+    border-color: #dddddd;
+    cursor: not-allowed;
+}
+
+/** ---------------------- Botões principais da tela --------------------*/
+
+.grupo-botoes {
+    display: flex;
+    justify-content: center; 
+    gap: 20px; 
+    margin-top: 40px; 
+}
+
+.botao {
+    height: 40px;
+    width: 224px;
+    background-color: #FDC280;
+    color: rgb(0, 0, 0);
+    border: 1px solid;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.5s;
+    text-transform: uppercase;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.botao:hover {
+    background-color: #F7941E;
+}
+
+.botao-limpar {
+    background-color: #FFFFFF;
+}
+
+.botao-limpar:hover {
+    background-color: #d7d5d5;
+}
+
+.botao-cancelar {
+    background-color: #FFFFFF;
+}
+
+.botao-cancelar:hover {
+    background-color: #e17373;
+}

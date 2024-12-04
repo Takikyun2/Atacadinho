@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - ATACADINHO</title>
+    <link rel="stylesheet" href="../../styles/cadastros/produtos.css">
+</head>
+<body>
+        <!-- Cabeçalho do Site -->
+        <header class="container-header">
+            <img src="../../assets/img/senac_logo.png" alt="Logo do Senac">
+            <hr>
+            <p>ATACADINHO</p>
+            <div class="botoes-navegacao">
+                <hr>
+                <a href="/produtos_atacadinho/produtos.html">
+                    <button class="botao-navegacao" title="Produtos (F1)">PRODUTOS (F1)</button>
+                </a>
+                <hr>
+                <a href="/login_atacadinho/login.html">
+                    <button class="botao-navegacao" title="Vendas-PVD (F2)">LOGIN (F2)</button>
+                </a>
+                <hr>
+                <a href="/relatorios_atacadinho/relatorios.html">
+                    <button class="botao-navegacao" title="Relatórios (F3)">RELATÓRIOS (F3)</button>
+                </a>
+                <hr>
+                <a href="/cadastro_atacadinho/cadastro.html">
+                    <button class="botao-navegacao" title="Cadastro Usuários">CADASTRO (F9)</button>
+                </a>
+                <hr>
+            </div>
+            <div class="header-icons">
+                <button class="icon minimize" title="Minimizar" aria-label="Minimizar">—</button>
+                <button class="icon maximize" title="Maximizar/Restaurar" aria-label="Maximizar/Restaurar">□</button>
+                <button class="icon close" title="Fechar" aria-label="Fechar">×</button>
+            </div>
+        </header>
+
+        <!--* ---------- Conteúdo da Página --------------->
+        <main class="container-principal">
+            <header>
+                <h1>Cadastro de Produtos</h1>
+            </header>
+
+            <form class="formulario">
+                <div class="input-linha">
+                    <div class="input-container">
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" name="nome" placeholder="Digite o nome do produto">
+                    </div>
+                    <div class="input-container">
+                        <label for="ean-gtin">EAN / GTIN</label>
+                        <input type="text" id="ean-gtin" name="ean-gtin" placeholder="Digite o EAN ou GTIN">
+                    </div>
+                </div>
+
+                <div class="input-linha">
+                    <div class="input-container">
+                        <label for="preco">Preço</label>
+                        <input type="number" id="preco" name="preco" placeholder="Digite o preço">
+                    </div>
+                    <div class="input-container">
+                        <label for="preco-promocional">Preço Promocional</label>
+                        <input type="number" id="preco-promocional" name="preco-promocional" placeholder="Digite o preço promocional">
+                    </div>
+                </div>
+
+                <div class="input-linha">
+                    <div class="input-container">
+                        <label for="unidade">Unidade</label>
+                        <select id="unidade" name="unidade">
+                            <option value="unidade">Unidade</option>
+                            <option value="quilo">Quilo</option>
+                            <option value="litro">Litro</option>
+                            <option value="pacote">Pacote</option>
+                        </select>
+                    </div>
+                    <div class="input-container">
+                        <label for="quantidade">Quantidade</label>
+                        <input type="number" id="quantidade" name="quantidade" placeholder="Digite a quantidade">
+                    </div>
+                </div>
+
+                <div class="scan-container">
+                    <button type="button" class="btn-scanear">Scanear</button>
+                </div>
+
+                <div class="promocao-container">
+                    <p>Preço Promocional:</p>
+                    <div class="radio-container">
+                        <input type="radio" id="promocional-ativo" name="status-promocao" value="ativo">
+                        <label for="promocional-ativo">Ativo</label>
+                        <input type="radio" id="promocional-desativado" name="status-promocao" value="desativado">
+                        <label for="promocional-desativado">Desativado</label>
+                    </div>
+                </div>
+
+                <div class="data-promocao">
+                    <label for="data-inicio">Data de Início</label>
+                    <input type="date" id="data-inicio" name="data-inicio">
+                    <span>até</span>
+                    <label for="data-fim">Data de Fim</label>
+                    <input type="date" id="data-fim" name="data-fim">
+                </div>
+            </form>
+        </main>
+    
+</body>
+</html>

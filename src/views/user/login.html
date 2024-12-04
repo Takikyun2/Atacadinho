@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ATACADINHO</title>
+    <link rel="stylesheet" href="../../styles/user/login.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Lado esquerdo da tela -->
+        <div class="lado-esquerdo">
+            <img src="../../assets/img/linhas.png" alt="linhas" class="linhas">
+            <img src="../../assets/img/senac_logo.png" alt="Logo" class="logo">
+        </div>
+
+        <!-- Lado direito da tela -->
+        <div class="lado-direito">
+            <div class="container-formulario">
+                <div class="icone-perfil">
+                    <img src="../../assets/img/icon-login.png" alt="Ícone de perfil">
+                </div>
+                <h2>LOGIN</h2>
+                <p>Seja bem-vindo(a) :)</p>
+                
+                <form action="#" method="POST">
+                    <label for="usuario">Usuário</label>
+                    <input type="text" id="usuario" name="usuario" placeholder="Digite seu usuário" required>
+
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+
+                    <div class="botoes">
+                        <a href="../cadastros/cadastroUser.html">
+                            <button type="button" class="cadastrar">Cadastre-se</button>
+                        </a>
+                        <!-- ! Link para tela de cadastro de produtos provisoria -->
+                        <button type="submit" class="entrar"> <a href="../cadastros/Cad-produtos.html">Entrar</a></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

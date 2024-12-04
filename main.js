@@ -36,7 +36,7 @@ function carregar_janela() {
     }
   });
 
-  janela.loadFile('src/views/cadastros/cadastro_produtos.html');
+  janela.loadFile('src/views/user/login.html');
 }
 
 app.whenReady().then(async () => {

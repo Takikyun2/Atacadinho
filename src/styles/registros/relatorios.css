@@ -1,0 +1,454 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+*{
+    margin: 0;
+    border: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+}
+
+/** Header de Relatórios */
+.container-header {
+    display: flex; 
+    align-items: center; 
+    background-color: #004A8D; 
+    padding: 10px 34px; 
+    color: white; 
+    width: 100%;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+.container-header img {
+    width: 38px; 
+    height: 25px; 
+    margin-right: 20px; 
+}
+
+.container-header hr {
+    height: 24px; 
+    width: 1px; 
+    background-color: white; 
+    border: none; 
+    margin: 0 20px; 
+}
+
+.container-header p {
+    width: 160px; 
+    height: 15px; 
+    font-size: 16px;  
+    margin: 0; 
+    text-align: left; 
+    margin-bottom: 4px;
+}
+
+/** Botões do centro */
+
+.botoes-navegacao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.botoes-navegacao .botao-navegacao {
+    background-color: #004A8D;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.5s;
+}
+
+.botoes-navegacao .botao-navegacao:hover {
+    background-color: #366da1;
+}
+
+.botoes-navegacao hr {
+    height: 24px;
+    width: 1px;
+    background-color: white;
+    border: none;
+}
+
+/** Icones do Header de minimizar, maximizar e fechar */
+.header-icons {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 22px; 
+}
+
+.header-icons .icon {
+    cursor: pointer;
+    color: white;
+    font-size: 25px; 
+    width: 11px; 
+    height: 11px; 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    border: 1px solid transparent; 
+    transition: all 0.2s ease;
+    background: transparent; 
+}
+
+.header-icons .icon.maximize {
+    position: relative;
+    top: -3px; 
+    font-size: 27px;
+}
+
+.header-icons .icon.close {
+    position: relative; 
+    font-size: 27px;
+    top: -2.3px; 
+    font-weight: 300;
+}
+
+.header-icons .minimize:hover {
+    color: #c4c4c4; 
+}
+.header-icons .maximize:hover {
+    color: #c4c4c4;
+}
+.header-icons .close:hover {
+    color: #ff5c5c; 
+}
+
+/** Contéudo Principal  */
+.container-principal {
+    padding-left: 50px; 
+    padding-right: 50px;
+}
+
+.container-principal p {
+    width: 212px; 
+    height: 56px; 
+    font-size: 24px; 
+    margin-top: 40px; 
+    text-align: left; 
+    font-weight: 600;
+    color: #222222; 
+    text-decoration: underline #FDC280;
+}
+
+.container-btn {
+    margin-top: 20px; 
+}
+
+.container-btn nav ul {
+    display: flex;
+    gap: 30px; 
+}
+
+.container-btn ul {
+    list-style-type: none;
+}
+
+.container-btn button {
+    background-color: #FDC280;
+    border: 1px solid #000000; 
+    color: #222222; 
+    font-size: 14px; 
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 5px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.2);
+    height: 38px;
+    width: 156px;
+    transition: 0.4s;
+}
+
+.container-btn button:hover{
+    background-color: #F7941E;
+}
+
+.container-btn button.ativo {
+    background-color: #F7941E;
+    color: #222222;
+    border: 1px solid #000000;
+    box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+/** Filtros */
+.container-filtro {
+    margin-top: 20px;
+    background-color: #D9D9D9;
+    width: 880px;
+    height: 40px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 0 10px;
+    border-radius: 5px;
+}
+
+.container-filtro select {
+    padding: 5px;
+    font-size: 14px;
+    width: 110px;
+    border-radius: 5px;
+    background-color: #D9D9D9; 
+    cursor: pointer;
+    padding-left: 5px;
+    transition: 0.4s;
+}
+
+.container-filtro select:hover {
+    background-color: #ccc;
+}
+
+.container-filtro input {
+    padding: 5px;
+    font-size: 14px;
+    width: 730px;
+    border-radius: 5px;
+    background-color: #ffffff; 
+    border: 1px solid #ffffff; 
+    transition: all 0.3s ease; 
+}
+
+.container-filtro input:focus {
+    background-color: #f2f2f2; 
+    border: 1px solid #f2f2f2; 
+    outline: none; 
+}
+
+/** Tabelas */
+.container-tabela {
+    margin-top: 20px;
+    margin-bottom: 34px;
+    width: 100%;
+    max-height: 400px; 
+    overflow-y: auto; 
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    scrollbar-width: thin; 
+    scrollbar-color: #cccccc #f9f9f9; 
+}
+
+.container-tabela table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background-color: #F9F9F9;
+}
+
+.container-tabela th, .container-tabela td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+    white-space: nowrap; 
+}
+
+.container-tabela th {
+    background-color: #004A8D; 
+    color: #ffffff;
+    font-weight: 300;
+    position: sticky; 
+    top: 0; 
+    z-index: 2; /
+}
+
+.container-tabela tr:nth-child(even) {
+    background-color: #f2f2f2; 
+}
+
+.container-tabela tr:hover {
+    background-color: #e0e0e0; 
+}
+
+
+/**-------------------------------------- GRÁFICO E CAMPO DE RESUMO --------------------------------- */
+
+.container-grafico {
+    width: 80%; 
+    max-width: 867px; 
+    margin-left: 0; 
+    margin-top: 15px; 
+    margin-bottom: 10px; 
+    padding: 15px;
+    border: 2px solid #004A8D; 
+    border-radius: 5px; 
+}
+
+canvas {
+    display: block; 
+    max-width: 100%; 
+    height: auto; 
+}
+
+.container-grafico-resumo{
+    display: flex;
+}
+
+/**-------------------------------------- MODAL DE RESUMO -------------------------------------------- */
+
+.modal {
+    width: 400px; 
+    height: 580px; 
+    background-color: #fff;
+    border-radius: 5px; 
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2); 
+    margin-top: -99px;
+    margin-left: 30px;
+    margin-bottom: 1px;
+}
+
+.modal-cabecalho {
+    background-color: #004A8D;
+    padding: 12px; 
+    text-align: center;
+    font-size: 13px; 
+    color: #fff;
+    font-weight: bold;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.modal-corpo {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.item-venda, .item-retirada {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.detalhes-venda, .detalhes-retirada {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #2C3E50;
+    margin-bottom: 5px;
+}
+
+.ponto-azul {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #1fa81a;
+    margin-right: 12px;
+}
+
+.ponto-vermelho {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #e74c3c;
+    margin-right: 12px;
+}
+
+.valor-venda {
+    font-weight: bold;
+    font-size: 16px;
+    color: #2c3e50;
+    margin-right: 20px;
+}
+
+.valor-retirada {
+    font-weight: bold;
+    font-size: 16px;
+    color: #e74c3c;
+    margin-right: 20px;
+}
+
+.hora-venda, .hora-retirada {
+    font-size: 14px;
+    color: #7f8c8d;
+    text-align: right;
+    font-style: italic;
+    flex-grow: 1;
+}
+
+.forma-pagamento, .motivo-retirada {
+    font-size: 14px;
+    color: #7f8c8d;
+    text-align: left;
+    font-style: italic;
+    opacity: 0.7;
+    margin-top: 5px; 
+}
+
+.item-venda hr, .item-retirada hr {
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+}
+
+.modal-rodape {
+    background-color: #FDC280;
+    padding: 12px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    color: #2c3e50;
+}
+
+/* Barra de Rolagem do modal de resumo */
+.modal-corpo::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-corpo::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.modal-corpo::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+/* * ----------------------------------- GRÁFICO DE PIZZA ---------------------------- */
+
+.container-pizza{
+    width: 36%; 
+    max-width: 867px; 
+    margin-left: 180PX; 
+    margin-top: -40px; 
+    margin-bottom: 10px; 
+    padding: 15px;
+}
+
+.container-pizza .modal{
+    margin-left: 735px;
+    margin-top: -582px;
+}
+
+/** ------------------------------------ GRÁFICO COLUNAS ------------------------------ */
+
+.container-transacoes{
+    width: 100%; 
+    border-radius: 5px;
+    max-width: 867px; 
+    margin-left: 0PX; 
+    margin-top: -41px; 
+    margin-bottom: 10px; 
+    padding: 15px;
+}
+
+.container-transacoes .modal{
+    margin-left: 915px;
+    margin-top: -561px;
+    height: 562px;
+   
+}
+
+.transacoes-grafico{
+    border: solid 2px #004A8D;
+    border-radius: 5px;
+}
