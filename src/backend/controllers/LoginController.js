@@ -1,6 +1,6 @@
 
 // Importa o modelo Login, que contém as operações de interação com o banco de dados
-const Login = require('../models/Login')
+const Login = require('../models/login')
 
 class LoginController {
 
@@ -17,7 +17,7 @@ class LoginController {
 
     // Método estático para listar todos os logins
     static async listarLogins() {
-        try {
+        try { 
             // Chama o método 'listarLogins' do modelo Login para obter todos os logins
             await Login.listarLogins();
         } catch (err) {

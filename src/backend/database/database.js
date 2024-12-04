@@ -61,7 +61,7 @@ async function setupDatabase() {
         sku VARCHAR(200) NOT NULL,
         codbarra VARCHAR(200) NOT NULL,
         categoria_id INT NOT NULL,
-        condicao BOOLEAN NOT NULL,
+        condicao BOOLEAN DEFAULT TRUE NOT NULL,
         datahora DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
         FOREIGN KEY (categoria_id) REFERENCES categoria(idcategoria)
       )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -92,12 +92,40 @@ async function setupDatabase() {
     await conn.query(`
       CREATE TABLE IF NOT EXISTS login (
         id_login INT AUTO_INCREMENT PRIMARY KEY,
-        user VARCHAR(255),
-        senha VARCHAR(255),
+        nomecompleto VARCHAR(255) NOT NULL,
+        user VARCHAR(255) NOT NULL,
+        senha VARCHAR(255) NOT NULL,
+        cpf VARCHAR(255) NOT NULL,
         status BOOLEAN DEFAULT TRUE NOT NULL,
+        user_type_id INT NOT NULL,
         datahoraupdate DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-        datahoraregistro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+        datahoraregistro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        FOREIGN KEY (user_type_id) REFERENCES user_type(id_user_type)
       )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    `);
+
+    await conn.query(`
+      CREATE TABLE IF NOT EXISTS user_type (
+        id_user_type INT AUTO_INCREMENT PRIMARY KEY,
+        desc VARCHAR(255)
+      )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    `);
+
+    await conn.query(`
+      CREATE PROCEDURE IF NOT EXISTS CheckAndInsertUserType()
+      BEGIN
+          DECLARE count_user_type INT;
+
+          -- Contar o número de registros na tabela user_type
+          SELECT COUNT(*) INTO count_user_type FROM user_type;
+
+          -- Verificar se a tabela está vazia
+          IF count_user_type = 0 THEN
+              -- Inserir os valores padrão
+              INSERT INTO user_type (desc)
+              VALUES ('Vendedor'), ('Gerente'), ('Administrador');
+          END IF;
+      END
     `);
 
     await conn.query(`
