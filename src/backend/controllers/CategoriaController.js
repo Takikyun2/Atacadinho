@@ -9,5 +9,21 @@ class CategoriaController {
       throw new Error('Erro ao listar categorias: ' + err.message)
     }
   }
+  
+  static async listarQuantidadeDeProdutosVendidos() {
+    try {
+      return await Categoria.listarQuantidadeDeProdutosVendidos();
+    } catch (err) {
+      throw new Error('Erro ao listar categorias: ' + err.message)
+    }
+  }
+
+  static async listarESomarValorProdutosVendidosCategorias() {
+    try {
+      return await Categoria.listarESomarValorProdutosVendidosCategorias();
+    } catch (err) {
+      throw new Error('Erro ao listar categorias: ' + err.message)
+    }
+  }
 }
 module.exports = CategoriaController;

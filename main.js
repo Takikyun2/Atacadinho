@@ -97,6 +97,22 @@ ipcMain.handle('listar-categorias', async () => { // faz o listar-categorias ser
   }
 });
 
+ipcMain.handle('listar-Quantidade-De-Produtos-Vendidos', async () => { // faz o listar-categorias ser visivel para o todo
+  try {
+    return await CategoriaController.listarQuantidadeDeProdutosVendidos();
+  } catch (err) {
+    return { erro: err.message };
+  }
+});
+
+ipcMain.handle('listar-E-Somar-Valor-Produtos-Vendidos-Categorias', async () => { // faz o listar-categorias ser visivel para o todo
+  try {
+    return await CategoriaController.listarESomarValorProdutosVendidosCategorias();
+  } catch (err) {
+    return { erro: err.message };
+  }
+});
+
 // Metodos do CompraController
 
 ipcMain.handle('buscar-produto-nome', async (event, args) => {
