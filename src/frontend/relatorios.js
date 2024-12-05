@@ -314,6 +314,38 @@ const graficoVendas = new Chart(contexto, {
   const myPieChart = new Chart(pizzaGrafico, config);
 
 // * ------------------------------ GRAFICO DE PRODUTOS ------------------------------------//
+//constante que armazena as categorias cadastradas no DB
+const categorias = []
+
+//constante que armazena a quantidade de produtos vendidos por categoria
+const quantidadeDeProdutosVendidosPorCategoria = []
+
+// busca as categorias do DB para inserir no grafico
+async function carregarCategorias() {
+  try {
+    const categoriasDB = await window.api.listarCategoria();
+    categoriasDB.forEach(categoria => categorias.push(categoria.categoriaproduto))
+    
+  }catch(error){
+    console.error('Erro ao carregar categorias:', error);
+  }
+}
+
+async function carregarQuantidadeDeProdutosVendidos() {
+  try {
+    //armazena o retorno da funcao que busca a quantidade de produtos vendidos por categoria
+    const quantidade = await window.api.listarQuantidadeDeProdutosVendidos();
+
+    //adiciona a quantidade de produtos vendidos de cada categoria ao array de quantidadeDeProdutosVendidosPorCategoria
+    quantidade.forEach(qtd => quantidadeDeProdutosVendidosPorCategoria.push(qtd.total_produtos_vendidos))
+    
+  }catch(error){
+    console.error('Erro ao carregar categorias:', error);
+  }
+}
+//Call da funcões de busca
+carregarCategorias();
+carregarQuantidadeDeProdutosVendidos();
 
 
 const colunas = document.getElementById('myChart').getContext('2d');
@@ -321,10 +353,10 @@ const colunas = document.getElementById('myChart').getContext('2d');
 const myChart = new Chart(colunas, {
     type: 'bar', // Tipo de gráfico: colunas (barras verticais)
     data: {
-        labels: ['Congelados', 'Limpeza', 'Frutas e Legumes', 'Laticínios', 'Padaria'], // Nomes das colunas
+        labels: categorias, // Nomes das colunas
         datasets: [{
-            label: 'Top 5 Mais Vendidos Hoje',
-            data: [5000, 7000, 8000, 5600, 4500], // Valores das colunas
+            label: 'Top 5 Categorias Mais Vendidas',
+            data: quantidadeDeProdutosVendidosPorCategoria, // Valores das colunas
             backgroundColor: [
                 'rgba(47, 95, 140, 100)',
                 'rgba(94, 118, 140, 100)',
@@ -350,3 +382,40 @@ const myChart = new Chart(colunas, {
         }
     }
 });
+
+
+const valorTotalProdutosCategorias = [];
+carregarValorTotalDeProdutosVendidosCategorias()
+
+async function carregarValorTotalDeProdutosVendidosCategorias() {
+  try {
+    const valorTotalPorCategoria = await window.api.listarESomarValorProdutosVendidosCategorias();
+    valorTotalPorCategoria.forEach(vt => valorTotalProdutosCategorias.push(vt));
+
+    // Atualizar o modal após carregar os dados
+    atualizarModal();
+  } catch (error) {
+    console.error('Erro ao carregar categorias:', error);
+  }
+}
+
+function atualizarModal() {
+  const sectionModal = document.getElementById("modal-corpo");
+
+  const output = valorTotalProdutosCategorias.map(vt => {
+    const { categoria, valor_total_vendido } = vt;
+    return `
+      <div class="item-venda">
+        <div class="detalhes-venda">
+          <span class="ponto-azul"></span>
+          <span class="valor-venda">${categoria}</span>
+        </div>
+        <span class="forma-pagamento">R$ ${valor_total_vendido.toFixed(2)}</span>
+        <hr>
+      </div>
+    `;
+  }).join('');
+  
+  sectionModal.innerHTML = output;
+}
+

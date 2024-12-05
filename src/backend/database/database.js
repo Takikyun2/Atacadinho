@@ -55,10 +55,10 @@ async function setupDatabase() {
         id_produto INT AUTO_INCREMENT PRIMARY KEY,
         nome VARCHAR(200) NOT NULL,
         preco VARCHAR(200) NOT NULL,
+        preco_promocional VARCHAR(200),
         marca VARCHAR(200) NOT NULL,
         fornecedor VARCHAR(200) NOT NULL,
         unidade VARCHAR(200) NOT NULL,
-        sku VARCHAR(200) NOT NULL,
         codbarra VARCHAR(200) NOT NULL,
         categoria_id INT NOT NULL,
         condicao BOOLEAN DEFAULT TRUE NOT NULL,
@@ -90,24 +90,9 @@ async function setupDatabase() {
     await conn.query(`CALL CheckAndInsertCategoria();`);
 
     await conn.query(`
-      CREATE TABLE IF NOT EXISTS login (
-        id_login INT AUTO_INCREMENT PRIMARY KEY,
-        nomecompleto VARCHAR(255) NOT NULL,
-        user VARCHAR(255) NOT NULL,
-        senha VARCHAR(255) NOT NULL,
-        cpf VARCHAR(255) NOT NULL,
-        status BOOLEAN DEFAULT TRUE NOT NULL,
-        user_type_id INT NOT NULL,
-        datahoraupdate DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-        datahoraregistro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-        FOREIGN KEY (user_type_id) REFERENCES user_type(id_user_type)
-      )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-    `);
-
-    await conn.query(`
       CREATE TABLE IF NOT EXISTS user_type (
         id_user_type INT AUTO_INCREMENT PRIMARY KEY,
-        desc VARCHAR(255)
+        desc_user VARCHAR(255)
       )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     `);
 
@@ -122,25 +107,52 @@ async function setupDatabase() {
           -- Verificar se a tabela está vazia
           IF count_user_type = 0 THEN
               -- Inserir os valores padrão
-              INSERT INTO user_type (desc)
+              INSERT INTO user_type (desc_user)
               VALUES ('Vendedor'), ('Gerente'), ('Administrador');
           END IF;
       END
     `);
 
+    // Chamar a procedure
+    await conn.query(`CALL CheckAndInsertUserType();`);
+
+    await conn.query(`
+      CREATE TABLE IF NOT EXISTS login (
+        id_login INT AUTO_INCREMENT PRIMARY KEY,
+        nomecompleto VARCHAR(255) NOT NULL,
+        user VARCHAR(255) NOT NULL,
+        senha VARCHAR(255) NOT NULL,
+        cpf VARCHAR(255) NOT NULL,
+        status BOOLEAN DEFAULT TRUE NOT NULL,
+        user_type_id INT NOT NULL,
+        datahoraupdate DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        datahoraregistro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        FOREIGN KEY (user_type_id) REFERENCES user_type(id_user_type)
+      )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    `);
+
+
     await conn.query(`
       CREATE TABLE IF NOT EXISTS caixa (
         id_caixa INT AUTO_INCREMENT PRIMARY KEY,
-        data_abertura DATETIME,
+        data_abertura DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
         data_fechamento DATETIME,
-        valor_inicial FLOAT,
+        valor_inicial FLOAT NOT NULL,
         valor_final FLOAT,
-        observacoes VARCHAR(255),
         login_id INT,
         FOREIGN KEY (login_id) REFERENCES login(id_login)
       )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     `);
 
+    await conn.query(`
+      CREATE TABLE IF NOT EXISTS sangrias (
+        id_sangria INT AUTO_INCREMENT PRIMARY KEY,
+        caixa_id INT,
+        valor_sangria FLOAT,
+        observacoes_sangria VARCHAR(255),
+        FOREIGN KEY (caixa_id) REFERENCES caixa(id_caixa)
+      )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    `);
 
     await conn.query(`
       CREATE TABLE IF NOT EXISTS tipo_pagamento (

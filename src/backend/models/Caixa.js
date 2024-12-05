@@ -11,17 +11,16 @@ class Caixa {
     try {
         console.log(caixa);
         
-        const {data_abertura, data_fechamento, valor_inicial, valor_final, observacoes,login_id} = caixa
+        const {data_abertura, data_fechamento, valor_inicial, valor_final,login_id} = caixa
  
       conn = await pool.getConnection();
       const [res] = await conn.execute(
-        `INSERT INTO caixa (data_abertura, data_fechamento, valor_inicial, valor_final, observacoes, login_id) VALUES (?, ?, ?, ?, ?, ?)`,
+        `INSERT INTO caixa (data_abertura, data_fechamento, valor_inicial, valor_final, login_id) VALUES (?, ?, ?, ?, ?)`,
         [
             data_abertura,
             data_fechamento,
             valor_inicial,
             valor_final,
-            observacoes,
             login_id
         ]
       );
@@ -48,18 +47,17 @@ class Caixa {
  
  
   static async atualizarRegistroCaixa(newCaixa) {
-    const {id_caixa, data_abertura, data_fechamento, valor_inicial, valor_final, observacoes,login_id} = newCaixa
+    const {id_caixa, data_abertura, data_fechamento, valor_inicial, valor_final,login_id} = newCaixa
  
     let conn;
     try {
       conn = await pool.getConnection();
       const [res] = await conn.execute(
-        `UPDATE caixa SET data_abertura = ?, data_fechamento = ?,valor_inicial = ?, valor_final = ?, observacoes = ?, login_id = ? WHERE id_caixa = ?`,
+        `UPDATE caixa SET data_abertura = ?, data_fechamento = ?,valor_inicial = ?, valor_final = ?, login_id = ? WHERE id_caixa = ?`,
         [   data_abertura,
             data_fechamento,
             valor_inicial,
             valor_final,
-            observacoes,
             login_id,
             id_caixa
         ]

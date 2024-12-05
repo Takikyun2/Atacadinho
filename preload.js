@@ -12,6 +12,10 @@ contextBridge.exposeInMainWorld('api', {
   // Metodos do CategoriaController
  
   listarCategoria: () => ipcRenderer.invoke('listar-categorias'),
+
+  listarQuantidadeDeProdutosVendidos: () => ipcRenderer.invoke('listar-Quantidade-De-Produtos-Vendidos'),
+
+  listarESomarValorProdutosVendidosCategorias: () => ipcRenderer.invoke('listar-E-Somar-Valor-Produtos-Vendidos-Categorias'),
  
   // Metodos do CompraController
  

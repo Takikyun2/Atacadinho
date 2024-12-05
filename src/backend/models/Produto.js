@@ -23,8 +23,8 @@ class Produto {
     try {
       conn = await pool.getConnection();
       const [res] = await conn.execute(
-        `INSERT INTO produtos (nome, preco, marca, fornecedor, unidade, sku, codbarra,categoria_id, condicao, datahora) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)`,
-        [produto.nome, produto.preco, produto.marca, produto.fornecedor, produto.unidade, produto.sku, produto.codbarra, produto.categoria, produto.condicao, produto.datahora]
+        `INSERT INTO produtos (nome, preco, preco_promocional,marca, fornecedor, unidade, codbarra,categoria_id, condicao, datahora) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [produto.nome, produto.preco, produto.preco_promocional,produto.marca, produto.fornecedor, produto.unidade, produto.codbarra, produto.categoria, produto.condicao, produto.datahora]
       );
       return res; // res contém informações sobre a operação de inserção
     } finally {
@@ -66,8 +66,8 @@ class Produto {
     try {
       conn = await pool.getConnection();
       const [res] = await conn.execute(
-        `UPDATE produtos SET nome = ?, preco = ?,marca = ?, fornecedor = ?, unidade = ?, sku = ?, categoria_id = ?, condicao = ? WHERE id_produto = ?`,
-        [novosDados.nome, novosDados.preco, novosDados.marca, novosDados.fornecedor, novosDados.unidade, novosDados.sku, novosDados.categoria, novosDados.condicao, id_produto]
+        `UPDATE produtos SET nome = ?, preco = ?, preco_promocional = ?,marca = ?, fornecedor = ?, unidade = ?, categoria_id = ?, condicao = ? WHERE id_produto = ?`,
+        [novosDados.nome, novosDados.preco, novosDados.preco_promocional,novosDados.marca, novosDados.fornecedor, novosDados.unidade, novosDados.categoria, novosDados.condicao, id_produto]
       );
       return res; // res contém informações sobre a operação de atualização
     } catch (error) {
