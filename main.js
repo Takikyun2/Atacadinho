@@ -1,5 +1,7 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron')
+const { spawn, execSync } = require('child_process');
 const path = require('path')
+const mysql = require('mysql2/promise');
 const { createDataBaseIfNotExists, setupDatabase } = require('./src/backend/database/database')
 const ProdutoController = require('./src/backend/controllers/ProdutoController')
 const CategoriaController = require('./src/backend/controllers/CategoriaController')
@@ -7,21 +9,66 @@ const CompraController = require('./src/backend/controllers/CompraController')
 const CaixaController  = require('./src/backend/controllers/CaixaController')
 const VendasController = require('./src/backend/controllers/VendaController')
 
-/* 
-  Função para criar e carregar a janela principal da aplicação:
-  'const janela': Declara uma constante para armazenar a janela.
-  'janela.loadFile('index.html')': Carrega o arquivo HTML da janela principal.
-  'app.whenReady().then(() => {': Configura a aplicação quando estiver pronta.
-  'carregar_janela()': Chama a função para carregar a janela.
-  'criarMenu()': Chama a função para criar o menu.
-  'app.on('window-all-closed', () => {': Fecha a aplicação quando todas as janelas forem fechadas.
-  'app.on('activate', () => {': Ativa a aplicação quando a janela for ativada.
-  'webPreferences': Configurações de preferências da janela web.
-  'nodeIntegration': Habilita a integração do Node.js na janela web.
-  'contextIsolation': Isola o contexto da janela web.
-*/
 
+// Função para verificar se o WAMP já está em execução
+function verificaWampExec() {
+  try {
+    const output = execSync('tasklist');
+    return output.toString().toLowerCase().includes('wampmanager.exe');
+  } catch (error) {
+    console.error('Erro ao verificar processos:', error);
+    return false;
+  }
+}
 
+// Função para iniciar o WAMP Server de forma assíncrona
+function iniciarWAMPServer() {
+  return new Promise((resolve, reject) => {
+    if (verificaWampExec()) {
+      console.log('WAMP Server ja esta em execucao.');
+      resolve();
+    } else {
+      const wampPath = path.join('C:', 'wamp64', 'wampmanager.exe'); // Caminho do exe do WAMP obs: garanta que este caminha esteja certo
+      const wampProcess = spawn(wampPath, { detached: true, stdio: 'ignore', shell: true });
+
+      wampProcess.on('error', (error) => {
+        console.error('Erro ao iniciar o WAMP Server:', error);
+        reject(error);
+      });
+
+      setTimeout(() => {
+        console.log('WAMP Server iniciado com sucesso!');
+        resolve();
+      }, 5 * 1000); // Tempo de espera para garantir inicialização
+    }
+  });
+}
+
+async function waitForDatabase() {
+  const dbConfig = {
+    host: 'localhost',
+    user: 'root',
+    password: '',
+  };
+
+  const maxRetries = 10; // Número máximo de tentativas
+  const retryInterval = 3000; // Intervalo entre tentativas (ms)
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      console.log(`Tentativa ${attempt}: Verificando conexao com o banco de dados...`);
+      const connection = await mysql.createConnection(dbConfig);
+      await connection.end();
+      console.log('Conexao com o banco de dados estabelecida!');
+      return true;
+    } catch (error) {
+      console.warn(`Banco de dados indisponivel. Tentando novamente em ${retryInterval / 1000} segundos...`);
+      await new Promise((res) => setTimeout(res, retryInterval));
+    }
+  }
+
+  throw new Error('O banco de dados nao esta disponivel apos varias tentativas.');
+}
 
 function carregar_janela() {
   const janela = new BrowserWindow({
@@ -39,12 +86,27 @@ function carregar_janela() {
   janela.loadFile('src/views/user/login.html');
 }
 
+// Inicializa o Electron após o WAMP Server
 app.whenReady().then(async () => {
+  try {
+    await iniciarWAMPServer();
+    await waitForDatabase();
+    await createDataBaseIfNotExists();
+    await setupDatabase();
+    carregar_janela();
+    criarMenu();
+  } catch (error) {
+    console.error('Erro ao iniciar o aplicativo:', error);
+    app.quit();
+  }
+});
+
+/* app.whenReady().then(async () => {
   await createDataBaseIfNotExists();
   await setupDatabase();
   carregar_janela();
   criarMenu();
-});
+}); */
 
 /* Ipc  */
 
