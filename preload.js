@@ -35,4 +35,6 @@ contextBridge.exposeInMainWorld('api', {
   // Metodos do VendasController
   adicionarRegistrosDeVendas: (venda, produtosDaVenda) => ipcRenderer.invoke('adicionar-registro-venda', venda, produtosDaVenda),
 
+  listarExtratoPorTiposDePagamentos: () => ipcRenderer.invoke('listar-Extrato-Tipos-Pagamentos'),
+
 });

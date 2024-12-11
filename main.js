@@ -233,6 +233,14 @@ ipcMain.handle('adicionar-registro-venda', async (event,venda, produtosDaVenda) 
   }
 });
 
+ipcMain.handle('listar-Extrato-Tipos-Pagamentos', async () => {
+  try {
+    return await VendasController.listarExtratoPorTiposDePagamentos();
+  } catch (err) {
+    return { sucesso: false, erro: err.message }
+  }
+});
+
 
 // ? - Produtos Ipc end
 
