@@ -1,6 +1,7 @@
 const { pool } = require('../database/database');
 
 class Vendas {
+  
   static async adicionarRegistrosDeVendas(venda, produtosDaVenda, tiposPagamentos) {
     let conn;
     try {
@@ -60,6 +61,30 @@ class Vendas {
       throw error; // Repassa o erro para ser tratado em outro lugar
     } finally {
       if (conn) conn.release(); // Libera a conexão do pool
+    }
+  }
+
+  static async listarExtratoPorTiposDePagamentos(){
+    let conn;
+    try {
+        conn = await pool.getConnection();
+        const [rows] = await conn.query(`
+            SELECT 
+                tp.descricao AS forma_pagamento,
+                COALESCE(SUM(vtp.valor), 0) AS total_valor
+            FROM 
+                tipo_pagamento tp
+            LEFT JOIN 
+                vendas_tipo_pagamento vtp ON tp.id_tipo_pagamento = vtp.tipo_pagamento_id
+            GROUP BY 
+                tp.descricao;
+        `);
+        return rows; // rows será um array de objetos, onde cada objeto representa uma categoria
+    } catch (error) {
+        console.error('Erro ao realizar a consulta:', error);
+        throw error;
+    } finally {
+        if (conn) conn.release();
     }
   }
 }

@@ -10,6 +10,13 @@ class VendasController {
         }
     }
  
+    static async listarExtratoPorTiposDePagamentos() {
+        try {
+          return await Vendas.listarExtratoPorTiposDePagamentos();
+        } catch (err) {
+          throw new Error('Erro ao listar registros de venda: ' + err.message)
+        }
+    }
     /* static async listarRegistrosDeVendas() {
         try {
           return await Produto.listarRegistrosDeVendas();

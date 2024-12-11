@@ -267,13 +267,42 @@ const graficoVendas = new Chart(contexto, {
 });
 
 //* --------------------------- GRÁFICO DE PIZZA EXTRATO -------------------------------//
+
+const extratos = []
+
+const labelsDasFormasPagamento = []
+const extratoDasFormasPagamento = []
+
+async function carregarExtratoPorTiposDePagamentos() {
+  try {
+    const extratoDB = await window.api.listarExtratoPorTiposDePagamentos();
+    console.log(extratoDB);
+    
+    extratoDB.forEach(extrato => {
+
+      extratos.push(extrato);
+
+      labelsDasFormasPagamento.push(extrato.forma_pagamento);
+
+      extratoDasFormasPagamento.push(extrato.total_valor)
+
+      inserirDadosModal()
+    })
+    
+  }catch(error){
+    console.error('Erro ao carregar extrato:', error);
+  }
+}
+
+carregarExtratoPorTiposDePagamentos()
+
   const data = {
-    labels: ["Pix", "Dinheiro", "Crédito", "Debito", "Boleto"],
+    labels: labelsDasFormasPagamento,
     datasets: [{
-      label: "Extrato: ",
-      data: [12, 10, 13, 5, 7], 
+      label: "Extrato ",
+      data: [2, 10, 13, 5, 7], 
       backgroundColor: [
-        "rgba(0, 74, 141, 100)",
+        "rgba(247, 158, 111, 100)",
         "rgba(247, 142, 30, 100)",
         "rgba(47, 95, 140, 100)",
         "rgba(75, 192, 192, 100)",
@@ -281,7 +310,7 @@ const graficoVendas = new Chart(contexto, {
         "rgba(247, 158, 111, 100)"
       ],
       borderColor: [
-        "rgba(0, 74, 141, 100)",
+        "rgba(247, 158, 111, 100)",
         "rgba(247, 142, 30, 100)",
         "rgba(47, 95, 140, 100)",
         "rgba(75, 192, 192, 100)",
@@ -312,6 +341,26 @@ const graficoVendas = new Chart(contexto, {
   // Renderizar o gráfico
   const pizzaGrafico = document.getElementById("myPieChart").getContext("2d");
   const myPieChart = new Chart(pizzaGrafico, config);
+
+  function inserirDadosModal() {
+    const modalPizza = document.getElementById('modal-Extrato-Pizza');
+
+    const output = extratos.map(extrato =>{
+      const {forma_pagamento, total_valor} = extrato
+      return `
+        <div class="item-venda">
+          <div class="detalhes-venda">
+             <span class="ponto-azul"></span>
+              <span class="valor-venda">R$ ${total_valor.toFixed(2)}</span>
+          </div>
+          <span class="forma-pagamento">${forma_pagamento}</span>
+          <hr>
+        </div> 
+      `;
+    }).join('');
+    
+    modalPizza.innerHTML = output;
+  }
 
 // * ------------------------------ GRAFICO DE PRODUTOS ------------------------------------//
 //constante que armazena as categorias cadastradas no DB

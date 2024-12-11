@@ -175,7 +175,7 @@ async function setupDatabase() {
           IF count_tipo_pagamento = 0 THEN
               -- Inserir os valores padrão
               INSERT INTO tipo_pagamento (descricao)
-              VALUES ('Pix'), ('Cartão de Crédito'), ('Cartão de Débito'), ('Dinheiro');
+              VALUES ('Pix'), ('Cartão de Crédito'), ('Cartão de Débito'), ('Dinheiro'), ('Boleto');
           END IF;
       END
     `);
