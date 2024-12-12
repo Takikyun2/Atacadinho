@@ -293,6 +293,7 @@ async function carregarExtratoPorTiposDePagamentos() {
     console.error('Erro ao carregar extrato:', error);
   }
 }
+console.log(extratoDasFormasPagamento);
 
 carregarExtratoPorTiposDePagamentos()
 
@@ -300,7 +301,7 @@ carregarExtratoPorTiposDePagamentos()
     labels: labelsDasFormasPagamento,
     datasets: [{
       label: "Extrato ",
-      data: [2, 10, 13, 5, 7], 
+      data: extratoDasFormasPagamento, 
       backgroundColor: [
         "rgba(247, 158, 111, 100)",
         "rgba(247, 142, 30, 100)",
