@@ -5,8 +5,13 @@ contextBridge.exposeInMainWorld('api', {
   // Metodos do ProdutoController
  
   adicionarProduto: (produto) => ipcRenderer.invoke('adicionar-produto', produto),
+
   listarProdutos: () => ipcRenderer.invoke('listar-produtos'),
+
+  buscarProdutoPorId: (id) => ipcRenderer.invoke('buscar-produto-id',id),
+
   atualizarProduto: (idproduto, novosDados) => ipcRenderer.invoke('atualizar-produto', idproduto, novosDados),
+
   removerProduto: (idproduto) => ipcRenderer.invoke('remover-produto', idproduto),
  
   // Metodos do CategoriaController

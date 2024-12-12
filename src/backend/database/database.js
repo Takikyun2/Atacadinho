@@ -54,8 +54,8 @@ async function setupDatabase() {
       CREATE TABLE IF NOT EXISTS produtos (
         id_produto INT AUTO_INCREMENT PRIMARY KEY,
         nome VARCHAR(200) NOT NULL,
-        preco VARCHAR(200) NOT NULL,
-        preco_promocional VARCHAR(200),
+        preco FLOAT NOT NULL,
+        preco_promocional FLOAT,
         marca VARCHAR(200) NOT NULL,
         fornecedor VARCHAR(200) NOT NULL,
         unidade VARCHAR(200) NOT NULL,

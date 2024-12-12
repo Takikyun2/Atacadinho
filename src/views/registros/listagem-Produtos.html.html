@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listagem - ATACADINHO</title>
+    <link rel="stylesheet" href="./listagem.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    
+<!-- Cabeçalho do Site -->
+<header class="container-header">
+    <img src="../relatorios_atacadinho/src/senac_logo.png" alt="Logo do Senac">
+    <hr>
+    <p>ATACADINHO</p>
+    <div class="botoes-navegacao">
+        <hr>
+        <a href="../pdv-atacadinho/pdv.html">
+            <button class="botao-navegacao" title="Produtos (F1)">PDV (F1)</button>
+        </a>
+        <hr>
+        <a href="../login_atacadinho/login.html">
+            <button class="botao-navegacao" title="Vendas-PVD (F2)">LOGIN (F2)</button>
+        </a>
+        <hr>
+        <a href="../relatorios_atacadinho/relatorios.html">
+            <button class="botao-navegacao" title="Relatórios (F3)">RELATÓRIOS (F3)</button>
+        </a>
+        <hr>
+        <a href="../cadastro_atacadinho/cadastro.html">
+            <button class="botao-navegacao" title="Cadastro Usuários">CADASTRO (F9)</button>
+        </a>
+        <hr>
+        <a href="../listagem_atacadinho/listagem.html">
+            <button class="botao-navegacao" title="Listagem Produtos">LISTAGEM (F10)</button>
+        </a>
+        <hr>
+    </div>
+    <div class="header-icons">
+        <button class="icon minimize" title="Minimizar" aria-label="Minimizar">—</button>
+        <button class="icon maximize" title="Maximizar/Restaurar" aria-label="Maximizar/Restaurar">□</button>
+        <button class="icon close" title="Fechar" aria-label="Fechar">×</button>
+    </div>
+</header>
+
+    <!-- CONTEÚDO PRINCIPAL  -->
+     
+       <main class="container-principal">
+
+        <section class="container-btn">
+            <h2>Lista de Produtos</h2>
+        </section>
+
+        <!-- Filtro da tabela -->
+       <!-- Filtro da tabela -->
+        <section class="container-filtro-flex">
+            <div class="container-filtro">
+                <select id="filtro" name="filtro">
+                    <option disabled selected>Filtro</option>
+                    <option value="data">Gelados</option>
+                    <option value="produto">Hotfrute</option>
+                    <option value="codigo">Carne</option>
+                    <option value="vendedor">Padaria</option>
+                </select>
+                <input type="text" id="input-filtro" name="input-filtro" placeholder="Pesquisa..">
+            </div>
+            <!-- O botão agora está fora do container-filtro -->
+            <button type="button" id="btn-pesquisar">Pesquisar</button>
+        </section>
+
+               <!-- Tabela de Produtos -->
+               <section class="container-tabela">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nome</th>
+                            <th>Categoria</th>
+                            <th>Marca</th>
+                            <th>Fornecedor</th>
+                            <th>EAN / GTIN</th>
+                            <th>Medida</th>
+                            <th>Preço Promo.</th>
+                            <th>Preço</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tbody id="tabela-produtos">
+                            <!-- Produtos serão inseridos aqui dinamicamente -->
+                        </tbody>
+                    </tbody>
+                </table>
+            </section>
+
+    </main>
+    <script src="./listagem.js"></script>
+</body>
+</html>
