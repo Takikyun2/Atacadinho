@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDV - Atacadinho</title>
+    <link rel="stylesheet" href="./pdv.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- scripts de plugin para o select com input de pesquisa -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+
+</head>
+
+<body>
+
+    <!-- Cabeçalho do Site -->
+    <header class="container-header">
+        <img src="../../assets/img/senac_logo.png" alt="Logo do Senac">
+        <hr>
+        <p>ATACADINHO</p>
+        <div class="botoes-navegacao">
+            <hr>
+            <a href="../../views/pdv/pdv.html">
+                <button class="botao-navegacao" title="Produtos (F1)">PDV (F1)</button>
+            </a>
+            <hr>
+            <a href="../../views/user/login.html">
+                <button class="botao-navegacao" title="Vendas-PVD (F2)">LOGIN (F2)</button>
+            </a>
+            <hr>
+            <a href="../../views/user/login.html">
+                <button class="botao-navegacao" title="Relatórios (F3)">RELATÓRIOS (F3)</button>
+            </a>
+            <hr>
+            <a href="../../views/cadastros/Cad-produtos.html">
+                <button class="botao-navegacao" title="Cadastro Usuários">CADASTRO (F9)</button>
+            </a>
+            <hr>
+            <a href="../../views/registros/listagem-Produtos.html">
+                <button class="botao-navegacao" title="Listagem Produtos">LISTAGEM (F10)</button>
+            </a>
+            <hr>
+        </div>
+        <div class="header-icons">
+            <button class="icon minimize" title="Minimizar" aria-label="Minimizar">—</button>
+            <button class="icon maximize" title="Maximizar/Restaurar" aria-label="Maximizar/Restaurar">□</button>
+            <button class="icon close" title="Fechar" aria-label="Fechar">×</button>
+        </div>
+    </header>
+
+    <!-- titulo - vendas -->
+    <section id="secao-vendas">
+        <!-- <input type="text" class="input-busca"  placeholder="Buscar produtos"> -->
+        <form action="" class="form-busca-produtos" id="busca-produto-form">
+            <select class="js-example-basic-single" name="select-busca-produto" id="select-busca-produto">
+                <option value="" selected="selected">Buscar produtos</option>
+                <option value="Queijo">Sabão em Pó Omo Multi 1K</option>
+                <option value="">Arroz Branco Tipo 1 5Kg</option>
+            </select>
+            <label for="quantidade" class="label-quantidade">Quant:</label>
+            <input type="number" name="quantidadeProduto" id="quantidadeProduto" class="input-quantidade" min="1" placeholder="1">
+        </form>
+    </section>
+
+    <!-- Tabela PDV -->
+    <section class="tabela-vendas">
+        <table>
+            <thead>
+                <tr>
+                    <th>Produtos:</th>
+                    <th>Quantidade:</th>
+                    <th>Preço:</th>
+                    <th>Total:</th>
+                    <th>Ações:</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <footer class="resumo-vendas">
+            <span></span>
+        </footer>
+    </section>
+
+    <!-- seção final -->
+    <section class="secao-final">
+        <div class="botao-container">
+            <hr>
+            <button>CONCLUIR (F6)</button>
+            <hr>
+            <button>DESCONTO (F7)</button>
+            <hr>
+            <button>OBSERVAÇÃO (F5)</button>
+            <hr>
+            <button id="abrir-modal-fechamento">FECHAR (F8)</button>
+            <hr>
+        </div>
+        <div class="total-container">
+            <div id="total-vendas"></div>
+        </div>
+    </section>
+
+    <!-- modal de fechamento de caixa -->
+
+    <div class="sobreposicao-modal-fechamento" id="sobreposicao-modal-fechamento">
+        <div class="modal-fechamento">
+            <div class="cabecalho-modal-fechamento">
+                <img src="./src/alerta 3.png" alt="Ícone de alerta">
+                <span>Tem certeza que deseja fechar o caixa?</span>
+            </div>
+            <div class="botoes-modal-fechamento">
+                <button class="btn-sim-fechamento" id="btn-sim-fechamento">SIM (ENTER)</button>
+                <button class="btn-nao-fechamento" id="btn-nao-fechamento">NÃO (ESC)</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="./pdv.js"></script>
+    <!-- script responsavel pelo select com input de pesquisa -->
+    <script>
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2({
+                width: '100%'
+            });
+        });
+    </script>
+</body>
+
+</html>

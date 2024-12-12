@@ -1,0 +1,321 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+*{
+    margin: 0;
+    border: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+}
+
+input{
+    background-color: #c4c4c4;
+    height: 20px;
+
+}
+
+/** Header de Relatórios */
+.container-header {
+    display: flex; 
+    align-items: center; 
+    background-color: #004A8D; 
+    padding: 10px 34px; 
+    color: white; 
+    width: 100%;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+.container-header img {
+    width: 38px; 
+    height: 25px; 
+    margin-right: 20px; 
+}
+
+.container-header hr {
+    height: 24px; 
+    width: 1px; 
+    background-color: white; 
+    border: none; 
+    margin: 0 20px; 
+}
+
+.container-header p {
+    width: 160px; 
+    height: 15px; 
+    font-size: 16px;  
+    margin: 0; 
+    text-align: left; 
+    margin-bottom: 4px;
+}
+
+/** Botões do centro */
+
+.botoes-navegacao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.botoes-navegacao .botao-navegacao {
+    background-color: #004A8D;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.5s;
+}
+
+.botoes-navegacao .botao-navegacao:hover {
+    background-color: #366da1;
+}
+
+.botoes-navegacao hr {
+    height: 24px;
+    width: 1px;
+    background-color: white;
+    border: none;
+}
+
+/** Icones do Header de minimizar, maximizar e fechar */
+.header-icons {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 22px; 
+}
+
+.header-icons .icon {
+    cursor: pointer;
+    color: white;
+    font-size: 25px; 
+    width: 11px; 
+    height: 11px; 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    border: 1px solid transparent; 
+    transition: all 0.2s ease;
+    background: transparent; 
+}
+
+.header-icons .icon.maximize {
+    position: relative;
+    top: -3px; 
+    font-size: 27px;
+}
+
+.header-icons .icon.close {
+    position: relative; 
+    font-size: 27px;
+    top: -2.3px; 
+    font-weight: 300;
+}
+
+.header-icons .minimize:hover {
+    color: #c4c4c4; 
+}
+.header-icons .maximize:hover {
+    color: #c4c4c4;
+}
+.header-icons .close:hover {
+    color: #ff5c5c; 
+}
+
+
+/* CONTEÚDO PRINCIPAL */
+
+.container-principal {
+    padding-left: 50px; 
+    padding-right: 50px;
+}
+
+.container-principal h2 {
+    width: 212px; 
+    height: 56px; 
+    font-size: 24px; 
+    margin-top: 40px; 
+    text-align: left; 
+    font-weight: 600;
+    color: #222222; 
+    text-decoration: underline #FDC280;
+}
+
+.container-btn {
+    margin-top: 20px; 
+}
+
+.container-btn nav ul {
+    display: flex;
+    gap: 30px; 
+}
+
+.container-btn ul {
+    list-style-type: none;
+}
+
+.container-btn button {
+    background-color: #FDC280;
+    border: 1px solid #000000; 
+    color: #222222; 
+    font-size: 14px; 
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 5px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.2);
+    height: 38px;
+    width: 156px;
+    transition: 0.4s;
+}
+
+.container-btn button:hover{
+    background-color: #F7941E;
+}
+
+.container-btn button.ativo {
+    background-color: #F7941E;
+    color: #222222;
+    border: 1px solid #000000;
+    box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+/** Filtros */
+.container-filtro {
+    margin-top: 5px;
+    background-color: #D9D9D9;
+    width: 880px;
+    height: 40px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 0 10px;
+    border-radius: 5px;
+}
+
+.container-filtro select {
+    padding: 5px;
+    font-size: 14px;
+    width: 110px;
+    border-radius: 5px;
+    background-color: #D9D9D9;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.container-filtro select:hover {
+    background-color: #ccc;
+}
+
+.container-filtro input {
+    padding: 5px;
+    font-size: 14px;
+    width: 730px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
+    transition: all 0.3s ease;
+}
+
+.container-filtro input:focus {
+    background-color: #f2f2f2;
+    border: 1px solid #f2f2f2;
+    outline: none;
+}
+
+/* Estilo para o botão de pesquisa */
+
+.container-filtro-flex{
+    display: flex;
+}
+.container-filtro-flex button {
+    margin-left: 20px;
+    width: 102.9px;
+    height: 40px;
+    margin-top: 4.5px;
+    font-size: 14px;
+    background-color: #FDC280;
+    color: #000000;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.container-filtro-flex button:hover {
+    background-color: #F78E1E;
+}
+
+/** Tabelas */
+.container-tabela {
+    margin-top: 20px;
+    margin-bottom: 34px;
+    width: 100%;
+    max-height: 500px; 
+    overflow-y: auto; 
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    scrollbar-width: thin; 
+    scrollbar-color: #cccccc #f9f9f9; 
+}
+
+.container-tabela table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background-color: #F9F9F9;
+}
+
+.container-tabela th, .container-tabela td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+    white-space: nowrap; 
+}
+
+.container-tabela th {
+    background-color: #004A8D; 
+    color: #ffffff;
+    font-weight: 300;
+    position: sticky; 
+    top: 0; 
+    z-index: 2; /
+}
+
+.container-tabela tr:nth-child(even) {
+    background-color: #f2f2f2; 
+}
+
+.container-tabela tr:hover {
+    background-color: #e0e0e0; 
+}
+
+/* Botão de editar e excluir */
+
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin: 0 10px; /* Aumentado para criar mais espaço */
+    margin-right: -5px;
+    gap: 10px;
+}
+
+.edit-icon {
+    color: #007bff;
+    transition: 5s;
+}
+
+.delete-icon {
+    color: #dc3545;
+    transition: 5s;
+}
+
+.icon-btn:focus {
+    outline: none;
+}

@@ -131,6 +131,14 @@ ipcMain.handle('listar-produtos', async () => {
   }
 });
 
+ipcMain.handle('buscar-produto-id', async (event, id) => {
+  try {
+    return await ProdutoController.buscarProdutoPorId(id);
+  } catch (err) {
+    return { erro: err.message };
+  }
+});
+
 ipcMain.handle('atualizar-produto', async (event, id, novosDados) => {
   try {
     await ProdutoController.atualizarProduto(id, novosDados)
