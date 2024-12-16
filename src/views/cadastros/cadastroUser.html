@@ -26,7 +26,7 @@
                 <button class="botao-navegacao" title="Relatórios (F3)">RELATÓRIOS (F3)</button>
             </a>
             <hr>
-            <a href="../../../src/views/cadastros/Cad-produtos.html">
+            <a href="../../../src/views/cadastros/cadastroDeProdutos.html">
                 <button class="botao-navegacao" title="Cadastro Usuários">CADASTRO (F9)</button>
             </a>
             <hr>
@@ -65,9 +65,9 @@
                     <label for="campo-cargo" class="campo-cargo">Cargo:</label>
                     <select id="campo-cargo" name="cargo">
                         <option disabled selected>Selecione seu Cargo</option>
-                        <option value="vendedor">Vendedor</option>
-                        <option value="gerente">Gerente</option>
-                        <option value="administrador">Administrador</option>
+                        <option value="1">Vendedor</option>
+                        <option value="2">Gerente</option>
+                        <option value="3">Administrador</option>
                     </select>
                 </div>
             </section>
@@ -86,7 +86,7 @@
             
         </form>
         <div class="grupo-botoes">
-            <button type="submit" class="botao botao-salvar">Salvar - F5</button>
+            <button type="submit" class="botao botao-salvar" id="btn-cad">Cadastrar - F5</button>
             <button type="reset" class="botao botao-limpar" id="limparBtn">Limpar Tela - F3</button>
             <button type="button" class="botao botao-cancelar"><a href="../user/login.html" style="text-decoration: none; color: #000;">Cancelar - F4</a></button>
         </div>
@@ -104,6 +104,8 @@
             });
         });
     </script>
+
+    <script src="../../../src/frontend/user/cadastroUser.js"></script>
 
 </body>
 </html>

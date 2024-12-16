@@ -6,16 +6,16 @@ class Login {
     static async adicionarLogin(login) {
         let conn;
         try {
-            console.log(login);
-            
-            const { nomeCompleto, user, senha, cpf } = login;
-     
+            const {nomeCompleto , user, senha, cpf, user_type_id} = login
             conn = await pool.getConnection();
             const [res] = await conn.execute(
-                `INSERT INTO login ( nomecompleto ,user, senha, cpf) VALUES (?, ?, ?, ?)`,
-                [nomeCompleto , user, senha, cpf]
+                `INSERT INTO login ( nomecompleto ,user, senha, cpf, user_type_id) VALUES (?, ?, ?, ?, ?)`,
+                [nomeCompleto , user, senha, cpf, user_type_id]
             );
             return res; // Retorna informações sobre a inserção
+        }catch (error) {
+            console.error('Erro ao realizar a consulta:', error);
+            throw error;
         } finally {
             if (conn) conn.release();
         }
@@ -36,49 +36,32 @@ class Login {
         }
     }
 
-    // Validar login
-    static async validarLogin(login) {
-        let conn;
-        try {
-            /* console.log(login); */
-            
-            const { user, senha} = login;
-    
-                conn = await pool.getConnection();
-                const [res] = await conn.execute(
-                    `SELECT id_login, nomecompelto, user, cpf, status FROM login WHERE user = ? AND senha = ?`,
-                    [user, senha]
-                );
-
-                if (res.length === 0) {
-                    console.log("Login ou senha incorretos.");
-                    return null; // Retorna nulo caso o login falhe
-                }
-
-                return res; // Retorna o resultado da consulta
-          
-        } finally {
-            if (conn) conn.release(); // Libera a conexão, se aberta
-        }
-    }
-
-    // Atualizar informações de login
-    static async atualizarLogin(newLogin) {
-        const { id_login, nomeCompleto, user, senha, cpf, status, datahoraupdate } = newLogin;
-
+    static async validarLogin({ user, senha }) {
         let conn;
         try {
             conn = await pool.getConnection();
-            const [res] = await conn.execute(
-                `UPDATE login SET nomecompleto = ?, user = ?, senha = ?, cpf = ?, status = ?, datahoraupdate = ? WHERE id_login = ?`,
-                [nomeCompleto, user, senha, cpf, status, datahoraupdate, id_login]
+            
+            const [rows] = await conn.query(
+                `SELECT id_login, nomecompleto, user, cpf, status 
+                FROM login 
+                WHERE user = ? AND senha = ?`, 
+                [user, senha]
             );
-            return res; // Retorna informações sobre a atualização
+
+
+            if (rows.length === 0) {
+                console.log("Login ou senha incorretos.");
+                return null; // Retorna nulo caso o login falhe
+            }
+
+            // Retorna o primeiro resultado encontrado
+            return rows[0];
+
         } catch (error) {
-            console.error('Erro ao realizar a atualização da tabela de logins:', error);
+            console.error('Erro ao realizar a consulta de users:', error);
             throw error;
         } finally {
-            if (conn) conn.release();
+            if (conn) conn.release(); 
         }
     }
 

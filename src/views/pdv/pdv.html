@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDV - Atacadinho</title>
-    <link rel="stylesheet" href="./pdv.css">
+    <link rel="stylesheet" href="../../../src/styles/pdv/pdv.css">
+    <link rel="stylesheet" href="../../../src/styles/pdv/modalAbertura.css">
+    <link rel="stylesheet" href="../../../src/styles/pdv/fechar_caixa.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- scripts de plugin para o select com input de pesquisa -->
@@ -37,7 +39,7 @@
                 <button class="botao-navegacao" title="Relatórios (F3)">RELATÓRIOS (F3)</button>
             </a>
             <hr>
-            <a href="../../../src/views/cadastros/Cad-produtos.html">
+            <a href="../../../src/views/cadastros/cadastroDeProdutos.html">
                 <button class="botao-navegacao" title="Cadastro Usuários">CADASTRO (F9)</button>
             </a>
             <hr>
@@ -46,12 +48,25 @@
             </a>
             <hr>
         </div>
-        <!-- <div class="header-icons">
-            <button class="icon minimize" title="Minimizar" aria-label="Minimizar">—</button>
-            <button class="icon maximize" title="Maximizar/Restaurar" aria-label="Maximizar/Restaurar">□</button>
-            <button class="icon close" title="Fechar" aria-label="Fechar">×</button>
-        </div> -->
     </header>
+
+    <!-- Modal de abertura caixa -->
+    <div id="modal-abertura" class="modal-abertura">
+        <div class="modal-content-abertura">
+            <div class="header-abertura">
+                <span id="dataHora-abertura">06 DE NOVEMBRO DE 2024 - HORÁRIO: <span id="time">14:46:19</span></span>
+                <hr class="divider-abertura">
+            </div>
+            <div class="content-abertura">
+                <label for="valor">DIGITE O VALOR EM CAIXA:</label>
+                <input type="text" id="valor-abertura" placeholder="R$">
+            </div>
+            <div class="buttons-abertura">
+                <button id="btn-abrir-caixa" class="btn-abertura abrir">ABRIR O CAIXA ( F1 )</button>
+                <button id="closeModal-abertura" class="btn-abertura cancelar">CANCELAR ( ESC )</button>
+            </div>
+        </div>
+    </div>
 
     <!-- titulo - vendas -->
     <section id="secao-vendas">
@@ -105,12 +120,12 @@
         </div>
     </section>
 
-    <!-- modal de fechamento de caixa -->
+    <!-- modal de aviso de fechamento de caixa -->
 
     <div class="sobreposicao-modal-fechamento" id="sobreposicao-modal-fechamento">
         <div class="modal-fechamento">
             <div class="cabecalho-modal-fechamento">
-                <img src="./src/alerta 3.png" alt="Ícone de alerta">
+                <img src="../../../src/assets/img/alerta 3.png" alt="Ícone de alerta">
                 <span>Tem certeza que deseja fechar o caixa?</span>
             </div>
             <div class="botoes-modal-fechamento">
@@ -120,8 +135,42 @@
         </div>
     </div>
 
+    <!-- Modal Fechamento-->
+  <div id="modalFechamento" class="modal">
+    <div class="modal-conteudo">
+      <header>
+        <p id="dataHora">06 DE NOVEMBRO DE 2024 - HORÁRIO: 18:46:19</p>
+        <hr>
+      </header>
+      
+      <main>
+        <form>
+          <div class="grupo-checkbox">
+            <label><input type="checkbox"> Vendas Canceladas</label>
+            <label><input type="checkbox"> Cartão de Débito</label>
+            <label><input type="checkbox"> Cartão de Crédito</label>
+            <label><input type="checkbox"> Sangrias</label>
+            <label><input type="checkbox"> Dinheiro</label>
+          </div>
 
-    <script src="./pdv.js"></script>
+          <div class="content-abertura">
+            <label for="valor">DIGITE O VALOR EM CAIXA:</label>
+            <input type="text" id="valor-fechamento" placeholder="R$ 00,00">
+        </div>
+
+          <div class="botoes">
+            <button type="button" id="btn-fechar-caixa" class="btn btn-fechar">FECHAR CAIXA (F1)</button>
+            <button type="button" id="fecharModalBtn" class="btn btn-cancelar">CANCELAR (ESC)</button>
+          </div>
+        </form>
+      </main>
+    </div>
+  </div>
+
+
+    <script src="../../../src/frontend/pdv/pdv.js"></script>
+    <script src="../../../src/frontend/pdv/fechar_caixa.js"></script>
+
     <!-- script responsavel pelo select com input de pesquisa -->
     <script>
         $(document).ready(function () {

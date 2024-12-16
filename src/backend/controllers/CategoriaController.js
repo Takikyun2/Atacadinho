@@ -25,5 +25,13 @@ class CategoriaController {
       throw new Error('Erro ao listar categorias: ' + err.message)
     }
   }
+
+  static async listarESomarCategoriasVendidasNoPeriodo(periodo) {
+    try {
+      return await Categoria.listarESomarCategoriasVendidasNoPeriodo(periodo);
+    } catch (err) {
+      throw new Error('Erro ao listar categorias: ' + err.message)
+    }
+  }
 }
 module.exports = CategoriaController;

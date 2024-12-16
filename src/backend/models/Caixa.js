@@ -6,30 +6,41 @@ class Caixa {
   }
 
  
-  static async adicionarRegistroDeCaixa(caixa) {    
+  static async adicionarRegistroDeCaixa({valor_inicial,login_id}) {    
     let conn;
-    try {
-        console.log(caixa);
-        
-        const {data_abertura, data_fechamento, valor_inicial, valor_final,login_id} = caixa
- 
+    try { 
       conn = await pool.getConnection();
       const [res] = await conn.execute(
-        `INSERT INTO caixa (data_abertura, data_fechamento, valor_inicial, valor_final, login_id) VALUES (?, ?, ?, ?, ?)`,
+        `INSERT INTO caixa (valor_inicial, login_id) VALUES (?, ?)`,
         [
-            data_abertura,
-            data_fechamento,
             valor_inicial,
-            valor_final,
             login_id
         ]
       );
       return res; // res contém informações sobre a operação de inserção
+    }catch (error) {
+      console.error('Erro ao realizar a insercao do registro de caixa:', error);
+      throw error;
     } finally {
       if (conn) conn.release();
     }
   }
  
+  static async atualizarUltimoRegistroCaixaAberto({valor_final}) {
+    let conn;
+    try {
+      conn = await pool.getConnection();
+      const [res] = await conn.execute('UPDATE caixa AS c JOIN ( SELECT MAX(id_caixa) AS max_id FROM caixa ) AS subquery ON c.id_caixa = subquery.max_id SET c.data_fechamento = NOW(), c.valor_final = ? ;', [valor_final]);
+      return res; 
+    } catch (error) {
+      console.error('Erro ao realizar a consulta:', error);
+      throw error;
+    }
+    finally {
+      if (conn) conn.release();
+    }
+  }
+
   static async listarRegistrosCaixa() {
     let conn;
     try {

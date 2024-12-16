@@ -1,6 +1,12 @@
 const { contextBridge, ipcRenderer } = require('electron');
  
 contextBridge.exposeInMainWorld('api', {
+
+  // Login
+  adicionarLogin: (login) => ipcRenderer.invoke('adicionar-login', login),
+  
+  validarLogin: (login) => ipcRenderer.invoke('validar-login', login),
+
  
   // Metodos do ProdutoController
  
@@ -21,6 +27,8 @@ contextBridge.exposeInMainWorld('api', {
   listarQuantidadeDeProdutosVendidos: () => ipcRenderer.invoke('listar-Quantidade-De-Produtos-Vendidos'),
 
   listarESomarValorProdutosVendidosCategorias: () => ipcRenderer.invoke('listar-E-Somar-Valor-Produtos-Vendidos-Categorias'),
+
+  listarESomarCategoriasVendidasNoPeriodo: (periodo) => ipcRenderer.invoke('listar-E-Somar-Categorias-Vendidas-Periodo', periodo),
  
   // Metodos do CompraController
  
@@ -30,6 +38,8 @@ contextBridge.exposeInMainWorld('api', {
   // Metodos do CaixaController
  
   adicionarRegistroDeCaixa: (caixa) => ipcRenderer.invoke('adicionar-registro-caixa', caixa),
+
+  atualizarUltimoRegistroCaixaAberto: (caixa) => ipcRenderer.invoke('atualizar-ultimo-registro-caixa', caixa),
  
   listarRegistrosCaixa: () => ipcRenderer.invoke('listar-registros-caixa'),
  

@@ -416,18 +416,41 @@ canvas {
 /* * ----------------------------------- GRÁFICO DE PIZZA ---------------------------- */
 
 .container-pizza{
-    width: 36%; 
+    width: 100%;
+    display: flex;
+    padding: 15px;
+    gap: 230px;
+    /* !OBS EM VEZ DE POSICIONAR OS ELEMENTOS USANDO MARGIN BUSQUE SEMPRE USAR O FLEX BOX PFV 
     max-width: 867px; 
     margin-left: 180PX; 
     margin-top: -40px; 
-    margin-bottom: 10px; 
-    padding: 15px;
+    margin-bottom: 10px;  */
 }
 
-.container-pizza .modal{
-    margin-left: 735px;
-    margin-top: -582px;
+.container-grafico-pizza{
+    width: 900px;
+    max-height: 600px;
+    display: flex;
+    justify-content: center;
+
 }
+.modal-container{
+    transform: translateY(-16%);
+
+}
+
+.modal-pizza {
+    width: 400px; 
+    height: 580px; 
+    background-color: #fff;
+    border-radius: 5px; 
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2); 
+}
+
+
 
 /** ------------------------------------ GRÁFICO COLUNAS ------------------------------ */
 
@@ -435,8 +458,7 @@ canvas {
     width: 100%; 
     border-radius: 5px;
     max-width: 867px; 
-    margin-left: 0PX; 
-    margin-top: -41px; 
+    margin-left: 0PX;  
     margin-bottom: 10px; 
     padding: 15px;
 }
