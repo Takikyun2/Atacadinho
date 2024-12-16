@@ -150,6 +150,7 @@ async function setupDatabase() {
         caixa_id INT,
         valor_sangria FLOAT,
         observacoes_sangria VARCHAR(255),
+        datahoraregistro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
         FOREIGN KEY (caixa_id) REFERENCES caixa(id_caixa)
       )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     `);

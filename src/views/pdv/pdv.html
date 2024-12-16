@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDV - Atacadinho</title>
+    <link rel="stylesheet" href="../../../src/styles/pdv/sangria.css">
     <link rel="stylesheet" href="../../../src/styles/pdv/pdv.css">
     <link rel="stylesheet" href="../../../src/styles/pdv/modalAbertura.css">
     <link rel="stylesheet" href="../../../src/styles/pdv/fechar_caixa.css">
@@ -63,7 +64,6 @@
             </div>
             <div class="buttons-abertura">
                 <button id="btn-abrir-caixa" class="btn-abertura abrir">ABRIR O CAIXA ( F1 )</button>
-                <button id="closeModal-abertura" class="btn-abertura cancelar">CANCELAR ( ESC )</button>
             </div>
         </div>
     </div>
@@ -111,6 +111,8 @@
             <button>DESCONTO (F7)</button>
             <hr>
             <button>OBSERVAÇÃO (F5)</button>
+            <hr>
+            <button id="openModal-sangria">SANGRIA (F9)</button>
             <hr>
             <button id="abrir-modal-fechamento">FECHAR (F8)</button>
             <hr>
@@ -167,9 +169,33 @@
     </div>
   </div>
 
+  <!-- Modal Sangria -->
+  <div id="modal-sangria" class="modal">
+    <div class="modal-content">
+        <div class="header">
+            <span id="dataHora-sangria">06 DE NOVEMBRO DE 2024 - HORÁRIO: <span id="time-sangria">14:46:19</span></span>
+            <hr class="divider">
+        </div>
+        <div class="content">
+            <label for="valor-sangria">DIGITE O VALOR DA SANGRIA:</label>
+            <input type="text" id="valor-sangria" placeholder="R$ 00,00">
+        </div>
+        <div class="content">
+            <label for="observacao-sangria">OBSERVAÇÃO:</label>
+            <input type="text" id="observacao-sangria" placeholder="Adicione o motivo da sangria">
+        </div>
+
+        <div class="buttons">
+            <button id="btn-cad-sangria" class="btn-sangria abrir">SALVAR ( F1 )</button>
+            <button id="closeModal-sangria" class="btn-sangria cancelar">CANCELAR ( ESC )</button>
+        </div>
+    </div>
+</div>
+
 
     <script src="../../../src/frontend/pdv/pdv.js"></script>
     <script src="../../../src/frontend/pdv/fechar_caixa.js"></script>
+    <script src="../../../src/frontend/pdv/sangria.js"></script>
 
     <!-- script responsavel pelo select com input de pesquisa -->
     <script>

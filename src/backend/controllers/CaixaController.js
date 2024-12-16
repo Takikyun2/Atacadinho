@@ -41,6 +41,14 @@ const Caixa = require('../models/Caixa');
           throw new Error('Erro ao remover registro caixa: ' + err.message)
         }
       }
+
+    static async adicionarRegistroDeSangria(sangria) {
+        try {
+          return await Caixa.adicionarRegistroDeSangria(sangria);
+        } catch (err) {
+          throw new Error('Erro ao adicionar registro de sangria: ' + err.message)
+        }
+    }
  
 }
 

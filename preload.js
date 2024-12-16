@@ -39,6 +39,8 @@ contextBridge.exposeInMainWorld('api', {
  
   adicionarRegistroDeCaixa: (caixa) => ipcRenderer.invoke('adicionar-registro-caixa', caixa),
 
+  adicionarRegistroDeSangria: (sangria) => ipcRenderer.invoke('adicionar-registro-sangria', sangria),
+
   atualizarUltimoRegistroCaixaAberto: (caixa) => ipcRenderer.invoke('atualizar-ultimo-registro-caixa', caixa),
  
   listarRegistrosCaixa: () => ipcRenderer.invoke('listar-registros-caixa'),

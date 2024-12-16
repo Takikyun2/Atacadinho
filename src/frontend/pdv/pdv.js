@@ -208,7 +208,6 @@ function aberturaDeCaixa (){
         // Modal elements
     const modal = document.getElementById('modal-abertura');
     const btnAbrirCaixa = document.getElementById('btn-abrir-caixa');
-    const closeModalBtn = document.getElementById('closeModal-abertura');
 
     window.onload = () => {
         const caixaStatus = JSON.parse(sessionStorage.getItem('caixaEstaAberto'));
@@ -256,7 +255,7 @@ function aberturaDeCaixa (){
     })
 
 
-    // Close modal
+    /* // Close modal
     closeModalBtn.addEventListener('click', () => {
         modal.style.display = 'none';
 
@@ -272,7 +271,7 @@ function aberturaDeCaixa (){
             // Limpa o valor do input ao pressionar ESC
             valorInput.value = '';
         }
-    });
+    }); */
 
     // Atualiza a data e hora dinamicamente
     function atualizarDataHora() {
