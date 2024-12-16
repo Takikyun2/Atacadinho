@@ -72,9 +72,15 @@
                         <label for="unidadeDeMedida">Unidade de Medida:</label>
                         <select class="form-input" name="unidadeDeMedida" id="unidadeDeMedida-select" required>
                             <option value="" disabled selected></option>
-                            <option value="kg">Quilograma</option>
-                            <option value="l">Litro</option>
-                            <option value="unidade">Unidade</option>
+                            <option value="un">Unidade (un)</option>
+                            <option value="kg">Quilograma (kg)</option>
+                            <option value="l">Litro (L)</option>
+                            <option value="m">Metro (m)</option>
+                            <option value="cx">Caixa (cx)</option>
+                            <option value="pc">Pacote (pc)</option>
+                            <option value="lt">Lata (lt)</option>
+                            <option value="conj">Conjunto (conj)</option>
+                            <option value="g">Garrafa (g)</option>
                         </select>
 
                         <label for="quantidade">Quantidade:</label>
@@ -125,11 +131,11 @@
 
                 <div class="div-condicaoDoProduto">
                     <label for="produtoAtivo">Condição do Produto:</label>
-                    <input class="form-input" id="produtoAtivo-radio" name="produtoCondicao" type="radio" value="ativo">
-
+                    <input class="form-input" id="produtoAtivo-radio" name="produtoCondicao" type="radio" value="1" checked>
                     <label for="produtoAtivo">Ativo</label>
+                    
                     <input class="form-input" id="produtoDesativado-radio" name="produtoCondicao" type="radio"
-                        value="desativado" checked>
+                        value="0">
 
                     <label for="produtoDesativado">Desativado</label>
                 </div>
