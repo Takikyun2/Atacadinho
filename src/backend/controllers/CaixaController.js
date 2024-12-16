@@ -4,15 +4,23 @@ const Caixa = require('../models/Caixa');
  
     static async adicionarRegistroDeCaixa(caixa) {
         try {
-          await Caixa.adicionarRegistroDeCaixa(caixa);
+          return await Caixa.adicionarRegistroDeCaixa(caixa);
         } catch (err) {
           throw new Error('Erro ao adicionar registro de caixa: ' + err.message)
         }
     }
+
+    static async atualizarUltimoRegistroCaixaAberto(fechaCaixa) {
+      try {
+        return await Caixa.atualizarUltimoRegistroCaixaAberto(fechaCaixa);
+      } catch (err) {
+        throw new Error('Erro ao atualizar registro de caixa: ' + err.message)
+      }
+  }
  
     static async listarRegistrosCaixa() {
         try {
-          return await Produto.listarRegistrosCaixa();
+          return await Caixa.listarRegistrosCaixa();
         } catch (err) {
           throw new Error('Erro ao listar registros de caixa: ' + err.message)
         }
@@ -20,7 +28,7 @@ const Caixa = require('../models/Caixa');
  
     static async atualizarRegistrosCaixa(newCaixa) {
         try {
-          await Caixa.atualizarRegistroCaixa(newCaixa);
+          return await Caixa.atualizarRegistroCaixa(newCaixa);
         } catch (err) {
           throw new Error('Erro ao atualizar registros de caixa: ' + err.message)
         }
@@ -28,7 +36,7 @@ const Caixa = require('../models/Caixa');
  
     static async removerRegistroCaixa(id_caixa) {
         try {
-          await Caixa.removerRegistroCaixa(id_caixa);
+          return await Caixa.removerRegistroCaixa(id_caixa);
         } catch (err) {
           throw new Error('Erro ao remover registro caixa: ' + err.message)
         }

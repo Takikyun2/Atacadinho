@@ -27,7 +27,7 @@
                 <button class="botao-navegacao" title="Relatórios (F3)">RELATÓRIOS (F3)</button>
             </a>
             <hr>
-            <a href="../../../src/views/cadastros/Cad-produtos.html">
+            <a href="../../../src/views/cadastros/cadastroDeProdutos.html">
                 <button class="botao-navegacao" title="Cadastro Usuários">CADASTRO (F9)</button>
             </a>
             <hr>
@@ -36,11 +36,6 @@
             </a>
             <hr>
         </div>
-        <!-- <div class="header-icons">
-            <button class="icon minimize" title="Minimizar" aria-label="Minimizar">—</button>
-            <button class="icon maximize" title="Maximizar/Restaurar" aria-label="Maximizar/Restaurar">□</button>
-            <button class="icon close" title="Fechar" aria-label="Fechar">×</button>
-        </div> -->
     </header>
     
 
@@ -199,23 +194,26 @@
 
          <!-- * -------------------------- GRÁFICO DE PIZZA ---------------------- -->
           <section class="container-pizza">
-            <section>
+            
+            <div class="container-grafico-pizza">
                 <canvas id="myPieChart" width="400" height="400"></canvas>
-             </section>
+             </div>
 
-              <!-- Resumo -->
-              <article class="modal" >
-                <header class="modal-cabecalho">
-                    <h2>Extrato</h2>
-                </header>
-                <section id="modal-Extrato-Pizza" class="modal-corpo">
-                    <!-- Dados inseridos dinamicamente atraves do arquivo relatorio.js linha 344 -->
-                </section>
-                <footer class="modal-rodape">
-                    <span>Total de Vendas: R$ 250,00</span><br>
-                    <span>Total de Retiradas: - R$ 80,00</span>
-                </footer>
-            </article>
+            <div class="modal-container">
+                <!-- Resumo -->
+                <article class="modal-pizza">
+                    <header class="modal-cabecalho">
+                        <h2>Extrato</h2>
+                    </header>
+                    <section id="modal-Extrato-Pizza" class="modal-corpo">
+                        <!-- Dados inseridos dinamicamente atraves do arquivo relatorio.js linha 344 -->
+                    </section>
+                    <footer class="modal-rodape">
+                        <span>Total de Vendas: R$ 250,00</span><br>
+                        <span>Total de Retiradas: - R$ 80,00</span>
+                    </footer>
+                </article>
+            </div>
      </section>       
 
      <!-- * -------------------------- GRÁFICO DE TRANSAÇÕES ------------------------- -->
@@ -245,6 +243,6 @@
 
 
 </main>
-    <script src="../../frontend/relatorios.js"></script>
+    <script type="module" src="../../frontend/relatorios.js"></script>
 </body>
 </html>

@@ -1,3 +1,5 @@
+import { categoriasMaisVendidasDia } from "../../src/frontend/relatorios/categorias.js"
+
 document.addEventListener("DOMContentLoaded", () => {
     const buttons = document.querySelectorAll(".btn-relatorio button");
     const containerTabela = document.querySelector(".container-tabela");
@@ -7,6 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const filtro = document.getElementById("filtro");
     const inputFiltro = document.getElementById("input-filtro");
     const modalResumo = document.querySelector(".modal"); 
+
+
+    const dadosUser = JSON.parse(sessionStorage.getItem('dadosUser'));
+    console.log(dadosUser.nomecompleto); // pegando dados do user guardado na sessao
+    
     
 
     //! obs**: Ainda falta finalizar essa tela de relatórios, falta implementar algumas funções ainda
@@ -69,6 +76,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     </tbody>
                 </table>`
         },
+        extrato: {
+          filtroOpcoes: ["Dia", "Semanal", "Mensal", "Anual"],
+        },
+        produtos: {
+          filtroOpcoes: ["Dia","Semanal", "Mensal", "Anual", "Tudo"],
+        },
+        caixa_atual: {
+          filtroOpcoes: ["Data", "Hora", "Valor"]
+        }
     };
 
     //* ------------------------ FUNÇÃO DE MUDAR DE TABELA ---------------------------//
@@ -80,10 +96,17 @@ document.addEventListener("DOMContentLoaded", () => {
         modalResumo.style.display = 'none'; // Esconde o modal
 
         if (tipoTabela === 'extrato') {
-            containerPizza.style.display = 'block'; // Mostra o gráfico de pizza para "Extrato"
+            containerPizza.style.display = 'flex'; // Mostra o gráfico de pizza para "Extrato"
+            atualizarFiltro(tipoTabela); // Atualiza o filtro
         } else if (tipoTabela !== 'caixa_atual') {
             containerTabela.style.display = 'block'; // Exibe a tabela para outras opções
-            containerTabela.innerHTML = dadosTabela[tipoTabela].tabelaHTML; // Adiciona a nova tabela
+
+            if(!dadosTabela[tipoTabela].tabelaHTML){
+              //Se nao existir o campo tabelaHTML no objeto de dadosTabela oculte a tabela
+              containerTabela.style.display = 'none';
+            }
+
+            containerTabela.innerHTML = dadosTabela[tipoTabela].tabelaHTML || ""; // Adiciona a nova tabela
             atualizarFiltro(tipoTabela); // Atualiza o filtro
         }
     }
@@ -164,6 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Função para atualizar as opções do filtro
     function atualizarFiltro(tipoTabela) {
         filtro.innerHTML = '<option disabled selected>Filtro</option>'; // Limpa as opções de filtro
+        /* console.log("Tipo de Tabela:", dadosTabela[tipoTabela]); */
         dadosTabela[tipoTabela].filtroOpcoes.forEach(opcao => {
             const optionElement = document.createElement("option");
             optionElement.value = opcao;
@@ -276,8 +300,7 @@ const extratoDasFormasPagamento = []
 async function carregarExtratoPorTiposDePagamentos() {
   try {
     const extratoDB = await window.api.listarExtratoPorTiposDePagamentos();
-    console.log(extratoDB);
-    
+
     extratoDB.forEach(extrato => {
 
       extratos.push(extrato);
@@ -293,7 +316,6 @@ async function carregarExtratoPorTiposDePagamentos() {
     console.error('Erro ao carregar extrato:', error);
   }
 }
-console.log(extratoDasFormasPagamento);
 
 carregarExtratoPorTiposDePagamentos()
 
@@ -393,9 +415,11 @@ async function carregarQuantidadeDeProdutosVendidos() {
     console.error('Erro ao carregar categorias:', error);
   }
 }
-//Call da funcões de busca
+//Call das funcões de busca
 carregarCategorias();
 carregarQuantidadeDeProdutosVendidos();
+
+
 
 
 const colunas = document.getElementById('myChart').getContext('2d');
@@ -469,3 +493,7 @@ function atualizarModal() {
   sectionModal.innerHTML = output;
 }
 
+
+
+
+categoriasMaisVendidasDia();

@@ -1,3 +1,5 @@
+aberturaDeCaixa ();
+
 const selectBusca = document.getElementById("select-busca-produto");
 
 async function listarProdutos() {
@@ -161,7 +163,7 @@ function atualizarFooter() {
 
 atualizarTabela();
 
-//& ------------- MODAL FEHCAR CAIXA ------------------------
+//& ------------- MODAL FECHAR CAIXA ------------------------
 
 const sobreposicaoModalFechamento = document.getElementById('sobreposicao-modal-fechamento');
 const btnSimFechamento = document.getElementById('btn-sim-fechamento');
@@ -178,10 +180,16 @@ btnNaoFechamento.addEventListener('click', () => {
     sobreposicaoModalFechamento.style.display = 'none';
 });
 
+const modalFechamento = document.getElementById('modalFechamento');
 // Fechar modal ao clicar em "SIM"
-btnSimFechamento.addEventListener('click', () => {
-    alert('Caixa fechado com sucesso!');
+btnSimFechamento.addEventListener('click', async () => {
+    //abrir modal de fechamento
+    modalFechamento.style.display = "block";
+    //fechar modal de aviso
     sobreposicaoModalFechamento.style.display = 'none';
+
+    /* alert('Caixa fechado com sucesso!'); */
+    /* sobreposicaoModalFechamento.style.display = 'none'; */
 });
 
 // Fechar modal com ESC e confirmar com ENTER
@@ -194,3 +202,134 @@ document.addEventListener('keydown', (e) => {
         sobreposicaoModalFechamento.style.display = 'none';
     }
 });
+
+
+function aberturaDeCaixa (){
+        // Modal elements
+    const modal = document.getElementById('modal-abertura');
+    const btnAbrirCaixa = document.getElementById('btn-abrir-caixa');
+    const closeModalBtn = document.getElementById('closeModal-abertura');
+
+    window.onload = () => {
+        const caixaStatus = JSON.parse(sessionStorage.getItem('caixaEstaAberto'));
+
+        // Se o caixa estiver fechado mostra o modal de abertura
+        if (!caixaStatus || !caixaStatus.isOpen) {
+            modal.style.display = 'flex';
+        } else {
+            modal.style.display = 'none';
+        }
+    }
+
+    
+
+    const dadosUser = JSON.parse(sessionStorage.getItem('dadosUser'));// pegando dados do user guardado na sessao
+
+
+    ///* Abre modal e cadastra no DB o registro */
+    btnAbrirCaixa.addEventListener('click', async ()=>{
+        //pegando valor do input ja formatado
+        const valorAberturaCaixa = document.getElementById('valor-abertura').value.replace('.', '').replace(',', '.');
+
+        const caixa = {
+            valor_inicial: valorAberturaCaixa,
+            login_id : dadosUser.id_login
+        }
+
+        try {
+            const result = await window.api.adicionarRegistroDeCaixa(caixa);
+            if (result.sucesso) {
+              alert('Registro cadastrado com sucesso');
+              //esconde o modal
+              modal.style.display = 'none';
+
+              sessionStorage.setItem('caixaEstaAberto', JSON.stringify({ isOpen: true }));
+
+            } else {
+              alert('Erro ao adicionar o registro de caixa: ' + result.erro);
+            }
+          } catch (error) {
+            console.error('Erro ao adicionar o registro de caixa:', error);
+            alert('Erro ao adicionar o registro de caixa.');
+          }
+        
+    })
+
+
+    // Close modal
+    closeModalBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+
+        // Limpa o valor do input ao clicar em cancelar
+        valorInput.value = '';
+    });
+
+    // Close modal with ESC key
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            modal.style.display = 'none';
+
+            // Limpa o valor do input ao pressionar ESC
+            valorInput.value = '';
+        }
+    });
+
+    // Atualiza a data e hora dinamicamente
+    function atualizarDataHora() {
+        const now = new Date();
+
+        const dia = String(now.getDate()).padStart(2, '0');
+        const mes = String(now.getMonth() + 1).padStart(2, '0');
+        const ano = now.getFullYear();
+
+        const horas = String(now.getHours()).padStart(2, '0');
+        const minutos = String(now.getMinutes()).padStart(2, '0');
+        const segundos = String(now.getSeconds()).padStart(2, '0');
+
+        const dataHoraFormatada = `${dia} DE ${obterNomeMes(mes).toUpperCase()} DE ${ano} - HORÁRIO: ${horas}:${minutos}:${segundos}`;
+        document.getElementById('dataHora-abertura').innerHTML = dataHoraFormatada;
+    }
+
+    function obterNomeMes(mes) {
+        const meses = [
+            'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
+            'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
+        ];
+        return meses[parseInt(mes, 10) - 1];
+    }
+
+    setInterval(atualizarDataHora, 1000);
+    atualizarDataHora();
+
+    // Lógica para garantir que só números sejam inseridos e adicionar 'R$' no input
+    const valorInput = document.getElementById('valor-abertura');
+
+    // Atualiza o valor no input sempre que o usuário digitar
+    valorInput.addEventListener('input', function (event) {
+        let value = event.target.value;
+
+      // Remove tudo que não seja número
+      value = value.replace(/\D/g, '');
+
+      // Remove zeros à esquerda, mas mantém "0" caso o valor seja vazio
+      value = value.replace(/^0+(?!$)/, '');
+
+      // Adiciona zeros se necessário
+      while (value.length < 3) {
+        value = '0' + value;
+      }
+
+      // Formata o valor: separa as casas decimais com vírgula
+      const formattedValue = value.slice(0, -2) + ',' + value.slice(-2);
+
+      // Define o valor formatado no input
+      event.target.value = formattedValue;
+    });
+
+    // Faz o input focar no valor para manter o 'R$' na frente quando o usuário começa a digitar
+    valorInput.addEventListener('focus', function () {
+        if (this.value === '') {
+            this.value = 'R$ ';
+        }
+    });
+}

@@ -4,10 +4,12 @@ const path = require('path')
 const mysql = require('mysql2/promise');
 const { createDataBaseIfNotExists, setupDatabase } = require('./src/backend/database/database')
 const ProdutoController = require('./src/backend/controllers/ProdutoController')
+const LoginController = require('./src/backend/controllers/LoginController')
 const CategoriaController = require('./src/backend/controllers/CategoriaController')
 const CompraController = require('./src/backend/controllers/CompraController')
 const CaixaController  = require('./src/backend/controllers/CaixaController')
-const VendasController = require('./src/backend/controllers/VendaController')
+const VendasController = require('./src/backend/controllers/VendaController');
+
 
 
 // Função para verificar se o WAMP já está em execução
@@ -112,6 +114,25 @@ app.whenReady().then(async () => {
 
 // ? - Produtos Ipc start
 
+//Metodos login
+ipcMain.handle('adicionar-login', async (event, login) => {
+  try {
+    await LoginController.adicionarLogin(login);
+    return { sucesso: true };
+  } catch (err) {
+    return { sucesso: false, erro: err.message };
+  }
+});
+
+ipcMain.handle('validar-login', async (event, login) => {
+  try {
+    const resultado = await LoginController.validarLogin(login);
+    return resultado
+  } catch (err) {
+    return { erro: err.message };
+  }
+});
+
 // Metodos do ProdutoController
 
 ipcMain.handle('adicionar-produto', async (event, produto) => {
@@ -183,6 +204,14 @@ ipcMain.handle('listar-E-Somar-Valor-Produtos-Vendidos-Categorias', async () => 
   }
 });
 
+ipcMain.handle('listar-E-Somar-Categorias-Vendidas-Periodo', async (event,periodo) => { 
+  try {
+    return await CategoriaController.listarESomarCategoriasVendidasNoPeriodo(periodo);
+  } catch (err) {
+    return { erro: err.message };
+  }
+});
+
 // Metodos do CompraController
 
 ipcMain.handle('buscar-produto-nome', async (event, args) => {
@@ -198,6 +227,15 @@ ipcMain.handle('buscar-produto-codigo', async (event, args) => {
 ipcMain.handle('adicionar-registro-caixa', async (event, caixa) => {
   try {
     await CaixaController.adicionarRegistroDeCaixa(caixa);
+    return { sucesso: true };
+  } catch (err) {
+    return { sucesso: false, erro: err.message }
+  }
+});
+
+ipcMain.handle('atualizar-ultimo-registro-caixa', async (event, caixa) => {
+  try {
+    await CaixaController.atualizarUltimoRegistroCaixaAberto(caixa);
     return { sucesso: true };
   } catch (err) {
     return { sucesso: false, erro: err.message }

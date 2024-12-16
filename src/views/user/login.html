@@ -23,7 +23,7 @@
                 <h2>LOGIN</h2>
                 <p>Seja bem-vindo(a) :)</p>
                 
-                <form action="#" method="POST">
+                <form action="#" method="POST" id="form-login">
                     <label for="usuario">Usuário</label>
                     <input type="text" id="usuario" name="usuario" placeholder="Digite seu usuário" required>
 
@@ -35,11 +35,13 @@
                             <button type="button" class="cadastrar">Cadastre-se</button>
                         </a>
                         <!-- ! Link para tela de cadastro de produtos provisoria -->
-                        <button type="submit" class="entrar"> <a href="../../views/pdv/pdv.html">Entrar</a></button>
+                        <button type="submit" class="entrar" id="btn-login">Entrar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+    <script src="../../../src/frontend/user/validaUser.js"></script>
 </body>
 </html>
