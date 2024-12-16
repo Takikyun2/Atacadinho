@@ -96,6 +96,27 @@ class Caixa {
     }
   }
  
+
+  static async adicionarRegistroDeSangria({caixa_id,valor_sangria, observacoes_sangria}) {    
+    let conn;
+    try { 
+      conn = await pool.getConnection();
+      const [res] = await conn.execute(
+        `INSERT INTO sangrias (caixa_id, valor_sangria, observacoes_sangria) VALUES (?, ?, ?)`,
+        [
+          caixa_id,
+          valor_sangria,
+          observacoes_sangria
+        ]
+      );
+      return res; // res contém informações sobre a operação de inserção
+    }catch (error) {
+      console.error('Erro ao realizar a insercao do registro de sangria no DB:', error);
+      throw error;
+    } finally {
+      if (conn) conn.release();
+    }
+  }
  
  
 }

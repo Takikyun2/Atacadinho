@@ -233,6 +233,15 @@ ipcMain.handle('adicionar-registro-caixa', async (event, caixa) => {
   }
 });
 
+ipcMain.handle('adicionar-registro-sangria', async (event, sangria) => {
+  try {
+    await CaixaController.adicionarRegistroDeSangria(sangria);
+    return { sucesso: true };
+  } catch (err) {
+    return { sucesso: false, erro: err.message }
+  }
+});
+
 ipcMain.handle('atualizar-ultimo-registro-caixa', async (event, caixa) => {
   try {
     await CaixaController.atualizarUltimoRegistroCaixaAberto(caixa);
