@@ -1,17 +1,10 @@
 document.querySelector('#form-produto').addEventListener('submit', async (event) => {
     event.preventDefault();
-
-    //Pega a data atual do aparelho e converte para o formato do mysql datetime
-    const datahora = new Date()
-    const dataHoraFormatada = datahora.toISOString().split('T')[0] + ' '
-    + datahora.toTimeString().split(' ')[0];
     
-
     const venda = { 
         valor_total: 50.00, 
         descricao: "Nada", 
-        caixa_id: 1, 
-        datahora: dataHoraFormatada
+        caixa_id: 1
     };
 
     const produtosDaVenda = [

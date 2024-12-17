@@ -7,10 +7,16 @@ const checkboxes = document.querySelectorAll('.grupo-checkbox input');
 const btnFecharCaixa = document.getElementById('btn-fechar-caixa');
 
 btnFecharCaixa.addEventListener('click', async ()=>{
+
+  const dadosUser = JSON.parse(sessionStorage.getItem('dadosUser'));// pegando dados do user guardado na sessao
+  
   const valorFinalCaixa = document.getElementById('valor-fechamento').value.replace('.', '').replace(',', '.');
 
   try {
-        const result = await window.api.atualizarUltimoRegistroCaixaAberto({valor_final: valorFinalCaixa});
+        const result = await window.api.atualizarUltimoRegistroCaixaAberto({
+          valor_final: valorFinalCaixa,
+          login_id : dadosUser.id_login
+        });
 
         if (result.sucesso) {
             alert('Caixa fechado com sucesso');
@@ -26,7 +32,7 @@ btnFecharCaixa.addEventListener('click', async ()=>{
           }
 
     } catch (error) {
-        
+        console.log(error);
     }
 })
 

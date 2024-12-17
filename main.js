@@ -133,6 +133,14 @@ ipcMain.handle('validar-login', async (event, login) => {
   }
 });
 
+ipcMain.handle('listar-logins', async () => {
+  try {
+    return await LoginController.listarLogins();
+  } catch (err) {
+    return { erro: err.message };
+  }
+});
+
 // Metodos do ProdutoController
 
 ipcMain.handle('adicionar-produto', async (event, produto) => {
@@ -226,8 +234,8 @@ ipcMain.handle('buscar-produto-codigo', async (event, args) => {
 
 ipcMain.handle('adicionar-registro-caixa', async (event, caixa) => {
   try {
-    await CaixaController.adicionarRegistroDeCaixa(caixa);
-    return { sucesso: true };
+    const res = await CaixaController.adicionarRegistroDeCaixa(caixa);
+    return { sucesso: true , res};
   } catch (err) {
     return { sucesso: false, erro: err.message }
   }
@@ -279,9 +287,9 @@ ipcMain.handle('remover-registro-caixa', async (event, id_caixa) => {
 
 
 // Metodos do vendasController
-ipcMain.handle('adicionar-registro-venda', async (event,venda, produtosDaVenda) => {
+ipcMain.handle('adicionar-registro-venda', async (event,venda, produtosDaVenda,tipoDePagamentoDaVenda) => {
   try {
-    await VendasController.adicionarRegistrosDeVendas(venda, produtosDaVenda)
+    await VendasController.adicionarRegistrosDeVendas(venda, produtosDaVenda, tipoDePagamentoDaVenda)
     return { sucesso: true };
   } catch (err) {
     return { sucesso: false, erro: err.message }
@@ -291,6 +299,14 @@ ipcMain.handle('adicionar-registro-venda', async (event,venda, produtosDaVenda) 
 ipcMain.handle('listar-Extrato-Tipos-Pagamentos', async () => {
   try {
     return await VendasController.listarExtratoPorTiposDePagamentos();
+  } catch (err) {
+    return { sucesso: false, erro: err.message }
+  }
+});
+
+ipcMain.handle('listar-registros-vendas', async () => {
+  try {
+    return await VendasController.listarRegistrosDeVendas();
   } catch (err) {
     return { sucesso: false, erro: err.message }
   }

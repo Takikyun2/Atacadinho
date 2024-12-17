@@ -80,8 +80,31 @@ async function setupDatabase() {
           IF count_categoria = 0 THEN
               -- Inserir os valores padrão
               INSERT INTO categoria (categoriaproduto)
-              VALUES ('Açougue'), ('Frios e laticínios'), ('Adega e bebidas'), ('Higiene e limpeza'), 
-              ('Hortifruti e mercearia'), ('Padaria'), ('Enlatados'), ('Cereais'), ('Rotisseria');
+              VALUES 
+              ('Açougue'), 
+              ('Frios e laticínios'), 
+              ('Adega e bebidas'), 
+              ('Higiene e limpeza'), 
+              ('Hortifruti e mercearia'), 
+              ('Padaria'), 
+              ('Enlatados'), 
+              ('Cereais'), 
+              ('Rotisseria'), 
+              ('Congelados'), 
+              ('Doces e confeitaria'), 
+              ('Biscoitos e snacks'), 
+              ('Pet shop'), 
+              ('Produtos naturais e integrais'), 
+              ('Bebês e infantis'), 
+              ('Utilidades domésticas'), 
+              ('Produtos de papelaria'), 
+              ('Condimentos e molhos'), 
+              ('Massas e farináceos'), 
+              ('Produtos importados'), 
+              ('Saúde e beleza'), 
+              ('Água e sucos'), 
+              ('Carvão e churrasco'), 
+              ('Automotivos');
           END IF;
       END
     `);
@@ -139,8 +162,10 @@ async function setupDatabase() {
         data_fechamento DATETIME,
         valor_inicial FLOAT NOT NULL,
         valor_final FLOAT,
-        login_id INT,
-        FOREIGN KEY (login_id) REFERENCES login(id_login)
+        login_id_abertura INT,
+        login_id_fechamento INT,
+        FOREIGN KEY (login_id_abertura) REFERENCES login(id_login),
+        FOREIGN KEY (login_id_fechamento) REFERENCES login(id_login)
       )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     `);
 
@@ -190,8 +215,10 @@ async function setupDatabase() {
         valor_total FLOAT NOT NULL,
         descricao VARCHAR(255),
         caixa_id INT NOT NULL,
+        login_id INT NOT NULL,
         datahora DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-        FOREIGN KEY (caixa_id) REFERENCES caixa(id_caixa)
+        FOREIGN KEY (caixa_id) REFERENCES caixa(id_caixa),
+        FOREIGN KEY (login_id) REFERENCES login(id_login)
       )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     `);
 

@@ -2,9 +2,9 @@ const Vendas = require('../models/Vendas');
  
 class VendasController {
  
-    static async adicionarRegistrosDeVendas(venda, produtosDaVenda) {
+    static async adicionarRegistrosDeVendas(venda, produtosDaVenda, tipoDePagamentoDaVenda) {
         try {
-          await Vendas.adicionarRegistrosDeVendas(venda,produtosDaVenda);
+          await Vendas.adicionarRegistrosDeVendas(venda,produtosDaVenda, tipoDePagamentoDaVenda);
         } catch (err) {
           throw new Error('Erro ao adicionar registro de venda: ' + err.message)
         }
@@ -17,9 +17,9 @@ class VendasController {
           throw new Error('Erro ao listar registros de venda: ' + err.message)
         }
     }
-    /* static async listarRegistrosDeVendas() {
+    static async listarRegistrosDeVendas() {
         try {
-          return await Produto.listarRegistrosDeVendas();
+          return await Vendas.listarVendas();
         } catch (err) {
           throw new Error('Erro ao listar registros de venda: ' + err.message)
         }
@@ -39,7 +39,7 @@ class VendasController {
         } catch (err) {
           throw new Error('Erro ao remover registro venda: ' + err.message)
         }
-      } */
+      }
  
 }
 
