@@ -1,29 +1,34 @@
+document.addEventListener('DOMContentLoaded', async () => {
 // Array de produtos para teste
-const produtos = [
-    { codigo: '001', nome: 'Produto A', categoria: 'Gelados', marca: 'Marca X', fornecedor: 'Fornecedor Y', ean: '1234567890123', medida: '500g', precoPromo: 'R$ 15,00', preco: 'R$ 20,00' },
-    { codigo: '002', nome: 'Produto B', categoria: 'Hotfrute', marca: 'Marca Y', fornecedor: 'Fornecedor X', ean: '2345678901234', medida: '300g', precoPromo: 'R$ 10,00', preco: 'R$ 15,00' },
-    { codigo: '003', nome: 'Produto C', categoria: 'Carne', marca: 'Marca Z', fornecedor: 'Fornecedor Z', ean: '3456789012345', medida: '1kg', precoPromo: 'R$ 25,00', preco: 'R$ 30,00' },
-    { codigo: '004', nome: 'Produto D', categoria: 'Padaria', marca: 'Marca W', fornecedor: 'Fornecedor W', ean: '4567890123456', medida: '200g', precoPromo: 'R$ 8,00', preco: 'R$ 12,00' },
-    { codigo: '005', nome: 'Produto E', categoria: 'Gelados', marca: 'Marca V', fornecedor: 'Fornecedor V', ean: '5678901234567', medida: '1L', precoPromo: 'R$ 18,00', preco: 'R$ 22,00' }
-];
+const produtos = await window.api.listarProdutos();
 
 // Função para renderizar a tabela com os dados
-function renderizarTabela(produtosFiltrados) {
+async function renderizarTabela(produtosFiltrados) {
     const tabelaProdutos = document.getElementById('tabela-produtos');
     tabelaProdutos.innerHTML = ''; // Limpa a tabela antes de renderizar
 
+    const categorias = await window.api.listarCategoria();
+    console.log(categorias);
+    
+
     produtosFiltrados.forEach(produto => {
+
+        const categoriaProduto = categorias.find(categoria => categoria.idcategoria === produto.categoria_id);
+
+        const nomeCategoria= categoriaProduto ? categoriaProduto.categoriaproduto : 'Usuário não encontrado';
+
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td>${produto.codigo}</td>
+            <td>${produto.id_produto}</td>
             <td>${produto.nome}</td>
-            <td>${produto.categoria}</td>
+            <td>${nomeCategoria}</td>
             <td>${produto.marca}</td>
             <td>${produto.fornecedor}</td>
-            <td>${produto.ean}</td>
-            <td>${produto.medida}</td>
-            <td>${produto.precoPromo}</td>
-            <td>${produto.preco}</td>
+            <td>${produto.codbarra}</td>
+            <td>${produto.unidade}</td>
+            <td>R$ ${produto.preco_promocional ? produto.preco_promocional.toFixed(2): "00.00"}</td>
+            <td>R$ ${produto.preco.toFixed(2)}</td>
             <td>
                 <button class="icon-btn" onclick="editarItem(this)">
                     <i class="fas fa-pencil-alt edit-icon"></i>
@@ -101,3 +106,5 @@ document.getElementById('btn-pesquisar').addEventListener('click', function () {
 
 // Inicializa a página com todos os produtos
 renderizarTabela(produtos);
+
+})

@@ -44,7 +44,7 @@
         <h3 id="titulo-main"><u id="titulo-main-sublinhado">Cadastro de Produtos</u></h3>
 
         <!-- Formulário de Cadastro de Produtos -->
-        <form id="form-principal" action="submit" method="post">
+        <form id="form-principal" action="submit">
 
             <!-- Informações Básicas -->
             <div class="first-container">
@@ -54,7 +54,7 @@
                     <input class="form-input" id="name-input" name="name" type="text" required>
 
                     <label for="eanGtin">EAN/GTIN:</label>
-                    <input class="form-input" id="eanGtin-input" name="eanGtin" type="number" required>
+                    <input class="form-input" id="eanGtin-input" name="eanGtin" type="text" required>
 
                     <label for="preco">Preço:</label>
                     <input class="form-input" id="preco-input" name="preco" type="number" required step="0.01"
@@ -71,7 +71,7 @@
                     <div class="dadosSecundarios">
                         <label for="unidadeDeMedida">Unidade de Medida:</label>
                         <select class="form-input" name="unidadeDeMedida" id="unidadeDeMedida-select" required>
-                            <option value="" disabled selected></option>
+                            <option value="" disabled selected>Selecione</option>
                             <option value="un">Unidade (un)</option>
                             <option value="kg">Quilograma (kg)</option>
                             <option value="l">Litro (L)</option>
@@ -82,9 +82,6 @@
                             <option value="conj">Conjunto (conj)</option>
                             <option value="g">Garrafa (g)</option>
                         </select>
-
-                        <label for="quantidade">Quantidade:</label>
-                        <input type="number" class="form-input" id="quantidade-input" name="quantidade" min="1">
                     </div>
 
                     <button id="button-scanear" type="button">Scanear</button>
@@ -116,10 +113,7 @@
                 <div class="dadosCMF">
                     <label for="categoria">Categoria:</label>
                     <select class="form-input" name="categoria" id="categoria-select" required>
-                        <option value="" disabled selected>Escolha uma categoria</option>
-                        <option value="alimentos">Alimentos</option>
-                        <option value="bebidas">Bebidas</option>
-                        <option value="limpeza">Produtos de Limpeza</option>
+                        <!-- opitions inseridos dinamicamente -->
                     </select>
 
                     <label for="marca">Marca:</label>
@@ -131,13 +125,10 @@
 
                 <div class="div-condicaoDoProduto">
                     <label for="produtoAtivo">Condição do Produto:</label>
-                    <input class="form-input" id="produtoAtivo-radio" name="produtoCondicao" type="radio" value="1" checked>
-                    <label for="produtoAtivo">Ativo</label>
-                    
-                    <input class="form-input" id="produtoDesativado-radio" name="produtoCondicao" type="radio"
-                        value="0">
-
-                    <label for="produtoDesativado">Desativado</label>
+                    <select class="form-input" name="categoria" id="produtoCondicao" required>
+                        <option value="1" selected>Ativo</option>
+                        <option value="0">Desativado</option>
+                    </select>
                 </div>
             </div>
 
@@ -206,6 +197,8 @@
         });
 
     </script>
+
+    <script src="../../../src/frontend/cadastro_produto_renderer.js"></script>
 </body>
 
 </html>

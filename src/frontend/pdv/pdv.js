@@ -39,7 +39,7 @@ const inserirDadosSelectBuscaProdutos = (produtosDB) =>{
 listarProdutos();
 
 // Exemplo de lista de produtos
-const produtos = [
+const produtosVenda = [
 ];
 
 const formBusca = document.getElementById("busca-produto-form");
@@ -72,8 +72,8 @@ formBusca.addEventListener("submit", async (evento)=>{
     }
     
 
-    produtos.push({
-        id: selectBusca.value,
+    produtosVenda.push({
+        produto_id: selectBusca.value,
         nome: nome,
         quantidade: parseInt(quantidadeProduto.value, 10),
         preco: parseFloat(preco)
@@ -91,8 +91,11 @@ function atualizarTabela() {
     const tabelaCorpo = document.querySelector("tbody");
     tabelaCorpo.innerHTML = ""; 
 
-    produtos.forEach((produto, index) => {
+    produtosVenda.forEach((produto, index) => {
         const total = (produto.quantidade * produto.preco).toFixed(2);
+
+        produto.valor_total_produtos = total
+
         const linha = document.createElement("tr");
 
         linha.innerHTML = `
@@ -117,13 +120,13 @@ function atualizarTabela() {
 }
 
 function removerProduto(index) {
-    produtos.splice(index, 1); 
+    produtosVenda.splice(index, 1); 
     atualizarTabela(); 
 }
 
 function editarProduto(index) {
     const celulaQuantidade = document.getElementById(`quantidade-${index}`);
-    const quantidadeAtual = produtos[index].quantidade;
+    const quantidadeAtual = produtosVenda[index].quantidade;
     
     const inputQuantidade = document.createElement("input");
     inputQuantidade.type = "number";
@@ -136,7 +139,7 @@ function editarProduto(index) {
     inputQuantidade.addEventListener("blur", () => {
         const novaQuantidade = parseInt(inputQuantidade.value);
         if (!isNaN(novaQuantidade) && novaQuantidade > 0) {
-            produtos[index].quantidade = novaQuantidade;
+            produtosVenda[index].quantidade = novaQuantidade;
             atualizarTabela();
         } else {
             alert("Quantidade inválida!");
@@ -148,13 +151,13 @@ function editarProduto(index) {
 function atualizarFooter() {
     const footer = document.querySelector(".resumo-vendas");
     
-    const quantidadeTotalItens = produtos.reduce((total, produto) => total + produto.quantidade, 0);
-    const quantidadeProdutosDiferentes = produtos.length;
+    const quantidadeTotalItens = produtosVenda.reduce((total, produto) => total + produto.quantidade, 0);
+    const quantidadeProdutosDiferentes = produtosVenda.length;
 
     footer.innerHTML = `${quantidadeProdutosDiferentes} itens (Qtd: ${quantidadeTotalItens})`;
 
     // Calcular o valor total
-    const valorTotal = produtos.reduce((total, produto) => total + (produto.quantidade * produto.preco), 0).toFixed(2);
+    const valorTotal = produtosVenda.reduce((total, produto) => total + (produto.quantidade * produto.preco), 0).toFixed(2);
 
     // Atualizar o valor total na seção final
     const totalVendas = document.querySelector("#total-vendas");
@@ -337,3 +340,54 @@ function aberturaDeCaixa (){
         }
     });
 }
+
+
+//Concluir venda
+
+const btnConcluirVenda = document.getElementById('btn-concluir-venda')
+
+btnConcluirVenda.addEventListener('click', async ()=>{
+    console.log(produtosVenda);
+    
+
+    if(produtosVenda.length === 0){
+        alert('Nenhum produto foi adicionado à venda.');
+        return
+    }
+    // Calcular o valor total
+    const valorTotalVenda = produtosVenda.reduce((total, produto) => total + (produto.quantidade * produto.preco), 0).toFixed(2);
+
+    const dadosCaixa = JSON.parse(sessionStorage.getItem('dadosCaixaAtual'));
+
+    const dadosUser = JSON.parse(sessionStorage.getItem('dadosUser'));// pegando dados do user guardado na sessao
+
+
+    const venda = { 
+        valor_total: valorTotalVenda, 
+        descricao: "Nada", 
+        caixa_id: dadosCaixa.idCaixa,
+        login_id: dadosUser.id_login
+    };
+
+    const tipoDePagamentoDaVenda = [{
+        tipo_pagamento_id: 3, 
+        valor: 500.00
+    }]
+
+
+   
+
+    try {
+        const result = await window.api.adicionarRegistrosDeVendas(venda, produtosVenda, tipoDePagamentoDaVenda);
+        if (result.sucesso) {
+          alert('Registro cadastrado com sucesso');
+          produtosVenda.length = 0; //limpa o array de produtos
+          atualizarTabela()
+        } else {
+          alert('Erro ao adicionar o registro de venda: ' + result.erro);
+        }
+      } catch (error) {
+        console.error('Erro ao adicionar o registro de venda:', error);
+        alert('Erro ao adicionar o registro de venda.');
+      }
+})

@@ -2,9 +2,9 @@ const Vendas = require('../models/Vendas');
  
 class VendasController {
  
-    static async adicionarRegistrosDeVendas(venda, produtosDaVenda) {
+    static async adicionarRegistrosDeVendas(venda, produtosDaVenda, tipoDePagamentoDaVenda) {
         try {
-          await Vendas.adicionarRegistrosDeVendas(venda,produtosDaVenda);
+          await Vendas.adicionarRegistrosDeVendas(venda,produtosDaVenda, tipoDePagamentoDaVenda);
         } catch (err) {
           throw new Error('Erro ao adicionar registro de venda: ' + err.message)
         }

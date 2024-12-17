@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       const categorias = await window.api.listarCategoria();
       console.log('Categorias recebidas no renderer:', categorias);
-      let categorySelect = document.querySelector('#category');
+
+      const categorySelect = document.querySelector('#categoria-select');
+
       categorySelect.innerHTML = '';
 
       // Adiciona a opção padrão
@@ -15,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       // Adiciona as opções ao select
       categorias.forEach(categoria => {
-        let option = document.createElement('option');
+        const option = document.createElement('option');
         option.value = categoria.idcategoria; // Define o valor como o ID da categoria
         option.textContent = categoria.categoriaproduto; // Define o texto como o nome da categoria
         categorySelect.appendChild(option);
@@ -29,26 +31,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   carregarCategorias();
 
   // Adicionar produto ao servidor
-  document.querySelector('#form-produto').addEventListener('submit', async (event) => {
-    event.preventDefault();
+  document.querySelector('#form-principal').addEventListener('submit', async (event) => {
 
-    //Pega a data atual do aparelho e converte para o formato do mysql datetime
-    const datahora = new Date()
-    const dataHoraFormatada = datahora.toISOString().split('T')[0] + ' '
-    + datahora.toTimeString().split(' ')[0];
+    event.preventDefault();
     
 
     const produto = { // Eduardo: essa função manda os produtos
-      nome: document.querySelector('#product-name').value,
-      preco: document.querySelector('#price').value,
-      marca: 'teste'/* document.querySelector('#marca-produto').value */,
-      fornecedor: 'teste'/* document.querySelector('#produto-fornecedor').value */,
-      unidade: document.querySelector('#unit').value,
-      sku: document.querySelector('#cod-sku').value,
-      codbarra: document.querySelector('#CodigoBarras').value,
-      categoria: document.querySelector('#category').value,
-      condicao: 1/* document.querySelector('#condition').value */,
-      datahora: dataHoraFormatada
+      nome: document.querySelector('#name-input').value,
+      preco: document.querySelector('#preco-input').value,
+      preco_promocional: document.querySelector('#precoPromocional-input').value,
+      marca: document.querySelector('#marca-input').value,
+      fornecedor: document.querySelector('#fornecedor-input').value,
+      unidade: document.querySelector('#unidadeDeMedida-select').value,
+      codbarra: document.querySelector('#eanGtin-input').value,
+      categoria: document.querySelector('#categoria-select').value,
+      condicao: document.querySelector('#produtoCondicao').value
     };
     
 

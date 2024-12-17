@@ -287,9 +287,9 @@ ipcMain.handle('remover-registro-caixa', async (event, id_caixa) => {
 
 
 // Metodos do vendasController
-ipcMain.handle('adicionar-registro-venda', async (event,venda, produtosDaVenda) => {
+ipcMain.handle('adicionar-registro-venda', async (event,venda, produtosDaVenda,tipoDePagamentoDaVenda) => {
   try {
-    await VendasController.adicionarRegistrosDeVendas(venda, produtosDaVenda)
+    await VendasController.adicionarRegistrosDeVendas(venda, produtosDaVenda, tipoDePagamentoDaVenda)
     return { sucesso: true };
   } catch (err) {
     return { sucesso: false, erro: err.message }

@@ -51,7 +51,7 @@ contextBridge.exposeInMainWorld('api', {
   removerRegistroCaixa: (id_caixa) => ipcRenderer.invoke('remover-registro-caixa', id_caixa),
 
   // Metodos do VendasController
-  adicionarRegistrosDeVendas: (venda, produtosDaVenda) => ipcRenderer.invoke('adicionar-registro-venda', venda, produtosDaVenda),
+  adicionarRegistrosDeVendas: (venda, produtosDaVenda,tipoDePagamentoDaVenda) => ipcRenderer.invoke('adicionar-registro-venda', venda, produtosDaVenda,tipoDePagamentoDaVenda),
 
   listarExtratoPorTiposDePagamentos: () => ipcRenderer.invoke('listar-Extrato-Tipos-Pagamentos'),
 

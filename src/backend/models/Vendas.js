@@ -3,12 +3,13 @@ const { pool } = require('../database/database');
 class Vendas {
   
   static async adicionarRegistrosDeVendas(venda, produtosDaVenda, tiposPagamentos) {
+
     let conn;
     try {
-      const { valor_total, descricao, caixa_id, datahora } = venda;
+      const { valor_total, descricao, caixa_id, login_id } = venda;
 
       // Validações básicas
-      if (!valor_total || !caixa_id || !datahora) {
+      if (!valor_total || !caixa_id) {
         throw new Error("Dados da venda estão incompletos.");
       }
 
@@ -20,8 +21,8 @@ class Vendas {
 
       // Inserir a venda na tabela "vendas"
       const [res] = await conn.execute(
-        `INSERT INTO vendas (valor_total, descricao, caixa_id, datahora) VALUES (?, ?, ?, ?)`,
-        [valor_total, descricao, caixa_id, datahora]
+        `INSERT INTO vendas (valor_total, descricao, caixa_id, login_id) VALUES (?, ?, ?, ?)`,
+        [valor_total, descricao, caixa_id, login_id]
       );
 
       const lastId = res.insertId;

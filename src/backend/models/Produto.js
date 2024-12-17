@@ -19,12 +19,13 @@ class Produto {
   }
 
   static async adicionar(produto) {
+
     let conn;
     try {
       conn = await pool.getConnection();
       const [res] = await conn.execute(
-        `INSERT INTO produtos (nome, preco, preco_promocional,marca, fornecedor, unidade, codbarra,categoria_id, condicao, datahora) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [produto.nome, produto.preco, produto.preco_promocional,produto.marca, produto.fornecedor, produto.unidade, produto.codbarra, produto.categoria, produto.condicao, produto.datahora]
+        `INSERT INTO produtos (nome, preco, preco_promocional,marca, fornecedor, unidade, codbarra,categoria_id, condicao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+        [produto.nome, produto.preco, produto.preco_promocional,produto.marca, produto.fornecedor, produto.unidade, produto.codbarra, produto.categoria, produto.condicao]
       );
       return res; // res contém informações sobre a operação de inserção
     } finally {
