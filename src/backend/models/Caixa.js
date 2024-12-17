@@ -11,13 +11,16 @@ class Caixa {
     try { 
       conn = await pool.getConnection();
       const [res] = await conn.execute(
-        `INSERT INTO caixa (valor_inicial, login_id) VALUES (?, ?)`,
+        `INSERT INTO caixa (valor_inicial, login_id_abertura) VALUES (?, ?)`,
         [
             valor_inicial,
             login_id
         ]
       );
-      return res; // res contém informações sobre a operação de inserção
+
+      const lastId = res.insertId; //pega o ultimo id cadastrado
+
+      return {res , lastId}; // res contém informações sobre a operação de inserção
     }catch (error) {
       console.error('Erro ao realizar a insercao do registro de caixa:', error);
       throw error;
@@ -26,11 +29,11 @@ class Caixa {
     }
   }
  
-  static async atualizarUltimoRegistroCaixaAberto({valor_final}) {
+  static async atualizarUltimoRegistroCaixaAberto({valor_final, login_id}) {
     let conn;
     try {
       conn = await pool.getConnection();
-      const [res] = await conn.execute('UPDATE caixa AS c JOIN ( SELECT MAX(id_caixa) AS max_id FROM caixa ) AS subquery ON c.id_caixa = subquery.max_id SET c.data_fechamento = NOW(), c.valor_final = ? ;', [valor_final]);
+      const [res] = await conn.execute('UPDATE caixa AS c JOIN ( SELECT MAX(id_caixa) AS max_id FROM caixa ) AS subquery ON c.id_caixa = subquery.max_id SET c.data_fechamento = NOW(), c.valor_final = ? , c.login_id_fechamento = ? ;', [valor_final, login_id]);
       return res; 
     } catch (error) {
       console.error('Erro ao realizar a consulta:', error);
@@ -109,6 +112,7 @@ class Caixa {
           observacoes_sangria
         ]
       );
+
       return res; // res contém informações sobre a operação de inserção
     }catch (error) {
       console.error('Erro ao realizar a insercao do registro de sangria no DB:', error);

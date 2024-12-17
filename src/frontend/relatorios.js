@@ -1,6 +1,8 @@
+import { listarRegistrosCaixaAnteriores } from "../../src/frontend/relatorios/caixasAnteriores.js"
 import { categoriasMaisVendidasDia } from "../../src/frontend/relatorios/categorias.js"
+import{ listarVendas } from "../../src/frontend/relatorios/vendas.js"
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const buttons = document.querySelectorAll(".btn-relatorio button");
     const containerTabela = document.querySelector(".container-tabela");
     const containerGrafico = document.querySelector(".container-grafico");
@@ -9,107 +11,146 @@ document.addEventListener("DOMContentLoaded", () => {
     const filtro = document.getElementById("filtro");
     const inputFiltro = document.getElementById("input-filtro");
     const modalResumo = document.querySelector(".modal"); 
-
-
-    const dadosUser = JSON.parse(sessionStorage.getItem('dadosUser'));
-    console.log(dadosUser.nomecompleto); // pegando dados do user guardado na sessao
-    
     
 
     //! obs**: Ainda falta finalizar essa tela de relatórios, falta implementar algumas funções ainda
     //! E se por acaso tiver alguma burrice aq no codigo do js, sorry ksksksk, ainda tô em processo de aprendizado, pfvr releva ksksks
     //! Mas em adiante, espero que tenham gostado do que eu fiz aq, tentei fazer algo bacana :D
 
+
+const outputTabelaRelatoriosVendas = listarVendas();
+
     // Dados para cada tabela
     const dadosTabela = {
-        vendas: {
-            filtroOpcoes: ["Produto", "Código", "Vendedor", "Data"],
-            tabelaHTML: `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Data</th>
-                            <th>Hora</th>
-                            <th>Produto</th>
-                            <th>Código</th>
-                            <th>Valor Unit.</th>
-                            <th>Quant.</th>
-                            <th>Sub-total</th>
-                            <th>Desconto</th>
-                            <th>Total Item</th>
-                            <th>Vendedor</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>16/11/2024</td>
-                            <td>14:35</td>
-                            <td>Notebook Dell</td>
-                            <td>ND12345</td>
-                            <td>R$ 3.500,00</td>
-                            <td>1</td>
-                            <td>R$ 3.500,00</td>
-                            <td>R$ 100,00</td>
-                            <td>R$ 3.400,00</td>
-                            <td>João Silva</td>
-                        </tr>
-                    </tbody>
-                </table>`
-        },
-        caixas_anteriores: {
-            filtroOpcoes: ["Data", "Hora", "Valor"],
-            tabelaHTML: `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Data</th>
-                            <th>Hora</th>
-                            <th>Valor</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>15/11/2024</td>
-                            <td>18:00</td>
-                            <td>R$ 8.000,00</td>
-                        </tr>
-                    </tbody>
-                </table>`
-        },
-        extrato: {
+      vendas: {
+          filtroOpcoes: ["Produto", "Código", "Vendedor", "Data"],
+          tabelaHTML: `
+              <table>
+                  <thead>
+                      <tr>
+                          <th>Data</th>
+                          <th>Hora</th>
+                          <th>Produto</th>
+                          <th>Código</th>
+                          <th>Valor Unit.</th>
+                          <th>Quant.</th>
+                          <th>Sub-total</th>
+                          <th>Desconto</th>
+                          <th>Total Item</th>
+                          <th>Vendedor</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>16/11/2024</td>
+                          <td>14:35</td>
+                          <td>Notebook Dell</td>
+                          <td>ND12345</td>
+                          <td>R$ 3.500,00</td>
+                          <td>1</td>
+                          <td>R$ 3.500,00</td>
+                          <td>R$ 100,00</td>
+                          <td>R$ 3.400,00</td>
+                          <td>João Silva</td>
+                      </tr>
+                  </tbody>
+              </table>`
+      },
+      caixas_anteriores: {
+          filtroOpcoes: ["Data", "Hora", "Valor"],
+          tabelaHTML: "" // Inicialmente vazio
+      },
+      extrato: {
           filtroOpcoes: ["Dia", "Semanal", "Mensal", "Anual"],
-        },
-        produtos: {
-          filtroOpcoes: ["Dia","Semanal", "Mensal", "Anual", "Tudo"],
-        },
-        caixa_atual: {
-          filtroOpcoes: ["Data", "Hora", "Valor"]
-        }
-    };
+          tabelaHTML: ""
+      },
+      produtos: {
+        filtroOpcoes: ["Dia","Semanal", "Mensal", "Anual", "Tudo"],
+      },
+      caixa_atual: {
+        filtroOpcoes: ["Data", "Hora", "Valor"]
+      }
+  };
+
+   // Aguarda os dados da API para inserir a tabela de caixas anteriores
+    try {
+        const outputTabelaRelatoriosCaixas = await listarRegistrosCaixaAnteriores();
+        dadosTabela.caixas_anteriores.tabelaHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Abertura</th>
+                        <th>Fechamento</th>
+                        <th>Saldo Inicial</th>
+                        <th>Saldo Final</th>
+                        <th>Total</th>
+                        <th>User Abertura</th>
+                        <th>User Fechamento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${outputTabelaRelatoriosCaixas}
+                </tbody>
+            </table>`;
+    } catch (error) {
+        console.error("Erro ao carregar registros de caixas anteriores:", error);
+    }
+
+   // Aguarda os dados da API para inserir a tabela de vendas 
+    try {
+        const outputTabelaRelatoriosVendas = await listarVendas();
+        dadosTabela.vendas.tabelaHTML = `
+            <table>
+                <thead>
+                      <tr>
+                          <th>Data</th>
+                          <th>Hora</th>
+                          <th>Produto</th>
+                          <th>Código</th>
+                          <th>Valor Unit.</th>
+                          <th>Quant.</th>
+                          <th>Total Item</th>
+                          <th>Vendedor</th>
+                      </tr>
+                  </thead>
+                <tbody>
+                    ${outputTabelaRelatoriosVendas}
+                </tbody>
+            </table>`;
+    } catch (error) {
+        console.error("Erro ao carregar registros de caixas anteriores:", error);
+    }
 
     //* ------------------------ FUNÇÃO DE MUDAR DE TABELA ---------------------------//
 
     function mudarTabela(tipoTabela) {
-        containerTabela.innerHTML = ''; // Limpa a tabela existente
-        containerGrafico.style.display = 'none'; // Esconde o gráfico de linha
-        containerPizza.style.display = 'none'; // Esconde o gráfico de pizza
-        modalResumo.style.display = 'none'; // Esconde o modal
-
-        if (tipoTabela === 'extrato') {
-            containerPizza.style.display = 'flex'; // Mostra o gráfico de pizza para "Extrato"
-            atualizarFiltro(tipoTabela); // Atualiza o filtro
-        } else if (tipoTabela !== 'caixa_atual') {
-            containerTabela.style.display = 'block'; // Exibe a tabela para outras opções
-
-            if(!dadosTabela[tipoTabela].tabelaHTML){
-              //Se nao existir o campo tabelaHTML no objeto de dadosTabela oculte a tabela
-              containerTabela.style.display = 'none';
-            }
-
-            containerTabela.innerHTML = dadosTabela[tipoTabela].tabelaHTML || ""; // Adiciona a nova tabela
-            atualizarFiltro(tipoTabela); // Atualiza o filtro
-        }
-    }
+      containerTabela.innerHTML = ''; // Limpa a tabela existente
+      containerGrafico.style.display = 'none'; // Esconde o gráfico de linha
+      containerPizza.style.display = 'none'; // Esconde o gráfico de pizza
+      modalResumo.style.display = 'none'; // Esconde o modal
+  
+      // Validação se `tipoTabela` existe no objeto `dadosTabela`
+      if (!dadosTabela[tipoTabela]) {
+          console.error(`Tipo de tabela "${tipoTabela}" não encontrado.`);
+          return;
+      }
+  
+      if (tipoTabela === 'extrato') {
+          containerPizza.style.display = 'flex'; // Mostra o gráfico de pizza para "Extrato"
+          atualizarFiltro(tipoTabela); // Atualiza o filtro
+      } else if (tipoTabela !== 'caixa_atual') {
+          containerTabela.style.display = 'block'; // Exibe a tabela para outras opções
+  
+          if (!dadosTabela[tipoTabela].tabelaHTML) {
+              containerTabela.style.display = 'none'; // Oculta a tabela se `tabelaHTML` for indefinido
+          }
+  
+          containerTabela.innerHTML = dadosTabela[tipoTabela].tabelaHTML || ""; // Adiciona a nova tabela
+          atualizarFiltro(tipoTabela); // Atualiza o filtro
+      }
+  }
+  
 
     //*----------------------------------GRÁFICO DE PIZZA --------------------------//
 
@@ -497,3 +538,4 @@ function atualizarModal() {
 
 
 categoriasMaisVendidasDia();
+

@@ -89,9 +89,9 @@ btnCadSangria.addEventListener('click', async () => {
     const observacaoSangria = document.getElementById('observacao-sangria').value;
     console.log(valorSangria);
     
-
+    const dadosCaixa = JSON.parse(sessionStorage.getItem('dadosCaixaAtual'));
    
-    const idCaixa = 1; // ! pegar id do caixa atual
+    const idCaixa = dadosCaixa.idCaixa
 
     const sangria = {
         caixa_id: idCaixa,

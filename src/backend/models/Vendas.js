@@ -64,6 +64,35 @@ class Vendas {
     }
   }
 
+  static async listarVendas() {
+    let conn;
+    try {
+      conn = await pool.getConnection();
+      const [rows] = await conn.query(`
+        SELECT 
+            DATE_FORMAT(v.datahora, '%d/%m/%Y') AS data,
+            DATE_FORMAT(v.datahora, '%H:%i') AS hora,
+            p.nome AS produto,
+            p.codbarra AS codigo,
+            p.preco AS valorUnitario,
+            pv.quantidade AS quantidade,
+            pv.valor_total_produtos AS total,
+            l.nomecompleto AS vendedor
+        FROM vendas v
+        JOIN produto_vendas pv ON v.id_venda = pv.venda_id
+        JOIN produtos p ON pv.produto_id = p.id_produto
+        JOIN login l ON v.login_id = l.id_login
+        ORDER BY v.datahora DESC;
+`);
+      return rows; // rows será um array de objetos, onde cada objeto representa uma categoria
+    } catch (error) {
+      console.error('Erro ao realizar a consulta:', error);
+      throw error;
+    } finally {
+      if (conn) conn.release();
+    }
+  }
+
   static async listarExtratoPorTiposDePagamentos(){
     let conn;
     try {

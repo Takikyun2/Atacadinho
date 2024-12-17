@@ -237,7 +237,12 @@ function aberturaDeCaixa (){
 
         try {
             const result = await window.api.adicionarRegistroDeCaixa(caixa);
+
+            
             if (result.sucesso) {
+                //guarda o id do caixa que abriu na session storage
+                sessionStorage.setItem('dadosCaixaAtual', JSON.stringify({ idCaixa: result.res.lastId}));
+
               alert('Registro cadastrado com sucesso');
               //esconde o modal
               modal.style.display = 'none';
