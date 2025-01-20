@@ -95,7 +95,7 @@
 .modal {
     display: none; /* Inicialmente o modal está oculto */
     position: fixed;
-    z-index: 1; /* Fica acima de tudo */
+    z-index: 1000 !important; /* Fica acima de tudo */
     left: 0;
     top: 0;
     width: 100%;

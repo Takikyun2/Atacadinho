@@ -31,7 +31,7 @@ label {
     text-align: end;
     font-size: 17px;
     margin: 40px;
-    gap: 40px;
+    gap: 10px;
 }
 
 .first-container {
@@ -53,12 +53,14 @@ label {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: -300px;
 }
 
 #video-camera {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+   
+    margin-right: 1300px !important;
 }
 
 /* Grid Components */
@@ -69,11 +71,16 @@ label {
 .coluna2 {
     display: grid;
     gap: 40px;
+
 }
 
 .dadosCMF {
-    grid-template-columns: 100px 250px;
+    grid-template-columns: 100px 20px;
     max-width: 485px;
+}
+
+.dadosCMF input{
+    width: 2000px;
 }
 
 .dadosBasicos {
@@ -90,6 +97,7 @@ label {
 .preco-promocional {
     gap: 10px;
     grid-template-columns: 150px 100px 15px 100px 15px;
+    margin-left: 0px !important;
 }
 
 .div-dataDaPromocao {
@@ -107,12 +115,13 @@ label {
     align-items: baseline;
     justify-content: left;
     gap: 20px;
+    margin-left: -200px;
 }
 
 /* Input and Select Styles */
 #unidadeDeMedida-select,
 #quantidade-input {
-    width: 52px;
+    width: 122px;
     height: 27px;
 }
 
@@ -127,7 +136,7 @@ label {
 #categoria-select,
 #marca-input,
 #fornecedor-input {
-    width: 98px;
+    width: 108px;
     height: 27px;
 }
 
@@ -166,6 +175,7 @@ label {
     width: 101px;
     height: 30px;
     box-shadow: 2px 2px 0px 0px;
+    margin-top: 29px;
 }
 
 #button-salvar,
@@ -180,4 +190,14 @@ label {
 #button-voltar:hover,
 #button-scanear:hover {
     background-color: #ffad4e;
+}
+
+.coluna-2-ajuste{
+padding: 20px;
+margin-left: 30px;
+}
+
+.promocional-flex{
+    display: flex;
+    gap: 50px;
 }

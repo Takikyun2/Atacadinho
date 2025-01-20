@@ -18,11 +18,11 @@
         <div class="botoes-navegacao">
             <hr>
             <a href="../../../src/views/pdv/pdv.html">
-                <button class="botao-navegacao" title="Produtos (F1)">PDV (F1)</button>
+                <button class="botao-navegacao" title="Ponto de Vendas (F1)">PDV (F1)</button>
             </a>
             <hr>
             <a href="../../../src/views/user/login.html">
-                <button class="botao-navegacao" title="Vendas-PVD (F2)">LOGIN (F2)</button>
+                <button class="botao-navegacao" title="Login (F2)">LOGIN (F2)</button>
             </a>
             <hr>
             <a href="../../../src/views/registros/relatorios.html">
@@ -30,11 +30,11 @@
             </a>
             <hr>
             <a href="../../../src/views/cadastros/cadastroDeProdutos.html">
-                <button class="botao-navegacao" title="Cadastro Usuários">CADASTRO (F9)</button>
+                <button class="botao-navegacao" title="Cadastro de Produtos (F9)">CADASTRO (F9)</button>
             </a>
             <hr>
             <a href="../../../src/views/registros/listagem-Produtos.html">
-                <button class="botao-navegacao" title="Listagem Produtos">LISTAGEM (F10)</button>
+                <button class="botao-navegacao" title="Listagem de Produtos (F10)">LISTAGEM (F10)</button>
             </a>
             <hr>
         </div>
@@ -60,9 +60,8 @@
                     <input class="form-input" id="preco-input" name="preco" type="number" required step="0.01"
                         placeholder="0.00">
 
-                    <label for="precoPromocional">Preço Promocional:</label>
-                    <input class="form-input" id="precoPromocional-input" name="precoPromocional" type="number"
-                        step="0.01" placeholder="0.00">
+                    <label for="fornecedor">Fornecedor:</label>
+                    <input class="form-input" id="fornecedor-input" name="fornecedor" type="text">
 
                 </div>
 
@@ -85,21 +84,28 @@
                     </div>
 
                     <button id="button-scanear" type="button">Scanear</button>
-                    <!-- Dados de Promoção -->
-                    <div class="preco-promocional">
-                        <label>Preço Promocional:</label>
-                        <span>Ativo</span>
-                        <input id="precoAtivo-input" class="form-input" name="precoPromocao" type="radio" value="ativo">
-                        <span>Desativado</span>
-                        <input id="precoInativo-input" class="form-input" name="precoPromocao" type="radio"
-                            value="inativo" checked>
+                    <div class="second-container">
+                        <!-- dadosCMF, pois CMF é uma abreviação de Categoria, Marca e Fornecedor -->
+                        <div class="dadosCMF">
+                            <label for="categoria">Categoria:</label>
+                            <select class="form-input" name="categoria" id="categoria-select" required>
+                                <!-- opitions inseridos dinamicamente -->
+                            </select>
+        
+                            <label for="marca">Marca:</label>
+                            <input class="form-input" id="marca-input" name="marca" type="text">
+    
+                        </div>
+        
+                        <div class="div-condicaoDoProduto">
+                            <label for="produtoAtivo">Condição do Produto:</label>
+                            <select class="form-input" name="categoria" id="produtoCondicao" required>
+                                <option value="1" selected>Ativo</option>
+                                <option value="0">Desativado</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="div-dataDaPromocao">
-                        <label for="">Data da Promoção:</label>
-                        <input type="datetime-local">
-                        <span>até</span>
-                        <input type="datetime-local">
-                    </div>
+
                 </div>
                 <div id="camera-scan">
                     <video id="video-camera" autoplay></video>
@@ -107,31 +113,29 @@
             </div>
 
             <hr>
-            <!-- Outros detalhes do produto -->
-            <div class="second-container">
-                <!-- dadosCMF, pois CMF é uma abreviação de Categoria, Marca e Fornecedor -->
-                <div class="dadosCMF">
-                    <label for="categoria">Categoria:</label>
-                    <select class="form-input" name="categoria" id="categoria-select" required>
-                        <!-- opitions inseridos dinamicamente -->
-                    </select>
 
-                    <label for="marca">Marca:</label>
-                    <input class="form-input" id="marca-input" name="marca" type="text">
+                <div class="coluna-2-ajuste coluna2">
+                        <!-- Dados de Promoção -->
+                        <div class="preco-promocional">
+                            <label>Promocional:</label>
+                            <span>Ativo</span>
+                            <input id="precoAtivo-input" class="form-input" name="precoPromocao" type="radio" value="ativo">
+                            <span>Desativado</span>
+                            <input id="precoInativo-input" class="form-input" name="precoPromocao" type="radio" value="inativo" checked>
+                        </div>
 
-                    <label for="fornecedor">Fornecedor:</label>
-                    <input class="form-input" id="fornecedor-input" name="fornecedor" type="text">
+                        <div class="promocional-flex">
+                            <label for="precoPromocional">Preço Promocional:</label>
+                            <input class="form-input" id="precoPromocional-input" name="precoPromocional" type="number" step="0.01" placeholder="0.00" disabled>
+                        </div>
+
+                        <div class="div-dataDaPromocao">
+                            <label for="">Data da Promoção:</label>
+                            <input id="dataInicio-input" type="datetime-local" disabled>
+                            <span>até</span>
+                            <input id="dataFim-input" type="datetime-local" disabled>
+                        </div>
                 </div>
-
-                <div class="div-condicaoDoProduto">
-                    <label for="produtoAtivo">Condição do Produto:</label>
-                    <select class="form-input" name="categoria" id="produtoCondicao" required>
-                        <option value="1" selected>Ativo</option>
-                        <option value="0">Desativado</option>
-                    </select>
-                </div>
-            </div>
-
             <hr>
 
             <!-- Botões -->
@@ -197,6 +201,27 @@
         });
 
     </script>
+
+    <!-- Função de ativo e desativado -->
+<script>
+    const precoAtivoInput = document.getElementById("precoAtivo-input");
+    const precoInativoInput = document.getElementById("precoInativo-input");
+    const precoPromocionalInput = document.getElementById("precoPromocional-input");
+    const dataInicioInput = document.getElementById("dataInicio-input");
+    const dataFimInput = document.getElementById("dataFim-input");
+
+    function toggleInputs() {
+        const isAtivo = precoAtivoInput.checked;
+
+        precoPromocionalInput.disabled = !isAtivo;
+        dataInicioInput.disabled = !isAtivo;
+        dataFimInput.disabled = !isAtivo;
+    }
+
+    precoAtivoInput.addEventListener("change", toggleInputs);
+    precoInativoInput.addEventListener("change", toggleInputs);
+    toggleInputs();
+</script>
 
     <script src="../../../src/frontend/cadastro_produto_renderer.js"></script>
 </body>

@@ -29,11 +29,11 @@
         <div class="botoes-navegacao">
             <hr>
             <a href="../../../src/views/pdv/pdv.html">
-                <button class="botao-navegacao" title="Produtos (F1)">PDV (F1)</button>
+                <button class="botao-navegacao" title="Ponto de Vendas (F1)">PDV (F1)</button>
             </a>
             <hr>
             <a href="../../../src/views/user/login.html">
-                <button class="botao-navegacao" title="Vendas-PVD (F2)">LOGIN (F2)</button>
+                <button class="botao-navegacao" title="Login (F2)">LOGIN (F2)</button>
             </a>
             <hr>
             <a href="../../../src/views/registros/relatorios.html">
@@ -41,18 +41,18 @@
             </a>
             <hr>
             <a href="../../../src/views/cadastros/cadastroDeProdutos.html">
-                <button class="botao-navegacao" title="Cadastro Usuários">CADASTRO (F9)</button>
+                <button class="botao-navegacao" title="Cadastro de Produtos (F9)">CADASTRO (F9)</button>
             </a>
             <hr>
             <a href="../../../src/views/registros/listagem-Produtos.html">
-                <button class="botao-navegacao" title="Listagem Produtos">LISTAGEM (F10)</button>
+                <button class="botao-navegacao" title="Listagem de Produtos (F10)">LISTAGEM (F10)</button>
             </a>
             <hr>
         </div>
     </header>
 
     <!-- Modal de abertura caixa -->
-    <div id="modal-abertura" class="modal-abertura">
+    <!-- <div id="modal-abertura" class="modal-abertura">
         <div class="modal-content-abertura">
             <div class="header-abertura">
                 <span id="dataHora-abertura">06 DE NOVEMBRO DE 2024 - HORÁRIO: <span id="time">14:46:19</span></span>
@@ -66,7 +66,7 @@
                 <button id="btn-abrir-caixa" class="btn-abertura abrir">ABRIR O CAIXA ( F1 )</button>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- titulo - vendas -->
     <section id="secao-vendas">
@@ -106,13 +106,11 @@
     <section class="secao-final">
         <div class="botao-container">
             <hr>
-            <button id="btn-concluir-venda">CONCLUIR (F6)</button>
-            <hr>
             <button>DESCONTO (F7)</button>
             <hr>
-            <button>OBSERVAÇÃO (F5)</button>
-            <hr>
             <button id="openModal-sangria">SANGRIA (F9)</button>
+            <hr>
+            <button id="btn-concluir-venda">CONCLUIR (F6)</button>
             <hr>
             <button id="abrir-modal-fechamento">FECHAR (F8)</button>
             <hr>
@@ -184,14 +182,12 @@
             <label for="observacao-sangria">OBSERVAÇÃO:</label>
             <input type="text" id="observacao-sangria" placeholder="Adicione o motivo da sangria">
         </div>
-
         <div class="buttons">
             <button id="btn-cad-sangria" class="btn-sangria abrir">SALVAR ( F1 )</button>
             <button id="closeModal-sangria" class="btn-sangria cancelar">CANCELAR ( ESC )</button>
         </div>
     </div>
 </div>
-
 
     <script src="../../../src/frontend/pdv/pdv.js"></script>
     <script src="../../../src/frontend/pdv/fechar_caixa.js"></script>
