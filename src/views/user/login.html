@@ -43,5 +43,13 @@
     </div>
 
     <script src="../../../src/frontend/user/validaUser.js"></script>
+    <script>
+            const login = JSON.parse(sessionStorage.getItem('dadosUser'));
+            //se tiver dados do user na sessao limpa eles 
+            if(login){
+                sessionStorage.setItem('dadosUser', JSON.stringify({}));
+                console.log("caiu");     
+            }
+    </script>
 </body>
 </html>
