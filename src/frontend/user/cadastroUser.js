@@ -1,5 +1,7 @@
 const btnCad = document.getElementById('btn-cad');
+
 btnCad.addEventListener('click', ()=>{
+
     const nome = document.getElementById('campo-nome-completo').value;
     const usuario = document.getElementById('campo-usuario').value;
     const senha = document.getElementById('campo-senha').value;
@@ -18,6 +20,7 @@ btnCad.addEventListener('click', ()=>{
         cpf: cpf, 
         user_type_id: cargo
     }
+
     adicionarLogin(login)
 
 })
@@ -27,11 +30,11 @@ const adicionarLogin = async (login) => {
         const result = await window.api.adicionarLogin(login)
         if (result.sucesso) {
             alert('Login adicionado com sucesso!');
+            window.location.href = "../../../src/views/user/login.html";
           } else {
             alert('Erro ao adicionar o Login: ' + result.erro);
           }
     } catch (error) {
         console.log(error);
-        
     }
 } 

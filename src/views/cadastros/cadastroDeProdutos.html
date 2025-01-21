@@ -67,23 +67,35 @@
 
                 <!-- Dados de Unidade de Medida -->
                 <div class="coluna2">
-                    <div class="dadosSecundarios">
-                        <label for="unidadeDeMedida">Unidade de Medida:</label>
-                        <select class="form-input" name="unidadeDeMedida" id="unidadeDeMedida-select" required>
-                            <option value="" disabled selected>Selecione</option>
-                            <option value="un">Unidade (un)</option>
-                            <option value="kg">Quilograma (kg)</option>
-                            <option value="l">Litro (L)</option>
-                            <option value="m">Metro (m)</option>
-                            <option value="cx">Caixa (cx)</option>
-                            <option value="pc">Pacote (pc)</option>
-                            <option value="lt">Lata (lt)</option>
-                            <option value="conj">Conjunto (conj)</option>
-                            <option value="g">Garrafa (g)</option>
-                        </select>
-                    </div>
+                    <div class="linha">
+                        <div class="coluna">
+                            <div class="dadosSecundarios">
+                                <label for="unidadeDeMedida">Unidade de Medida:</label>
+                                <select class="form-input" name="unidadeDeMedida" id="unidadeDeMedida-select" required>
+                                    <option value="" disabled selected>Selecione</option>
+                                    <option value="un">Unidade (un)</option>
+                                    <option value="kg">Quilograma (kg)</option>
+                                    <option value="l">Litro (L)</option>
+                                    <option value="m">Metro (m)</option>
+                                    <option value="cx">Caixa (cx)</option>
+                                    <option value="pc">Pacote (pc)</option>
+                                    <option value="lt">Lata (lt)</option>
+                                    <option value="conj">Conjunto (conj)</option>
+                                    <option value="g">Garrafa (g)</option>
+                                </select>
+                            </div>
+        
+                            <button id="button-scanear" type="button">Scanear</button>
+                        </div>
 
-                    <button id="button-scanear" type="button">Scanear</button>
+                        <div id="camera-scan">
+                            <video id="video-camera" autoplay></video>
+                        </div>
+                    </div>
+                    
+
+                    
+
                     <div class="second-container">
                         <!-- dadosCMF, pois CMF é uma abreviação de Categoria, Marca e Fornecedor -->
                         <div class="dadosCMF">
@@ -106,9 +118,7 @@
                         </div>
                     </div>
 
-                </div>
-                <div id="camera-scan">
-                    <video id="video-camera" autoplay></video>
+                    
                 </div>
             </div>
 
