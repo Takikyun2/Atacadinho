@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../../src/styles/pdv/pdv.css">
     <link rel="stylesheet" href="../../../src/styles/pdv/modalAbertura.css">
     <link rel="stylesheet" href="../../../src/styles/pdv/fechar_caixa.css">
+    <link rel="stylesheet" href="../../../src/styles/pdv/modalPagamento.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- scripts de plugin para o select com input de pesquisa -->
@@ -52,7 +53,7 @@
     </header>
 
     <!-- Modal de abertura caixa -->
-     <div id="modal-abertura" class="modal-abertura">
+      <div id="modal-abertura" class="modal-abertura">
         <div class="modal-content-abertura">
             <div class="header-abertura">
                 <span id="dataHora-abertura">06 DE NOVEMBRO DE 2024 - HORÁRIO: <span id="time">14:46:19</span></span>
@@ -66,7 +67,7 @@
                 <button id="btn-abrir-caixa" class="btn-abertura abrir">ABRIR O CAIXA ( F1 )</button>
             </div>
         </div>
-    </div> 
+    </div>  
 
     <!-- titulo - vendas -->
     <section id="secao-vendas">
@@ -110,7 +111,7 @@
             <hr>
             <button id="openModal-sangria">SANGRIA (F9)</button>
             <hr>
-            <button id="btn-concluir-venda">CONCLUIR (F6)</button>
+            <button id="btn-concluir-venda openModal-pagamento">CONCLUIR (F6)</button>
             <hr>
             <button id="abrir-modal-fechamento">FECHAR (F8)</button>
             <hr>
@@ -189,9 +190,71 @@
     </div>
 </div>
 
+    <!-- Modal Pagamento -->
+    <section id="modal-pagamento" class="modal-pagamento">
+        <div class="modal-content-pagamento">
+            <div class="header-pagamento">
+                <h2>Total a Pagar</h2>
+                <p id="valorPagar" class="valor-pagar"></p>
+                <p id="descontoPagar" class="desconto-pagar"></p>
+            </div>
+
+            <div class="content-pagamento">
+                <div class="forma-pagamento">
+                    <div class="forma-item">
+                        <span>DINHEIRO</span>
+                        <input type="text" id="dinheiro" placeholder="0,00">
+                    </div>
+
+                    <div class="forma-item">
+                        <span>CARTÃO DE CRÉDITO</span>
+                        <input type="text" id="cartao-credito" placeholder="0,00">
+                    </div>
+
+                    <div class="forma-item">
+                        <span>CARTÃO DE DÉBITO</span>
+                        <input type="text" id="cartao-debito" placeholder="0,00">
+                    </div>
+
+                    <div class="forma-item">
+                        <span>CHEQUE</span>
+                        <input type="text" id="cheque" placeholder="0,00">
+                    </div>
+
+                    <div class="forma-item">
+                        <span>PIX</span>
+                        <input type="text" id="pix" placeholder="0,00">
+                    </div>
+                </div>
+
+                <p id="trocoPagar" class="troco-pagar"><span>Troco: R$ </span> 0,00</p>
+            </div>
+
+            <div class="buttons-pagamento">
+                <button class="btn-pagamento abrir">CONCLUIR (F2)</button>
+                <button id="closeModal-pagamento" class="btn-pagamento cancelar">CANCELAR (ESC)</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="modal-concluido" class="modal-pagamento">
+        <div class="modal-content-pagamento">
+            <h2>Venda Feita!</h2>
+            <div class="icon-container">
+                <div class="icon-wrapper">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+            </div>
+            <p class="valor-compra"></p>
+            <p class="valor-troco"></p>
+            <button id="closeModal-concluido" class="btn-pagamento abrir">Nova Venda</button>
+        </div>
+    </section>
+
     <script src="../../../src/frontend/pdv/pdv.js"></script>
     <script src="../../../src/frontend/pdv/fechar_caixa.js"></script>
     <script src="../../../src/frontend/pdv/sangria.js"></script>
+    <script src="../../../src/frontend/pdv/pagamento.js"></script>
 
     <!-- script responsavel pelo select com input de pesquisa -->
     <script>
