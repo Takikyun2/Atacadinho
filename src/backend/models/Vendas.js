@@ -117,6 +117,23 @@ class Vendas {
         if (conn) conn.release();
     }
   }
+  static async listarTiposDePagamentos(){
+    let conn;
+    try {
+        conn = await pool.getConnection();
+        const [rows] = await conn.query(`
+            SELECT *
+            FROM 
+                tipo_pagamento;
+        `);
+        return rows; // rows será um array de objetos, onde cada objeto representa uma categoria
+    } catch (error) {
+        console.error('Erro ao realizar a consulta:', error);
+        throw error;
+    } finally {
+        if (conn) conn.release();
+    }
+  }
 }
 
 module.exports = Vendas;

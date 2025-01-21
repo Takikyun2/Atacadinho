@@ -24,6 +24,13 @@ class VendasController {
           throw new Error('Erro ao listar registros de venda: ' + err.message)
         }
     }
+    static async listarTiposDePagamentos() {
+        try {
+          return await Vendas.listarTiposDePagamentos();
+        } catch (err) {
+          throw new Error('Erro ao listar tipos de pagamento: ' + err.message)
+        }
+    }
  
     static async atualizarRegistrosDeVendas(newVenda, produtosDaVenda) {
         try {

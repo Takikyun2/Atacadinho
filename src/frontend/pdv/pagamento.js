@@ -11,7 +11,8 @@ const descontoPagarElement = document.getElementById('descontoPagar');
 const trocoPagarElement = document.getElementById('trocoPagar');
 
 
-const inputsPagamento = document.querySelectorAll('#modal-pagamento input');
+/* const inputsPagamento = document.querySelectorAll('#modal-pagamento input'); */
+
 const erroElement = document.createElement('p');
 erroElement.style.color = 'red';
 erroElement.style.marginTop = '10px';
@@ -19,7 +20,7 @@ erroElement.style.display = 'none';
 erroElement.textContent = 'Insira um valor válido e suficiente para concluir a compra.';
 modalPagamento.querySelector('.content-pagamento').appendChild(erroElement);
 
-const calculaValorFinal = ()=>{
+/* const calculaValorFinal = ()=>{
 
     const valorCompra =  parseFloat(document.querySelector("#total-vendas-valor").textContent);
 
@@ -31,7 +32,7 @@ const calculaValorFinal = ()=>{
     
 
     return {valorFinal,desconto,descontoPercentual}
-}
+} */
 
 // Abrir e fechar modal de pagamento
 openModalPagamentoBtn.addEventListener('click', () => {
@@ -86,25 +87,7 @@ const calcularDesconto = (valorFinal) => {
 
 // Concluir pagamento
 concluirPagamentoBtn.addEventListener('click', () => {
-    const totalPago = Array.from(inputsPagamento).reduce((sum, input) => {
-        const valor = parseFloat(input.value.replace(',', '.')) || 0;
-        return sum + valor;
-    }, 0);
-
-    const { valorFinal } = calculaValorFinal();
-
-    if (totalPago >= valorFinal) {
-        const troco = totalPago - valorFinal;
-
-        modalConcluido.querySelector('.valor-compra').textContent = `R$ ${valorFinal.toFixed(2).replace('.', ',')}`;
-        modalConcluido.querySelector('.valor-troco').textContent = `Troco: R$ ${(troco >= 0 ? troco : 0).toFixed(2).replace('.', ',')}`;
-
-        modalPagamento.style.display = 'none';
-        modalConcluido.style.display = 'flex';
-        resetInputs();
-    } else {
-        erroElement.style.display = 'block';
-    }
+    
 });
 
 // Fechar modal de concluído

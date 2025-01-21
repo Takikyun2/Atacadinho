@@ -343,12 +343,29 @@ function aberturaDeCaixa (){
 
 
 //Concluir venda
+/* ! Obs: a partir deste conteudo todo o codigo responsavel peça finalizacao da compra esta interligada com o arquivo pagamento.js  */
+const inputsPagamento = document.querySelectorAll('#modal-pagamento input');
+
 
 const btnConcluirVenda = document.getElementById('btn-concluir-venda')
 
-btnConcluirVenda.addEventListener('click', async ()=>{
-    console.log(produtosVenda);
+const calculaValorFinal = ()=>{
+
+    const valorCompra =  parseFloat(document.querySelector("#total-vendas-valor").textContent);
+
+
+    const descontoPercentual = 0; 
+    const desconto = (valorCompra * descontoPercentual) / 100;
+    const valorFinal = valorCompra - desconto;
+
     
+
+    return {valorFinal,desconto,descontoPercentual}
+}
+
+btnConcluirVenda.addEventListener('click', async ()=>{
+
+    console.log(produtosVenda);
 
     if(produtosVenda.length === 0){
         alert('Nenhum produto foi adicionado à venda.');
@@ -360,6 +377,7 @@ btnConcluirVenda.addEventListener('click', async ()=>{
     const dadosCaixa = JSON.parse(sessionStorage.getItem('dadosCaixaAtual'));
 
     const dadosUser = JSON.parse(sessionStorage.getItem('dadosUser'));// pegando dados do user guardado na sessao
+    
 
 
     const venda = { 
@@ -368,11 +386,38 @@ btnConcluirVenda.addEventListener('click', async ()=>{
         caixa_id: dadosCaixa.idCaixa,
         login_id: dadosUser.id_login
     };
+    
+    //array de objetos com os tipos de pagamentos realizados na compra
+    const tipoDePagamentoDaVenda = []
 
-    const tipoDePagamentoDaVenda = [{
-        tipo_pagamento_id: 3, 
-        valor: 500.00
-    }]
+    inputsPagamento.forEach((inputValue, index) => {
+        tipoDePagamentoDaVenda.push({
+            tipo_pagamento_id: index + 1, 
+            valor: inputValue.value
+        })
+    })
+
+    console.log(tipoDePagamentoDaVenda);
+    
+
+    const totalPago = Array.from(inputsPagamento).reduce((sum, input) => {
+        const valor = parseFloat(input.value.replace(',', '.')) || 0;
+        return sum + valor;
+    }, 0);
+    
+    const { valorFinal } = calculaValorFinal();
+    
+    //verifica se o valor inserido nos inputs sao maiores que o debido atual se nao for mostra a mensagem de erro
+
+    if (totalPago >= valorFinal) {
+        const troco = totalPago - valorFinal;
+
+        modalConcluido.querySelector('.valor-compra').textContent = `R$ ${valorFinal.toFixed(2).replace('.', ',')}`;
+        modalConcluido.querySelector('.valor-troco').textContent = `Troco: R$ ${(troco >= 0 ? troco : 0).toFixed(2).replace('.', ',')}`;
+        
+    } else {
+        erroElement.style.display = 'block';
+    }
 
 
    
@@ -380,9 +425,13 @@ btnConcluirVenda.addEventListener('click', async ()=>{
     try {
         const result = await window.api.adicionarRegistrosDeVendas(venda, produtosVenda, tipoDePagamentoDaVenda);
         if (result.sucesso) {
-          alert('Registro cadastrado com sucesso');
-          produtosVenda.length = 0; //limpa o array de produtos
-          atualizarTabela()
+            console.log('Registro cadastrado com sucesso');
+            produtosVenda.length = 0; //limpa o array de produtos
+            atualizarTabela()
+
+            modalPagamento.style.display = 'none';
+            modalConcluido.style.display = 'flex';
+            resetInputs();
         } else {
           alert('Erro ao adicionar o registro de venda: ' + result.erro);
         }

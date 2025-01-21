@@ -57,4 +57,6 @@ contextBridge.exposeInMainWorld('api', {
 
   listarRegistrosDeVendas: () => ipcRenderer.invoke('listar-registros-vendas'),
 
+  listarTiposDePagamentos: () => ipcRenderer.invoke('listar-tipos-de-pagamentos'),
+
 });

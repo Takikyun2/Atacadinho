@@ -312,6 +312,14 @@ ipcMain.handle('listar-registros-vendas', async () => {
   }
 });
 
+ipcMain.handle('listar-tipos-de-pagamentos', async () => {
+  try {
+    return await VendasController.listarTiposDePagamentos();
+  } catch (err) {
+    return { sucesso: false, erro: err.message }
+  }
+});
+
 
 // ? - Produtos Ipc end
 
