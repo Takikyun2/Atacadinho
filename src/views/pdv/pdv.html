@@ -111,15 +111,15 @@
             <hr>
             <button id="openModal-sangria">SANGRIA (F9)</button>
             <hr>
-            <button id="btn-concluir-venda openModal-pagamento">CONCLUIR (F6)</button>
+            <button id="openModal-pagamento">CONCLUIR (F6)</button>
             <hr>
             <button id="abrir-modal-fechamento">FECHAR (F8)</button>
             <hr>
         </div>
         <div class="total-container">
-            <div id="total-vendas"></div>
+            <div id="total-vendas">Total = R$<span id="total-vendas-valor"></span></div>
         </div>
-    </section>
+    </section> 
 
     <!-- modal de aviso de fechamento de caixa -->
 
@@ -231,7 +231,7 @@
             </div>
 
             <div class="buttons-pagamento">
-                <button class="btn-pagamento abrir">CONCLUIR (F2)</button>
+                <button class="btn-pagamento abrir" id="btn-concluir-venda">CONCLUIR (F2)</button>
                 <button id="closeModal-pagamento" class="btn-pagamento cancelar">CANCELAR (ESC)</button>
             </div>
         </div>

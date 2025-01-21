@@ -10,13 +10,6 @@ const valorPagarElement = document.getElementById('valorPagar');
 const descontoPagarElement = document.getElementById('descontoPagar');
 const trocoPagarElement = document.getElementById('trocoPagar');
 
-const valorCompra = 80.38; // Valor original
-const descontoPercentual = 2; // imposto KKKKKK
-const desconto = (valorCompra * descontoPercentual) / 100;
-const valorFinal = valorCompra - desconto;
-
-valorPagarElement.textContent = `R$ ${valorFinal.toFixed(2).replace('.', ',')}`;
-descontoPagarElement.textContent = `R$ ${valorCompra.toFixed(2).replace('.', ',')} - desconto de R$ ${desconto.toFixed(2).replace('.', ',')} (${descontoPercentual}%)`;
 
 const inputsPagamento = document.querySelectorAll('#modal-pagamento input');
 const erroElement = document.createElement('p');
@@ -26,9 +19,34 @@ erroElement.style.display = 'none';
 erroElement.textContent = 'Insira um valor válido e suficiente para concluir a compra.';
 modalPagamento.querySelector('.content-pagamento').appendChild(erroElement);
 
+const calculaValorFinal = ()=>{
+
+    const valorCompra =  parseFloat(document.querySelector("#total-vendas-valor").textContent);
+
+
+    const descontoPercentual = 0; // imposto KKKKKK
+    const desconto = (valorCompra * descontoPercentual) / 100;
+    const valorFinal = valorCompra - desconto;
+
+    
+
+    return {valorFinal,desconto,descontoPercentual}
+}
+
 // Abrir e fechar modal de pagamento
 openModalPagamentoBtn.addEventListener('click', () => {
+
     modalPagamento.style.display = 'flex';
+
+    const valorCompra =  parseFloat(document.querySelector("#total-vendas-valor").textContent);
+
+    const {valorFinal, desconto, descontoPercentual} = calculaValorFinal();
+
+    valorPagarElement.textContent = `R$ ${valorFinal.toFixed(2).replace('.', ',')}`;
+    descontoPagarElement.textContent = `R$ ${valorCompra.toFixed(2).replace('.', ',')} - desconto de R$ ${desconto.toFixed(2).replace('.', ',')} (${descontoPercentual}%)`;
+
+    calcularDesconto(valorFinal)
+
 });
 
 closeModalPagamentoBtn.addEventListener('click', () => {
@@ -44,24 +62,27 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-// Atualizar o troco ao inserir valores nos inputs
-inputsPagamento.forEach(input => {
-    input.addEventListener('input', () => {
-        const totalPago = Array.from(inputsPagamento).reduce((sum, input) => {
-            const valor = parseFloat(input.value.replace(',', '.')) || 0;
-            return sum + valor;
-        }, 0);
+const calcularDesconto = (valorFinal) => {
 
-        const troco = totalPago - valorFinal;
-
-        if (troco >= 0) {
-            trocoPagarElement.textContent = `Troco: R$ ${troco.toFixed(2).replace('.', ',')}`;
-            erroElement.style.display = 'none';
-        } else {
-            trocoPagarElement.textContent = 'Troco: R$ 0,00';
-        }
+    // Atualizar o troco ao inserir valores nos inputs
+    inputsPagamento.forEach(input => {
+        input.addEventListener('input', () => {
+            const totalPago = Array.from(inputsPagamento).reduce((sum, input) => {
+                const valor = parseFloat(input.value.replace(',', '.')) || 0;
+                return sum + valor;
+            }, 0);
+    
+            const troco = totalPago - valorFinal;
+    
+            if (troco >= 0) {
+                trocoPagarElement.textContent = `Troco: R$ ${troco.toFixed(2).replace('.', ',')}`;
+                erroElement.style.display = 'none';
+            } else {
+                trocoPagarElement.textContent = 'Troco: R$ 0,00';
+            }
+        });
     });
-});
+}
 
 // Concluir pagamento
 concluirPagamentoBtn.addEventListener('click', () => {
@@ -69,6 +90,8 @@ concluirPagamentoBtn.addEventListener('click', () => {
         const valor = parseFloat(input.value.replace(',', '.')) || 0;
         return sum + valor;
     }, 0);
+
+    const { valorFinal } = calculaValorFinal();
 
     if (totalPago >= valorFinal) {
         const troco = totalPago - valorFinal;

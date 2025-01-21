@@ -160,8 +160,8 @@ function atualizarFooter() {
     const valorTotal = produtosVenda.reduce((total, produto) => total + (produto.quantidade * produto.preco), 0).toFixed(2);
 
     // Atualizar o valor total na seção final
-    const totalVendas = document.querySelector("#total-vendas");
-    totalVendas.innerHTML = `Total = R$ ${valorTotal}`;
+    const totalVendas = document.querySelector("#total-vendas-valor");
+    totalVendas.innerHTML = ` ${valorTotal}`;
 }
 
 atualizarTabela();
