@@ -63,12 +63,13 @@ class Produto {
   }
 
   static async atualizar(id_produto, novosDados) {
+
     let conn;
     try {
       conn = await pool.getConnection();
       const [res] = await conn.execute(
-        `UPDATE produtos SET nome = ?, preco = ?, preco_promocional = ?,marca = ?, fornecedor = ?, unidade = ?, categoria_id = ?, condicao = ? WHERE id_produto = ?`,
-        [novosDados.nome, novosDados.preco, novosDados.preco_promocional,novosDados.marca, novosDados.fornecedor, novosDados.unidade, novosDados.categoria, novosDados.condicao, id_produto]
+        `UPDATE produtos SET nome = ?, preco = ?, preco_promocional = ?,marca = ?, fornecedor = ?, unidade = ?, codbarra = ?, categoria_id = ?, condicao = ?, datahora = ? WHERE id_produto = ?;`,
+        [novosDados.nome, novosDados.preco, novosDados.preco_promocional,novosDados.marca, novosDados.fornecedor, novosDados.unidade, novosDados.codbarra, novosDados.categoria, novosDados.condicao, novosDados.datahora, id_produto]
       );
       return res; // res contém informações sobre a operação de atualização
     } catch (error) {

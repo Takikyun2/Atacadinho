@@ -214,10 +214,18 @@ function aberturaDeCaixa (){
 
     window.onload = () => {
         const caixaStatus = JSON.parse(sessionStorage.getItem('caixaEstaAberto'));
-
+        
         // Se o caixa estiver fechado mostra o modal de abertura
         if (!caixaStatus || !caixaStatus.isOpen) {
+            const inputValorAbertura = document.getElementById('valor-abertura');
+            
+            // Garantir que o modal esteja visível antes de focar
             modal.style.display = 'flex';
+
+            // Adiciona o foco no campo de entrada
+            if (inputValorAbertura) {
+                inputValorAbertura.focus();
+            }
         } else {
             modal.style.display = 'none';
         }
@@ -344,7 +352,7 @@ function aberturaDeCaixa (){
 
 //Concluir venda
 /* ! Obs: a partir deste conteudo todo o codigo responsavel peça finalizacao da compra esta interligada com o arquivo pagamento.js  */
-const inputsPagamento = document.querySelectorAll('#modal-pagamento input');
+
 
 
 const btnConcluirVenda = document.getElementById('btn-concluir-venda')
@@ -364,6 +372,8 @@ const calculaValorFinal = ()=>{
 }
 
 btnConcluirVenda.addEventListener('click', async ()=>{
+
+    const inputsPagamento = document.querySelectorAll('#modal-pagamento input');
 
     console.log(produtosVenda);
 
@@ -391,13 +401,16 @@ btnConcluirVenda.addEventListener('click', async ()=>{
     const tipoDePagamentoDaVenda = []
 
     inputsPagamento.forEach((inputValue, index) => {
-        tipoDePagamentoDaVenda.push({
-            tipo_pagamento_id: index + 1, 
-            valor: inputValue.value
-        })
+        //se tiver valor no input mande para o array de tipos de pagamento da compra
+        if(inputValue.value){
+            tipoDePagamentoDaVenda.push({
+                tipo_pagamento_id: index + 1, 
+                valor: inputValue.value
+            })
+        }
     })
-
     console.log(tipoDePagamentoDaVenda);
+    
     
 
     const totalPago = Array.from(inputsPagamento).reduce((sum, input) => {

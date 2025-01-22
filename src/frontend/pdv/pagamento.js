@@ -63,7 +63,12 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+
+
+
 const calcularDesconto = (valorFinal) => {
+
+    const inputsPagamento = document.querySelectorAll('#modal-pagamento input');
 
     // Atualizar o troco ao inserir valores nos inputs
     inputsPagamento.forEach(input => {
@@ -103,11 +108,39 @@ document.addEventListener('keydown', (event) => {
 
 // Resetar inputs e mensagens
 function resetInputs() {
+    const inputsPagamento = document.querySelectorAll('#modal-pagamento input');
     inputsPagamento.forEach(input => input.value = '');
     trocoPagarElement.textContent = 'Troco: R$ 0,00';
     erroElement.style.display = 'none';
 }
 
+const listarTiposDePagamentos = async () =>{
+    try {
+        const tipoPagamentos = await window.api.listarTiposDePagamentos();
+        
+        const outputTiposPagamento = tipoPagamentos.map(
+            tp => {
+
+            return `
+                <div class="forma-item">
+                    <span>${tp.descricao}</span>
+                    <input type="text" id="${tp.id_tipo_pagamento}" placeholder="0,00">
+                </div>
+            `;
+        })
+        .join(''); // Une todos os elementos do array em uma única string
+        
+        const formaPagamentoDiv = document.getElementById('forma-pagamento');
+
+        formaPagamentoDiv.innerHTML = outputTiposPagamento;
+        console.log(outputTiposPagamento);
+        
+    } catch (error) {
+        
+    }
+}
+
+listarTiposDePagamentos()
 
 
 

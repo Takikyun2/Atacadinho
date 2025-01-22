@@ -29,9 +29,9 @@ class ProdutoController {
     }
   }
 
-  static async atualizarProduto(id, novosDados) {
+  static async atualizarProduto(idproduto, novosDados) {
     try {
-      await Produto.atualizar(id, novosDados);
+      await Produto.atualizar(idproduto, novosDados);
     } catch (err) {
       throw new Error('Erro ao atualizar produto: ' + err.message)
     }

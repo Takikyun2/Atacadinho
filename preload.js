@@ -17,7 +17,7 @@ contextBridge.exposeInMainWorld('api', {
 
   buscarProdutoPorId: (id) => ipcRenderer.invoke('buscar-produto-id',id),
 
-  atualizarProduto: (idproduto, novosDados) => ipcRenderer.invoke('atualizar-produto', idproduto, novosDados),
+  atualizarProduto: ( idproduto, novosDados) => ipcRenderer.invoke('atualizar-produto', idproduto, novosDados),
 
   removerProduto: (idproduto) => ipcRenderer.invoke('remover-produto', idproduto),
  

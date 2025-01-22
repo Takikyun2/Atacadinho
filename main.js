@@ -168,12 +168,11 @@ ipcMain.handle('buscar-produto-id', async (event, id) => {
   }
 });
 
-ipcMain.handle('atualizar-produto', async (event, id, novosDados) => {
+ipcMain.handle('atualizar-produto', async (event, idproduto, novosDados) => {
   try {
-    await ProdutoController.atualizarProduto(id, novosDados)
-    return { sucesso: true, produto: produtoAtualizado };
+    return await ProdutoController.atualizarProduto(idproduto, novosDados)
   } catch (err) {
-    return { sucesso: false, erro: err.message };
+    return { erro: err.message };
   }
 })
 
