@@ -105,7 +105,8 @@ btnCadSangria.addEventListener('click', async () => {
         const response = await window.api.adicionarRegistroDeSangria(sangria);
 
         if (response.sucesso) {
-            alert('Sangria adicionada com sucesso!');
+            toastr.success('Sangria adicionada com sucesso!');
+            
             modal.style.display = 'none';
 
             // Limpa os inputs após salvar

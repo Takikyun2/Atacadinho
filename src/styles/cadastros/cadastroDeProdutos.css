@@ -30,7 +30,7 @@ label {
     display: grid;
     text-align: end;
     font-size: 17px;
-    margin: 40px;
+    margin: 40px ;
     gap: 10px;
 }
 
@@ -39,7 +39,7 @@ label {
 }
 
 .second-container {
-    grid-template-columns: 485px 550px;
+    grid-template-columns: 485px 200px;
     gap: 84px;
 }
 

@@ -9,7 +9,7 @@ btnCad.addEventListener('click', ()=>{
     const cpf = document.getElementById('campo-cpf').value;
 
     if(!nome || !usuario || !senha || !cargo || !cpf){
-        alert('Preencha todos os campos');
+        toastr.warning('Preencha todos os campos!');
         return
     }
 
@@ -29,12 +29,42 @@ const adicionarLogin = async (login) => {
     try {
         const result = await window.api.adicionarLogin(login)
         if (result.sucesso) {
-            alert('Login adicionado com sucesso!');
-            window.location.href = "../../../src/views/user/login.html";
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": 0, // Sem tempo limite
+                "extendedTimeOut": 0, // Sem tempo adicional
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut",
+                "tapToDismiss": false // Não fechar ao clicar no toast
+            };
+
+            toastr["success"](
+                `Deseja voltar à tela de login?<br /><br />
+                 <button type="button" class="btn clear" onclick="redirectToLogin()">Yes</button>`,
+                "Login cadastrado com sucesso"
+            );
+
           } else {
-            alert('Erro ao adicionar o Login: ' + result.erro);
+            toastr.error('Erro ao cadastrar login!');
+            console.log('Erro ao cadastrar o Login: ' + result.erro);
           }
     } catch (error) {
         console.log(error);
     }
 } 
+
+
+function redirectToLogin() {
+    window.location.href = "../../../src/views/user/login.html";
+}

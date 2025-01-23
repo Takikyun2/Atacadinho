@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   async function carregarCategorias() {
     try {
       const categorias = await window.api.listarCategoria();
-      console.log('Categorias recebidas no renderer:', categorias);
 
       const categorySelect = document.querySelector('#categoria-select');
 
@@ -52,13 +51,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       const result = await window.api.adicionarProduto(produto);
       if (result.sucesso) {
-        alert('Produto adicionado com sucesso!');
+
+        toastr.options = {
+          "positionClass": "toast-bottom-full-width", // Exibição no topo, ocupando largura total
+        };
+
+        toastr.success('Produto adicionado com sucesso!');
+
+        for(const form of document.getElementsByTagName('form')) {
+          form.reset();
+        }
+
       } else {
-        alert('Erro ao adicionar o produto: ' + result.erro);
+        toastr.error('Erro ao adicionar o produto');
+        console.log('Erro ao adicionar o produto: ' + result.erro);
       }
     } catch (error) {
       console.error('Erro ao adicionar produto:', error);
-      alert('Erro ao adicionar o produto.');
+      toastr.error('Erro ao adicionar o produto');
     }
   });
 

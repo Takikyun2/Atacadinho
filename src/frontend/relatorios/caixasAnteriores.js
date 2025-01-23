@@ -14,7 +14,6 @@ export async function listarRegistrosCaixaAnteriores() {
         }
 
         const logins = await window.api.listarLogins();
-        console.log(logins);
 
         const outputTabelaRelatoriosCaixas = response
             .filter(caixa => caixa.valor_final && caixa.data_fechamento) // Filtra apenas os caixas fechados
@@ -43,6 +42,7 @@ export async function listarRegistrosCaixaAnteriores() {
         return outputTabelaRelatoriosCaixas;
 
     } catch (error) {
-        alert("Erro ao listar registros do caixa: " + error);
+        toastr.error('Erro ao listar registros do caixa');
+        console.log("Erro ao listar registros do caixa: " + error);
     }
 }

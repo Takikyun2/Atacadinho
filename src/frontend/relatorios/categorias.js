@@ -6,8 +6,6 @@ export async function categoriasMaisVendidasDia(){
             mes: 12,
             ano: 2024
            });
-
-        console.log(valorTotalCategoria);
         
     } catch (error) {
         console.error('Erro ao carregar categorias:', error);

@@ -1,11 +1,16 @@
 // Função de excluir item
-function excluirItem(botao) {
+async function excluirItem(botao) {
     if (confirm("Deseja realmente excluir este item?")) {
         const linha = botao.parentNode.parentNode;
-        linha.remove();
         const id_produto = linha.querySelector("td").innerText;
-         
-        removerProduto(id_produto)
+        const resultRemoverProduto = await removerProduto(id_produto)
+        
+        if(resultRemoverProduto.sucesso === false){
+            return
+        }
+
+        linha.remove();
+
     }
 }
 
@@ -158,8 +163,11 @@ const atualizaProduto = async (idproduto, novosDados) => {
         novosDados["categoria"] = idCategoria 
 
         const result = await window.api.atualizarProduto(idproduto, novosDados)
+        
+        toastr.success('Produto atualizado com sucesso!');
 
     } catch (error) {
+        toastr.error('Ocorreu um erro ao atualizar o produto!');
         console.log(error);
     }
 }
@@ -167,11 +175,16 @@ const removerProduto = async (idproduto) => {
     try {
         
         const result = await window.api.removerProduto(idproduto)
-        if (result) {
-            console.log("produto removido com sucesso");
+        if (result.sucesso === false) {
+            toastr.error('Ocorreu um erro ao remover o produto!');
+            return result
         }
 
+        toastr.success('Produto removido com sucesso!');
+        return result
+
     } catch (error) {
-        console.log(error);
+        toastr.error('Ocorreu um erro ao remover o produto!');
+        console.error(error);
     }
 }

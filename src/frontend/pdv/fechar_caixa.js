@@ -19,7 +19,7 @@ btnFecharCaixa.addEventListener('click', async ()=>{
         });
 
         if (result.sucesso) {
-            alert('Caixa fechado com sucesso');
+            toastr.success('Caixa fechado com sucesso!');
             //esconde o modal
             modalFechamento.style.display = "none";
             //atualiza o storage para informar que o caixa esta fechado e assim abrir o modal de abertura novamente
@@ -28,7 +28,8 @@ btnFecharCaixa.addEventListener('click', async ()=>{
             window.location.href = "../../../src/views/user/login.html";
 
           } else {
-            alert('Erro ao atualizar o registro de caixa: ' + result.erro);
+            toastr.error('Erro ao atualizar o registro de caixa');
+            console.log('Erro ao atualizar o registro de caixa: ' + result.erro);
           }
 
     } catch (error) {

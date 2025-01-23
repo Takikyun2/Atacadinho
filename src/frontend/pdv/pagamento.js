@@ -133,7 +133,6 @@ const listarTiposDePagamentos = async () =>{
         const formaPagamentoDiv = document.getElementById('forma-pagamento');
 
         formaPagamentoDiv.innerHTML = outputTiposPagamento;
-        console.log(outputTiposPagamento);
         
     } catch (error) {
         

@@ -51,14 +51,14 @@ formBusca.addEventListener("submit", async (evento)=>{
     const idProdutoSelecionado = selectBusca.value
 
     if (!idProdutoSelecionado) {
-        alert("Selecione um produto válido!");
+        toastr.warning('Selecione um produto válido!');
         return;
     }
 
     const produtoPorId = await buscarProdutosPorId(idProdutoSelecionado);
 
     if (!produtoPorId) {
-        alert("Produto não encontrado!");
+        toastr.error('Produto não encontrado!');
         return;
     }
     
@@ -142,7 +142,7 @@ function editarProduto(index) {
             produtosVenda[index].quantidade = novaQuantidade;
             atualizarTabela();
         } else {
-            alert("Quantidade inválida!");
+            toastr.error('Quantidade inválida!');
             atualizarTabela();
         }
     });
@@ -191,8 +191,6 @@ btnSimFechamento.addEventListener('click', async () => {
     //fechar modal de aviso
     sobreposicaoModalFechamento.style.display = 'none';
 
-    /* alert('Caixa fechado com sucesso!'); */
-    /* sobreposicaoModalFechamento.style.display = 'none'; */
 });
 
 // Fechar modal com ESC e confirmar com ENTER
@@ -201,7 +199,7 @@ document.addEventListener('keydown', (e) => {
         sobreposicaoModalFechamento.style.display = 'none';
     }
     if (e.key === 'Enter' && sobreposicaoModalFechamento.style.display === 'flex') {
-        alert('Caixa fechado com sucesso!');
+        toastr.success('Caixa fechado com sucesso!');
         sobreposicaoModalFechamento.style.display = 'none';
     }
 });
@@ -254,40 +252,24 @@ function aberturaDeCaixa (){
                 //guarda o id do caixa que abriu na session storage
                 sessionStorage.setItem('dadosCaixaAtual', JSON.stringify({ idCaixa: result.res.lastId}));
 
-              alert('Registro cadastrado com sucesso');
+              toastr.success('Caixa aberto com sucesso! Seja bem vindo!');
               //esconde o modal
               modal.style.display = 'none';
 
               sessionStorage.setItem('caixaEstaAberto', JSON.stringify({ isOpen: true }));
 
             } else {
-              alert('Erro ao adicionar o registro de caixa: ' + result.erro);
+                toastr.error('Erro ao adicionar o registro de caixa!');
+                console.log('Erro ao adicionar o registro de caixa: ' + result.erro);
             }
           } catch (error) {
             console.error('Erro ao adicionar o registro de caixa:', error);
-            alert('Erro ao adicionar o registro de caixa.');
+            toastr.error('Erro ao adicionar o registro de caixa!');
           }
         
     })
 
 
-    /* // Close modal
-    closeModalBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
-
-        // Limpa o valor do input ao clicar em cancelar
-        valorInput.value = '';
-    });
-
-    // Close modal with ESC key
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
-            modal.style.display = 'none';
-
-            // Limpa o valor do input ao pressionar ESC
-            valorInput.value = '';
-        }
-    }); */
 
     // Atualiza a data e hora dinamicamente
     function atualizarDataHora() {
@@ -378,7 +360,7 @@ btnConcluirVenda.addEventListener('click', async ()=>{
     console.log(produtosVenda);
 
     if(produtosVenda.length === 0){
-        alert('Nenhum produto foi adicionado à venda.');
+        toastr.warning('Nenhum produto foi adicionado à venda!');
         return
     }
     // Calcular o valor total
@@ -438,7 +420,7 @@ btnConcluirVenda.addEventListener('click', async ()=>{
     try {
         const result = await window.api.adicionarRegistrosDeVendas(venda, produtosVenda, tipoDePagamentoDaVenda);
         if (result.sucesso) {
-            console.log('Registro cadastrado com sucesso');
+            toastr.success('Registro de compra cadastrada com sucesso');
             produtosVenda.length = 0; //limpa o array de produtos
             atualizarTabela()
 
@@ -446,10 +428,11 @@ btnConcluirVenda.addEventListener('click', async ()=>{
             modalConcluido.style.display = 'flex';
             resetInputs();
         } else {
-          alert('Erro ao adicionar o registro de venda: ' + result.erro);
+            toastr.error('Erro ao adicionar o registro de venda');
+            console.error('Erro ao adicionar o registro de venda: ' + result.erro);
         }
       } catch (error) {
         console.error('Erro ao adicionar o registro de venda:', error);
-        alert('Erro ao adicionar o registro de venda.');
+        toastr.error('Erro ao adicionar o registro de venda');
       }
 })

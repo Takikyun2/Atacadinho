@@ -1,7 +1,6 @@
 export async function listarVendas(){
     try {
         const vendas = await window.api.listarRegistrosDeVendas();
-        console.log(vendas);
 
         const outputTabelaRelatoriosVendas = vendas.map(
             venda => {
