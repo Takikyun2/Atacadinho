@@ -45,6 +45,10 @@ contextBridge.exposeInMainWorld('api', {
   atualizarUltimoRegistroCaixaAberto: (caixa) => ipcRenderer.invoke('atualizar-ultimo-registro-caixa', caixa),
  
   listarRegistrosCaixa: () => ipcRenderer.invoke('listar-registros-caixa'),
+
+  listarRegistrosCaixaAtual: () => ipcRenderer.invoke('listar-registros-caixa-atual'),
+
+  obterMovimentacaoCaixaAtual: () => ipcRenderer.invoke('obter-movimentacao-caixa-atual'),
  
   atualizarRegistrosCaixa: (newCaixa) => ipcRenderer.invoke('atualizar-registro-caixa',  newCaixa),
  

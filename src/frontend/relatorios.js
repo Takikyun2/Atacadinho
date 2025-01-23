@@ -266,11 +266,28 @@ const outputTabelaRelatoriosVendas = listarVendas();
 
 
 //* -------------------------- GRAFICO E CAMPO DE RESUMOS -------------------------------- //
+let horarioDasCompras = []
+let valorTotalDasCompras = []
+
+try {
+  const caixaAtual = await window.api.listarRegistrosCaixaAtual();
+
+  if(caixaAtual.length > 0){
+    caixaAtual.forEach(registro => {
+
+      horarioDasCompras.push(registro.hora_venda)
+      valorTotalDasCompras.push(registro.total_vendas)
+
+    })
+  }
+} catch (error) {
+  console.log(error);
+}
 
 const contexto = document.getElementById('salesChart').getContext('2d');
 
-const labelsHoras = ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00']; // Horários
-const valoresVendas = [670, 306, 454, 580, 432, 210, 300, 700, 620, 400, 800]; // Valores
+const labelsHoras = horarioDasCompras; // Horários
+const valoresVendas = valorTotalDasCompras; // Valores
 
 const graficoVendas = new Chart(contexto, {
     // Daqui pra baixo é estilo do gráfico, ent relaxe
@@ -330,6 +347,53 @@ const graficoVendas = new Chart(contexto, {
     },
   },
 });
+
+// inserir dados das movimentacoes no aside
+async function atualizarAsideMovimentacoes() {
+  try {
+    const { movimentacoes, totalVendas, totalRetiradas } = await window.api.obterMovimentacaoCaixaAtual();
+
+    console.log(movimentacoes, totalVendas, totalRetiradas);
+    
+
+    let sectionContent = '';
+    movimentacoes.forEach(movimentacao => {
+      let valorExibido = '';
+        if (movimentacao.tipo === 'Abertura') {
+            valorExibido = `R$ ${movimentacao.valor ? movimentacao.valor.toFixed(2) : '0.00'}`; // Usando valorInicial se disponível, senão 0.00
+        } else {
+             valorExibido = (movimentacao.valor > 0 ? 'R$ ' : '- R$ ') + Math.abs(movimentacao.valor).toFixed(2);
+        }
+
+      sectionContent += `
+          <div class="item-venda">
+              <div class="detalhes-venda">
+                  <span class="ponto-azul"></span>
+                  <span class="valor-venda">${valorExibido}</span>
+                  <span class="hora-venda">${movimentacao.datahora ? new Date(movimentacao.datahora).toLocaleTimeString() : ''}</span>
+              </div>
+              ${movimentacao.tipo === 'Abertura' ? '<span class="forma-pagamento">Caixa Aberto</span>' : `<span class="forma-pagamento">${movimentacao.tipo}</span>`}
+              <hr>
+          </div>
+          `;
+    });
+
+      const footerContent = `
+          <span>Total de Vendas: R$ ${totalVendas.toFixed(2)}</span><br>
+          <span>Total de Retiradas: - R$ ${Math.abs(totalRetiradas).toFixed(2)}</span>
+      `;
+
+      document.querySelector('.modal-corpo').innerHTML = sectionContent;
+      document.querySelector('.modal-rodape').innerHTML = footerContent;
+
+  } catch (error) {
+    
+  }
+}
+
+atualizarAsideMovimentacoes();
+
+
 
 //* --------------------------- GRÁFICO DE PIZZA EXTRATO -------------------------------//
 

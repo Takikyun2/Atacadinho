@@ -266,6 +266,22 @@ ipcMain.handle('listar-registros-caixa', async () => {
   }
 });
 
+ipcMain.handle('listar-registros-caixa-atual', async () => { 
+  try {
+    return await CaixaController.listarRegistrosCaixaAtual();
+  } catch (err) {
+    return { erro: err.message };
+  }
+});
+
+ipcMain.handle('obter-movimentacao-caixa-atual', async () => { 
+  try {
+    return await CaixaController.obterMovimentacaoCaixaAtual();
+  } catch (err) {
+    return { erro: err.message };
+  }
+});
+
 ipcMain.handle('atualizar-registro-caixa', async (event, newCaixa) => {
   try {
     await ProdutoController.atualizarProduto(newCaixa)

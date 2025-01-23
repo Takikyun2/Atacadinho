@@ -25,6 +25,22 @@ const Caixa = require('../models/Caixa');
           throw new Error('Erro ao listar registros de caixa: ' + err.message)
         }
     }
+
+    static async listarRegistrosCaixaAtual() {
+        try {
+          return await Caixa.listarRegistrosCaixaAtual();
+        } catch (err) {
+          throw new Error('Erro ao listar registros do caixa atual: ' + err.message)
+        }
+    }
+    
+    static async obterMovimentacaoCaixaAtual() {
+        try {
+          return await Caixa.obterMovimentacaoCaixaAtual();
+        } catch (err) {
+          throw new Error('Erro ao listar registros do caixa atual: ' + err.message)
+        }
+    }
  
     static async atualizarRegistrosCaixa(newCaixa) {
         try {
