@@ -41,7 +41,6 @@ function salvarEdicao(linha, botaoSalvar) {
     const colunas = linha.querySelectorAll("td");
 
     const id_produto =  colunas[0].querySelector("input").value; // Pegando o ID do produto
-    console.log(id_produto);
     
 
     // Criar um objeto com os dados editados
@@ -80,8 +79,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Função para renderizar a tabela com os dados
     async function renderizarTabela(produtosFiltrados) {
+        
         const tabelaProdutos = document.getElementById('tabela-produtos');
         tabelaProdutos.innerHTML = ''; // Limpa a tabela antes de renderizar
+
+        if(!produtosFiltrados){
+            const div = document.createElement('tr');
+            div.innerHTML = `
+              <td colspan="10" style="text-align: center;">Nenhum produto encontrado</
+            `;
+            tabelaProdutos.appendChild(div);
+            return;
+        }
 
         produtosFiltrados.forEach(produto => {
             const categoriaProduto = categorias.find(categoria => categoria.idcategoria === produto.categoria_id);
@@ -112,24 +121,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // Função de filtrar produtos
-    document.getElementById('btn-pesquisar').addEventListener('click', function () {
-        const filtro = document.getElementById('filtro').value;
-        const pesquisa = document.getElementById('input-filtro').value.toLowerCase();
-
-        // Filtra os produtos com base no filtro de categoria e na pesquisa de texto
-        const produtosFiltrados = produtos.filter(function (produto) {
-            const correspondeCategoria = filtro === 'Filtro' || produto.categoria.toLowerCase() === filtro.toLowerCase();
-            const correspondePesquisa = produto.nome.toLowerCase().includes(pesquisa) ||
-                produto.categoria.toLowerCase().includes(pesquisa) ||
-                produto.marca.toLowerCase().includes(pesquisa) ||
-                produto.fornecedor.toLowerCase().includes(pesquisa);
-
-            return correspondeCategoria && correspondePesquisa;
-        });
-
-        renderizarTabela(produtosFiltrados);
+    document.getElementById('btn-pesquisar').addEventListener('click', filtrarProdutos);
+    document.getElementById('input-filtro').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            filtrarProdutos();
+        }
     });
 
+    async function filtrarProdutos() {
+        const filtro = document.getElementById('filtro').value;
+        const pesquisa = document.getElementById('input-filtro').value;
+
+        if (pesquisa) {
+            const produtoFiltradoPorNome = await window.api.buscarProdutoPorNome(pesquisa);
+            
+            // Se tiver pelo menos um caractere no input, faz a pesquisa
+            renderizarTabela(produtoFiltradoPorNome);
+        } else {
+            // Se não tiver nada no input, mostra todos os produtos novamente
+            renderizarTabela(produtos);
+        }
+    }
+        
     // Inicializa a página com todos os produtos
     renderizarTabela(produtos);
 });
@@ -137,19 +150,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 const atualizaProduto = async (idproduto, novosDados) => {
     try {
         const categorias = await window.api.listarCategoria();
-        console.log(idproduto);
-        
-        
 
         const categoriaProduto = categorias.find(categoria => categoria.categoriaproduto === novosDados.categoria);
         
-
         const idCategoria = categoriaProduto ? categoriaProduto.idcategoria : 'categoria não encontrada';
 
-        novosDados["categoria"] = idCategoria
-        console.log(novosDados);
-        
-        
+        novosDados["categoria"] = idCategoria 
 
         const result = await window.api.atualizarProduto(idproduto, novosDados)
 

@@ -2,11 +2,7 @@ const Produto = require('../models/Produto')
 
 class CompraController {
 
-  static async buscarProdutoPorNome(args) {
-
-    console.log('Dados recebidos no backend: ', args)
-
-    const { nomeProduto, quantidade } = args;
+  static async buscarProdutoPorNome(nomeProduto) {
 
     // ! Verificação e validacao dos dados
 
@@ -15,21 +11,15 @@ class CompraController {
       return { status: 400, messsage: 'Nome do produto inválido' };
     }
 
-    if (!quantidade || typeof quantidade !== 'number' || quantidade <= 0) {
-      console.log('Quantidade inválida', quantidade);
-      return { status: 400, messsage: 'Quantidade inválida' };
-    }
-
     // & Busca dos produtos por nome
 
     try {
       const produtos = await Produto.buscarPorNome(nomeProduto);
       if (produtos.length > 0) {
-        const produtoSelecionado = produtos[0];
-        const total = produtoSelecionado.preco * quantidade;
-        return { status: 200, produto: produtoSelecionado, total };
+        const produtoSelecionado = produtos;
+        return produtoSelecionado;
       } else {
-        return { status: 404, message: 'Nenhum produto encontrado' };
+        return false; //retorne false se não encontrar produtos
       }
     } catch (err) {
       console.error('Erro ao buscar produtos:', err.message);
