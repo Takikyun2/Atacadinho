@@ -12,11 +12,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    
 </head>
 
 <body>
-    <!-- Cabeçalho do Site -->
     <header class="container-header">
         <img src="../../../src/assets/img/senac_logo.png" alt="Logo do Senac">
         <hr>
@@ -49,13 +47,9 @@
     <main>
         <h3 id="titulo-main"><u id="titulo-main-sublinhado">Cadastro de Produtos</u></h3>
 
-        <!-- Formulário de Cadastro de Produtos -->
         <form id="form-principal" action="submit">
-
-            <!-- Informações Básicas -->
             <div class="first-container">
                 <div class="dadosBasicos">
-                    <!-- Dados básicos -->
                     <label for="name">Nome do Produto:</label>
                     <input class="form-input" id="name-input" name="name" type="text" required>
 
@@ -63,15 +57,12 @@
                     <input class="form-input" id="eanGtin-input" name="eanGtin" type="text" required>
 
                     <label for="preco">Preço:</label>
-                    <input class="form-input" id="preco-input" name="preco" type="number" required step="0.01"
-                        placeholder="0.00">
+                    <input class="form-input" id="preco-input" name="preco" type="number" required step="0.01" placeholder="0.00">
 
                     <label for="fornecedor">Fornecedor:</label>
                     <input class="form-input" id="fornecedor-input" name="fornecedor" type="text">
-
                 </div>
 
-                <!-- Dados de Unidade de Medida -->
                 <div class="coluna2">
                     <div class="linha">
                         <div class="coluna">
@@ -90,7 +81,6 @@
                                     <option value="g">Garrafa (g)</option>
                                 </select>
                             </div>
-        
                             <button id="button-scanear" type="button">Scanear</button>
                         </div>
 
@@ -98,23 +88,16 @@
                             <video id="video-camera" autoplay></video>
                         </div>
                     </div>
-                    
-
-                    
 
                     <div class="second-container">
-                        <!-- dadosCMF, pois CMF é uma abreviação de Categoria, Marca e Fornecedor -->
                         <div class="dadosCMF">
                             <label for="categoria">Categoria:</label>
-                            <select class="form-input" name="categoria" id="categoria-select" required>
-                                <!-- opitions inseridos dinamicamente -->
-                            </select>
-        
+                            <select class="form-input" name="categoria" id="categoria-select" required></select>
+
                             <label for="marca">Marca:</label>
                             <input class="form-input" id="marca-input" name="marca" type="text">
-    
                         </div>
-        
+
                         <div class="div-condicaoDoProduto">
                             <label for="produtoAtivo">Condição do Produto:</label>
                             <select class="form-input" name="categoria" id="produtoCondicao" required>
@@ -123,47 +106,40 @@
                             </select>
                         </div>
                     </div>
-
-                    
                 </div>
             </div>
 
             <hr>
 
-                <div class="coluna-2-ajuste coluna2">
-                        <!-- Dados de Promoção -->
-                        <div class="preco-promocional">
-                            <label>Promocional:</label>
-                            <span>Ativo</span>
-                            <input id="precoAtivo-input" class="form-input" name="precoPromocao" type="radio" value="ativo">
-                            <span>Desativado</span>
-                            <input id="precoInativo-input" class="form-input" name="precoPromocao" type="radio" value="inativo" checked>
-                        </div>
-
-                        <div class="promocional-flex">
-                            <label for="precoPromocional">Preço Promocional:</label>
-                            <input class="form-input" id="precoPromocional-input" name="precoPromocional" type="number" step="0.01" placeholder="0.00" disabled>
-                        </div>
-
-                        <div class="div-dataDaPromocao">
-                            <label for="">Data da Promoção:</label>
-                            <input id="dataInicio-input" type="datetime-local" disabled>
-                            <span>até</span>
-                            <input id="dataFim-input" type="datetime-local" disabled>
-                        </div>
+            <div class="coluna-2-ajuste coluna2">
+                <div class="preco-promocional">
+                    <label>Promocional:</label>
+                    <span>Ativo</span>
+                    <input id="precoAtivo-input" class="form-input" name="precoPromocao" type="radio" value="ativo">
+                    <span>Desativado</span>
+                    <input id="precoInativo-input" class="form-input" name="precoPromocao" type="radio" value="inativo" checked>
                 </div>
+
+                <div class="promocional-flex">
+                    <label for="precoPromocional">Preço Promocional:</label>
+                    <input class="form-input" id="precoPromocional-input" name="precoPromocional" type="number" step="0.01" placeholder="0.00" disabled>
+                </div>
+
+                <div class="div-dataDaPromocao">
+                    <label for="">Data da Promoção:</label>
+                    <input id="dataInicio-input" type="datetime-local" disabled>
+                    <span>até</span>
+                    <input id="dataFim-input" type="datetime-local" disabled>
+                </div>
+            </div>
             <hr>
 
-            <!-- Botões -->
             <div class="action-buttons">
                 <button class="button-action" id="button-salvar" type="submit">SALVAR - F5</button>
                 <button class="button-action" id="button-limpar" type="reset">LIMPAR TELA - F3</button>
-                <button class="button-action" id="button-cancelar" type="button" onclick="">CANCELAR F4</button>
-                <button class="button-action" id="button-voltar" type="button" onclick="window.history.back()">VOLTAR
-                    -F6</button>
+                <button class="button-action" id="button-cancelar" type="button">CANCELAR F4</button>
+                <button class="button-action" id="button-voltar" type="button" onclick="window.history.back()">VOLTAR -F6</button>
             </div>
-
-
         </form>
     </main>
 
@@ -174,12 +150,12 @@
         const videoElement = document.getElementById("video-camera");
         const inputEAN = document.getElementById("eanGtin-input");
 
+        // Scanner com câmera
         btnScanear.addEventListener("click", async () => {
             const codeReader = new ZXing.BrowserBarcodeReader();
 
             try {
                 const devices = await codeReader.listVideoInputDevices();
-                console.log("Dispositivos detectados:", devices);
 
                 if (devices.length === 0) {
                     alert("Nenhuma câmera encontrada. Verifique se o dispositivo está conectado.");
@@ -190,7 +166,6 @@
 
                 navigator.mediaDevices.getUserMedia({ video: true })
                     .then(stream => {
-                        console.log("Acesso à câmera concedido.");
                         videoElement.srcObject = stream;
                         videoElement.style.display = "block";
 
@@ -216,28 +191,53 @@
             }
         });
 
+        // Captura de eventos do leitor de código de barras (via teclado)
+        let barcode = "";
+        let lastKeyTime = Date.now();
+
+        document.addEventListener("keydown", (event) => {
+            const currentTime = Date.now();
+
+            // Reseta se o intervalo entre teclas for grande
+            if (currentTime - lastKeyTime > 100) {
+                barcode = "";
+            }
+
+            if (event.key === "Enter" && barcode) {
+                inputEAN.value = barcode;
+                alert(`Código capturado: ${barcode}`);
+                barcode = "";
+                return;
+            }
+
+            // Ignora teclas de controle
+            if (!event.ctrlKey && !event.altKey && !event.metaKey) {
+                barcode += event.key;
+            }
+
+            lastKeyTime = currentTime;
+        });
     </script>
 
-    <!-- Função de ativo e desativado -->
-<script>
-    const precoAtivoInput = document.getElementById("precoAtivo-input");
-    const precoInativoInput = document.getElementById("precoInativo-input");
-    const precoPromocionalInput = document.getElementById("precoPromocional-input");
-    const dataInicioInput = document.getElementById("dataInicio-input");
-    const dataFimInput = document.getElementById("dataFim-input");
+    <script>
+        const precoAtivoInput = document.getElementById("precoAtivo-input");
+        const precoInativoInput = document.getElementById("precoInativo-input");
+        const precoPromocionalInput = document.getElementById("precoPromocional-input");
+        const dataInicioInput = document.getElementById("dataInicio-input");
+        const dataFimInput = document.getElementById("dataFim-input");
 
-    function toggleInputs() {
-        const isAtivo = precoAtivoInput.checked;
+        function toggleInputs() {
+            const isAtivo = precoAtivoInput.checked;
 
-        precoPromocionalInput.disabled = !isAtivo;
-        dataInicioInput.disabled = !isAtivo;
-        dataFimInput.disabled = !isAtivo;
-    }
+            precoPromocionalInput.disabled = !isAtivo;
+            dataInicioInput.disabled = !isAtivo;
+            dataFimInput.disabled = !isAtivo;
+        }
 
-    precoAtivoInput.addEventListener("change", toggleInputs);
-    precoInativoInput.addEventListener("change", toggleInputs);
-    toggleInputs();
-</script>
+        precoAtivoInput.addEventListener("change", toggleInputs);
+        precoInativoInput.addEventListener("change", toggleInputs);
+        toggleInputs();
+    </script>
 
     <script src="../../../src/frontend/cadastro_produto_renderer.js"></script>
 </body>
