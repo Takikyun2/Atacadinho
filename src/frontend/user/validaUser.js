@@ -6,7 +6,7 @@ formLogin.addEventListener('submit', (event)=>{
     const  senha = document.getElementById('senha').value;
 
     if (!usuario || !senha) {
-        alert('Preencha todos os campos');
+        toastr.warning('Preencha todos os campos');
         return
     }
 
@@ -22,7 +22,7 @@ const validaLogin = async (login) => {
         const resultado = await window.api.validarLogin(login);
 
         if (!resultado) {
-            alert('Login ou senha inseridos incorretamente')
+            toastr.error('Login ou senha inseridos incorretamente')
             return
         }
 

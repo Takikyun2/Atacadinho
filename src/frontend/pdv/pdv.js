@@ -38,17 +38,79 @@ const inserirDadosSelectBuscaProdutos = (produtosDB) =>{
 
 listarProdutos();
 
+const inserirProdutoViaLeitorBarras = () => {
+        // Captura de eventos do leitor de código de barras (via teclado)
+    let barcode = "";
+    let lastKeyTime = Date.now();
+
+    document.addEventListener("keydown", async (event) => {
+        const currentTime = Date.now();
+
+        // Reseta se o intervalo entre teclas for grande
+        if (currentTime - lastKeyTime > 100) {
+            barcode = "";
+        }
+
+        if (event.key === "Enter" && barcode) {
+
+            console.log(`Código capturado: ${barcode}`);
+
+            try {
+                const produtoDB = await window.api.buscarProdutosPorCodigo(barcode);
+                console.log(produtoDB);
+            
+                if (produtoDB) {
+                    const produto = produtoDB[0];
+                    const {id_produto, nome, preco} = produto;
+
+                    produtosVenda.push({
+                        produto_id: id_produto,
+                        nome: nome,
+                        quantidade: 1,
+                        preco: parseFloat(preco)
+                    })
+
+                    console.log(produtosVenda);
+                    atualizarTabela();
+                }
+            } catch (error) {
+                console.error(error);
+                toastr.error('Erro ao scanear o produto')
+            }
+
+            barcode = "";
+            return;
+        }
+
+        // Ignora teclas de controle
+        if (!event.ctrlKey && !event.altKey && !event.metaKey) {
+            barcode += event.key;
+        }
+
+        lastKeyTime = currentTime;
+    });
+
+}
+
+
+
 // Exemplo de lista de produtos
 const produtosVenda = [
 ];
+
+inserirProdutoViaLeitorBarras();
+
 
 const formBusca = document.getElementById("busca-produto-form");
 
 formBusca.addEventListener("submit", async (evento)=>{
 
     evento.preventDefault();
+    const selectBuscaProduto = document.getElementById("select-busca-produto");
+    const idProdutoSelecionado = selectBuscaProduto.value
 
-    const idProdutoSelecionado = selectBusca.value
+    console.log(idProdutoSelecionado);
+    
 
     if (!idProdutoSelecionado) {
         toastr.warning('Selecione um produto válido!');
@@ -71,19 +133,27 @@ formBusca.addEventListener("submit", async (evento)=>{
         quantidadeProduto.value = 1;
     }
     
+     // Verifica se o produto já está no array
+     let produtoExistente = produtosVenda.find(produto => produto.produto_id === selectBusca.value);
 
-    produtosVenda.push({
-        produto_id: selectBusca.value,
-        nome: nome,
-        quantidade: parseInt(quantidadeProduto.value, 10),
-        preco: parseFloat(preco)
-    })
+     if (produtoExistente) {
+         // Se existir, apenas aumenta a quantidade
+         produtoExistente.quantidade += parseInt(quantidadeProduto.value, 10);
+     } else {
+        // Se não existir, adiciona o produto ao array
+        produtosVenda.push({
+            produto_id: selectBusca.value,
+            nome: nome,
+            quantidade: parseInt(quantidadeProduto.value, 10),
+            preco: parseFloat(preco)
+        })
+     }
+
 
     atualizarTabela();
 
     /* formBusca.reset(); */
     quantidadeProduto.value = "";
-    selectBusca.value = "";
 })
 
 
@@ -136,7 +206,7 @@ function editarProduto(index) {
     celulaQuantidade.innerHTML = "";
     celulaQuantidade.appendChild(inputQuantidade);
 
-    inputQuantidade.addEventListener("blur", () => {
+    function salvarQuantidade() {
         const novaQuantidade = parseInt(inputQuantidade.value);
         if (!isNaN(novaQuantidade) && novaQuantidade > 0) {
             produtosVenda[index].quantidade = novaQuantidade;
@@ -145,7 +215,21 @@ function editarProduto(index) {
             toastr.error('Quantidade inválida!');
             atualizarTabela();
         }
+    }
+
+    // Salva ao perder o foco (blur)
+    inputQuantidade.addEventListener("blur", salvarQuantidade);
+
+    // Salva ao pressionar "Enter"
+    inputQuantidade.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            salvarQuantidade();
+        }
     });
+
+    // Dá foco automaticamente ao input ao ser criado
+    inputQuantidade.focus();
+    
 }
 
 function atualizarFooter() {

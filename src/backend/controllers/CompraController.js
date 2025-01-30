@@ -27,10 +27,9 @@ class CompraController {
     }
   }
 
-  static async buscarProdutosPorCodigo(args) {
+  static async buscarProdutosPorCodigo(codigoBarras) {
 
-    console.log('Dados recebidos no backend: ', args)
-    const { codigoBarras, quantidade } = args;
+    console.log('Dados recebidos no backend: ', codigoBarras)
 
     // ! Verificação e validacao dos dados
 
@@ -39,18 +38,12 @@ class CompraController {
       return { status: 400, message: 'Codigo de barras inválido' };
     }
 
-    if (!quantidade || typeof quantidade !== 'number' || quantidade <= 0) {
-      console.log('Quantidade inválida', quantidade);
-      return { status: 400, message: 'Quantidade inválida' };
-    }
-
     // & Busca dos produtos por codigo de barras
 
     try {
       const produto = await Produto.buscarPorCodigo(codigoBarras);
       if (produto) {
-        const total = produto.preco * quantidade;
-        return { status: 200, produto, total }; // retorna o produto e o total calculado
+        return produto; // retorna o produto 
       } else {
         return { status: 404, message: 'Nenhum produto encontrado' };
       }

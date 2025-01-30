@@ -1,6 +1,6 @@
 const btnCad = document.getElementById('btn-cad');
 
-btnCad.addEventListener('click', ()=>{
+btnCad.addEventListener('click', async ()=>{
 
     const nome = document.getElementById('campo-nome-completo').value;
     const usuario = document.getElementById('campo-usuario').value;
@@ -13,12 +13,23 @@ btnCad.addEventListener('click', ()=>{
         return
     }
 
+    
+    
     const login = { 
         nomeCompleto: nome, 
         user: usuario, 
         senha: senha, 
         cpf: cpf, 
         user_type_id: cargo
+    }
+    
+    const response = await window.api.listarLogins()
+
+    const  isUsernameAlreadyExists = response.find( l => l.user === login.user)
+
+    if (isUsernameAlreadyExists) {
+        toastr.error("Este nome de usuário já está em uso. Por favor, tente novamente.")
+        return
     }
 
     adicionarLogin(login)

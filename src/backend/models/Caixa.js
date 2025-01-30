@@ -46,7 +46,7 @@ class Caixa {
     let conn;
     try {
       conn = await pool.getConnection();
-      const [rows] = await conn.execute("SELECT * FROM caixa");
+      const [rows] = await conn.execute("SELECT * FROM caixa ORDER BY id_caixa DESC ;");
       return rows; // rows será um array com os resultados da consulta
     } catch (error) {
       console.error("Erro ao realizar a consulta:", error);

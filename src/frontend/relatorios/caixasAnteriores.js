@@ -1,6 +1,7 @@
 export async function listarRegistrosCaixaAnteriores() {
     try {
         const response = await window.api.listarRegistrosCaixa();
+        
 
         function formatarData(dataString) {
             const data = new Date(dataString); // Converte a string do banco em um objeto Date
