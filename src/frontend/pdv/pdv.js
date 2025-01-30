@@ -66,17 +66,17 @@ const inserirProdutoViaLeitorBarras = () => {
                 // Verifica se o produto já está no array
                 let produtoExistente = produtosVenda.find(produto => produto.produto_id === selectBusca.value);
 
-                        if (produtoExistente) {
-                            // Se existir, apenas aumenta a quantidade
-                            produtoExistente.quantidade += parseInt(quantidadeProduto.value, 10);
-                        } else {
-                            produtosVenda.push({
-                                produto_id: id_produto,
-                                nome: nome,
-                                quantidade: 1,
-                                preco: parseFloat(preco)
-                            })
-                        }
+                if (produtoExistente) {
+                // Se existir, apenas aumenta a quantidade
+                    produtoExistente.quantidade += 1;
+                } else {
+                    produtosVenda.push({
+                        produto_id: id_produto,
+                        nome: nome,
+                        quantidade: 1,
+                        preco: parseFloat(preco)
+                    })
+                }
 
                 
                     console.log(produtosVenda);
