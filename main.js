@@ -1,6 +1,7 @@
-const { app, BrowserWindow, Menu, ipcMain } = require('electron')
+const { app, BrowserWindow, Menu, ipcMain,dialog  } = require('electron')
 const { spawn, execSync } = require('child_process');
 const path = require('path')
+const fs = require('fs'); // Adicionado para verificar se o WAMP está instalado
 const mysql = require('mysql2/promise');
 const { createDataBaseIfNotExists, setupDatabase } = require('./src/backend/database/database')
 const ProdutoController = require('./src/backend/controllers/ProdutoController')
@@ -9,7 +10,6 @@ const CategoriaController = require('./src/backend/controllers/CategoriaControll
 const CompraController = require('./src/backend/controllers/CompraController')
 const CaixaController  = require('./src/backend/controllers/CaixaController')
 const VendasController = require('./src/backend/controllers/VendaController');
-
 
 
 // Função para verificar se o WAMP já está em execução
@@ -23,6 +23,12 @@ function verificaWampExec() {
   }
 }
 
+// Função para verificar se o WAMP está instalado
+function verificaWampInstalado() {
+  const wampPath = path.join('C:', 'wamp64', 'wampmanager.exe');
+  return fs.existsSync(wampPath);
+}
+
 // Função para iniciar o WAMP Server de forma assíncrona
 function iniciarWAMPServer() {
   return new Promise((resolve, reject) => {
@@ -30,11 +36,25 @@ function iniciarWAMPServer() {
       console.log('WAMP Server ja esta em execucao.');
       resolve();
     } else {
-      const wampPath = path.join('C:', 'wamp64', 'wampmanager.exe'); // Caminho do exe do WAMP obs: garanta que este caminha esteja certo
+      if (!verificaWampInstalado()) {
+        console.error('WAMP nao esta instalado no caminho especificado.');
+        dialog.showErrorBox(
+          'Erro - WAMP nao instalado',
+          'O WAMP nao foi encontrado no caminho especificado. Por favor, instale o WAMP e tente novamente.'
+        );
+        reject(new Error('WAMP nao esta instalado no caminho especificado.'));
+        return;
+      }
+
+      const wampPath = path.join('C:', 'wamp64', 'wampmanager.exe'); // Caminho do exe do WAMP
       const wampProcess = spawn(wampPath, { detached: true, stdio: 'ignore', shell: true });
 
       wampProcess.on('error', (error) => {
         console.error('Erro ao iniciar o WAMP Server:', error);
+        dialog.showErrorBox(
+          'Erro ao iniciar o WAMP',
+          'Ocorreu um erro ao tentar iniciar o WAMP Server. Verifique se o WAMP está corretamente instalado.'
+        );
         reject(error);
       });
 
@@ -46,6 +66,7 @@ function iniciarWAMPServer() {
   });
 }
 
+// Função para verificar a conexão com o banco de dados
 async function waitForDatabase() {
   const dbConfig = {
     host: 'localhost',
@@ -72,6 +93,7 @@ async function waitForDatabase() {
   throw new Error('O banco de dados nao esta disponivel apos varias tentativas.');
 }
 
+// Função para carregar a janela principal
 function carregar_janela() {
   const janela = new BrowserWindow({
     width: 1920,
@@ -86,19 +108,54 @@ function carregar_janela() {
   });
 
   janela.loadFile('src/views/user/login.html');
+
+  janela.on('close', async (event) => {
+    event.preventDefault();
+    const caixaAberto = await janela.webContents.executeJavaScript(
+      "sessionStorage.getItem('caixaEstaAberto')"
+    );
+
+    const status = caixaAberto ? JSON.parse(caixaAberto) : { isOpen: false };
+
+    if (status.isOpen) {
+      dialog.showMessageBox(janela, {
+        type: 'warning',
+        title: 'Atenção',
+        message: 'O caixa está aberto. Feche-o antes de sair.',
+        buttons: ['OK']
+      });
+    } else {
+      app.exit();
+    }
+  });
+
+  return janela; // Retorna a janela criada
 }
 
-// Inicializa o Electron após o WAMP Server
+// Inicializa o Electron após o WAMP Server e a conexão com o banco de dados
 app.whenReady().then(async () => {
   try {
+    // Verifica e inicia o WAMP
     await iniciarWAMPServer();
+
+    // Aguarda a conexão com o banco de dados
     await waitForDatabase();
+
+    // Cria o banco de dados e configura as tabelas, se necessário
     await createDataBaseIfNotExists();
     await setupDatabase();
-    carregar_janela();
+
+    // Cria a janela principal
+    const janela = carregar_janela();
+
+    // Cria o menu da aplicação
     criarMenu();
   } catch (error) {
     console.error('Erro ao iniciar o aplicativo:', error);
+    dialog.showErrorBox(
+      'Erro ao iniciar o aplicativo',
+      'Não foi possível iniciar o aplicativo. Verifique se o WAMP está instalado e o banco de dados está disponível.'
+    );
     app.quit();
   }
 });
@@ -352,7 +409,7 @@ ipcMain.handle('listar-tipos-de-pagamentos', async () => {
 
 function criarMenu() {
   const template = [
-    {
+    /* {
       label: 'Arquivo',
 
       submenu: [
@@ -386,7 +443,7 @@ function criarMenu() {
           }
         }
       ]
-    },
+    }, */
     {
       label: 'Editar',
       submenu: [

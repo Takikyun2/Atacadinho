@@ -281,6 +281,7 @@ const modalFechamento = document.getElementById('modalFechamento');
 btnSimFechamento.addEventListener('click', async () => {
     //abrir modal de fechamento
     modalFechamento.style.display = "block";
+    document.getElementById('valor-fechamento').focus();
     //fechar modal de aviso
     sobreposicaoModalFechamento.style.display = 'none';
 
@@ -303,24 +304,23 @@ function aberturaDeCaixa (){
     const modal = document.getElementById('modal-abertura');
     const btnAbrirCaixa = document.getElementById('btn-abrir-caixa');
 
-    window.onload = () => {
-        const caixaStatus = JSON.parse(sessionStorage.getItem('caixaEstaAberto'));
+    const caixaStatus = JSON.parse(sessionStorage.getItem('caixaEstaAberto'));
+    
+    // Se o caixa estiver fechado mostra o modal de abertura
+    if (!caixaStatus || !caixaStatus.isOpen) {
+        const inputValorAbertura = document.getElementById('valor-abertura');
         
-        // Se o caixa estiver fechado mostra o modal de abertura
-        if (!caixaStatus || !caixaStatus.isOpen) {
-            const inputValorAbertura = document.getElementById('valor-abertura');
-            
-            // Garantir que o modal esteja visível antes de focar
-            modal.style.display = 'flex';
+        // Garantir que o modal esteja visível antes de focar
+        modal.style.display = 'flex';
 
-            // Adiciona o foco no campo de entrada
-            if (inputValorAbertura) {
-                inputValorAbertura.focus();
-            }
-        } else {
-            modal.style.display = 'none';
+        // Adiciona o foco no campo de entrada
+        if (inputValorAbertura) {
+            inputValorAbertura.focus();
         }
+    } else {
+        modal.style.display = 'none';
     }
+
 
     
 
@@ -330,7 +330,13 @@ function aberturaDeCaixa (){
     ///* Abre modal e cadastra no DB o registro */
     btnAbrirCaixa.addEventListener('click', async ()=>{
         //pegando valor do input ja formatado
-        const valorAberturaCaixa = document.getElementById('valor-abertura').value.replace('.', '').replace(',', '.');
+        const valorAberturaCaixa = document.getElementById('valor-abertura').value.replace('R$', '').trim()
+        .replace('.', '').replace(',', '.');
+
+        if (!valorAberturaCaixa) {
+            toastr.warning('Insira um valor para abrir o caixa!');
+            return;
+        }
 
         const caixa = {
             valor_inicial: valorAberturaCaixa,
@@ -345,11 +351,14 @@ function aberturaDeCaixa (){
                 //guarda o id do caixa que abriu na session storage
                 sessionStorage.setItem('dadosCaixaAtual', JSON.stringify({ idCaixa: result.res.lastId}));
 
-              toastr.success('Caixa aberto com sucesso! Seja bem vindo!');
-              //esconde o modal
-              modal.style.display = 'none';
+                toastr.success('Caixa aberto com sucesso! Seja bem vindo!');
+                //esconde o modal
+                modal.style.display = 'none';
+               // Reseta o input
+                document.getElementById('valor-abertura').value = '';
 
               sessionStorage.setItem('caixaEstaAberto', JSON.stringify({ isOpen: true }));
+
 
             } else {
                 toastr.error('Erro ao adicionar o registro de caixa!');

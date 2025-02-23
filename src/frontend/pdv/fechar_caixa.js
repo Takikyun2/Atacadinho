@@ -10,7 +10,13 @@ btnFecharCaixa.addEventListener('click', async ()=>{
 
   const dadosUser = JSON.parse(sessionStorage.getItem('dadosUser'));// pegando dados do user guardado na sessao
   
-  const valorFinalCaixa = document.getElementById('valor-fechamento').value.replace('.', '').replace(',', '.');
+  const valorFinalCaixa = document.getElementById('valor-fechamento').value.replace('R$', '').trim().replace('.', '').replace(',', '.');
+
+  if (!valorFinalCaixa) {
+    toastr.warning('Insira um valor para fechar a caixa!');
+    return;
+  }
+  
 
   try {
         const result = await window.api.atualizarUltimoRegistroCaixaAberto({
@@ -22,10 +28,18 @@ btnFecharCaixa.addEventListener('click', async ()=>{
             toastr.success('Caixa fechado com sucesso!');
             //esconde o modal
             modalFechamento.style.display = "none";
+            //limpa os campos
+            document.getElementById('valor-fechamento').value = '';
+
             //atualiza o storage para informar que o caixa esta fechado e assim abrir o modal de abertura novamente
             sessionStorage.setItem('caixaEstaAberto', JSON.stringify({ isOpen: false }));
 
-            window.location.href = "../../../src/views/user/login.html";
+            document.getElementById('modal-abertura').style.display = 'flex';
+
+            // Adiciona o foco no campo de entrada
+            if (document.getElementById('valor-abertura')) {
+              document.getElementById('valor-abertura').focus();
+            }
 
           } else {
             toastr.error('Erro ao atualizar o registro de caixa');

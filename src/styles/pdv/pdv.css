@@ -267,7 +267,7 @@ input[type="number"] {
     width: 100%;
     background-color: #004A8D; 
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 1000; 
+    z-index: 999; 
     display: flex;
     justify-content: center; 
     padding: 10px;
