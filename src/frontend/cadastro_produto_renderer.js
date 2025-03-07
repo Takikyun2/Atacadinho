@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       // Adiciona a opção padrão
       const optionDefault = document.createElement('option');
       /* optionDefault.value = ''; */
-      optionDefault.textContent = 'Selecione uma categoria';
+      optionDefault.textContent = 'Selecione uma categoria';``
       categorySelect.appendChild(optionDefault);
 
       // Adiciona as opções ao select
@@ -50,12 +50,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     try {
       const result = await window.api.adicionarProduto(produto);
-      if (result.sucesso) {
+      console.log(result);
+      if(result.error){
+        /* toastr.options = {
+          "positionClass": "toast-bottom-full-width", // Exibição no topo, ocupando largura total
+        }; */
+        toastr.error(result.error);
+        console.log('Erro ao adicionar o produto: ' + result.erro);
+        return;
+      }
 
+      if (result.affectedRows > 0) {
         toastr.options = {
           "positionClass": "toast-bottom-full-width", // Exibição no topo, ocupando largura total
         };
-
+        
+        
         toastr.success('Produto adicionado com sucesso!');
 
         for(const form of document.getElementsByTagName('form')) {

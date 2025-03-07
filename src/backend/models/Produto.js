@@ -23,12 +23,28 @@ class Produto {
     let conn;
     try {
       conn = await pool.getConnection();
-      const [res] = await conn.execute(
-        `INSERT INTO produtos (nome, preco, preco_promocional,marca, fornecedor, unidade, codbarra,categoria_id, condicao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-        [produto.nome, produto.preco, produto.preco_promocional,produto.marca, produto.fornecedor, produto.unidade, produto.codbarra, produto.categoria, produto.condicao]
+  
+      // Passo 1: Verificar se já existe um produto com o mesmo código de barras
+      const [existingProduct] = await conn.execute(
+        `SELECT codbarra FROM produtos WHERE codbarra = ?;`,
+        [produto.codbarra]
       );
-      return res; // res contém informações sobre a operação de inserção
-    } finally {
+  
+      // Passo 2: Condicionar a inserção
+      if (existingProduct.length > 0) {
+        return { error: "Já existe um produto cadastrado com este código de barras." }; // Ou lançar um erro
+      } else {
+        // Não existe produto com este código de barras, podemos inserir
+        const [res] = await conn.execute(
+          `INSERT INTO produtos (nome, preco, preco_promocional,marca, fornecedor, unidade, codbarra,categoria_id, condicao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+          [produto.nome, produto.preco, produto.preco_promocional, produto.marca, produto.fornecedor, produto.unidade, produto.codbarra, produto.categoria, produto.condicao]
+        );
+        return res; // res contém informações sobre a operação de inserção
+      }
+    }catch (error) {
+      console.error('Erro ao realizar ao inserir produto:', error);
+      throw error;
+    }finally {
       if (conn) conn.release();
     }
   }

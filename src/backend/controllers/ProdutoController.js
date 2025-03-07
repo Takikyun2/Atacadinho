@@ -7,7 +7,7 @@ class ProdutoController {
 
   static async adicionarProduto(produto) {
     try {
-      await Produto.adicionar(produto);
+      return await Produto.adicionar(produto);
     } catch (err) {
       throw new Error('Erro ao adicionar produto: ' + err.message)
     }

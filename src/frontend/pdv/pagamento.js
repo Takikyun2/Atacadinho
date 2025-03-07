@@ -37,6 +37,11 @@ modalPagamento.querySelector('.content-pagamento').appendChild(erroElement);
 // Abrir e fechar modal de pagamento
 openModalPagamentoBtn.addEventListener('click', () => {
 
+    if (!produtosVenda.length) {
+        toastr.warning('Adicione produtos para concluir a venda.');
+        return;  
+    }
+
     modalPagamento.style.display = 'flex';
 
     const valorCompra =  parseFloat(document.querySelector("#total-vendas-valor").textContent);

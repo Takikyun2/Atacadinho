@@ -202,8 +202,7 @@ ipcMain.handle('listar-logins', async () => {
 
 ipcMain.handle('adicionar-produto', async (event, produto) => {
   try {
-    await ProdutoController.adicionarProduto(produto);
-    return { sucesso: true };
+    return await ProdutoController.adicionarProduto(produto);
   } catch (err) {
     return { sucesso: false, erro: err.message }
   }
