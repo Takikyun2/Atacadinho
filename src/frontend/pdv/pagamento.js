@@ -129,7 +129,7 @@ const listarTiposDePagamentos = async () =>{
             return `
                 <div class="forma-item">
                     <span>${tp.descricao}</span>
-                    <input type="text" id="${tp.id_tipo_pagamento}" placeholder="0,00">
+                    <input type="number" id="${tp.id_tipo_pagamento}" placeholder="0,00">
                 </div>
             `;
         })

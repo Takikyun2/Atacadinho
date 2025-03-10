@@ -355,20 +355,22 @@ async function atualizarAsideMovimentacoes() {
 
     console.log(movimentacoes, totalVendas, totalRetiradas);
     
-
     let sectionContent = '';
     movimentacoes.forEach(movimentacao => {
       let valorExibido = '';
-        if (movimentacao.tipo === 'Abertura') {
-            valorExibido = `R$ ${movimentacao.valor ? movimentacao.valor.toFixed(2) : '0.00'}`; // Usando valorInicial se disponível, senão 0.00
-        } else {
-             valorExibido = (movimentacao.valor > 0 ? 'R$ ' : '- R$ ') + Math.abs(movimentacao.valor).toFixed(2);
-        }
+      if (movimentacao.tipo === 'Abertura') {
+          valorExibido = `R$ ${movimentacao.valor ? movimentacao.valor.toFixed(2) : '0.00'}`;
+      } else {
+          valorExibido = (movimentacao.valor > 0 ? 'R$ ' : '- R$ ') + Math.abs(movimentacao.valor).toFixed(2);
+      }
+
+      // Define a classe do ponto com base no tipo da movimentação
+      const pontoClass = movimentacao.tipo === 'Sangria' ? 'ponto-vermelho' : 'ponto-azul';
 
       sectionContent += `
           <div class="item-venda">
               <div class="detalhes-venda">
-                  <span class="ponto-azul"></span>
+                  <span class="${pontoClass}"></span>
                   <span class="valor-venda">${valorExibido}</span>
                   <span class="hora-venda">${movimentacao.datahora ? new Date(movimentacao.datahora).toLocaleTimeString() : ''}</span>
               </div>
@@ -378,16 +380,16 @@ async function atualizarAsideMovimentacoes() {
           `;
     });
 
-      const footerContent = `
-          <span>Total de Vendas: R$ ${totalVendas.toFixed(2)}</span><br>
-          <span>Total de Retiradas: - R$ ${Math.abs(totalRetiradas).toFixed(2)}</span>
-      `;
+    const footerContent = `
+        <span>Total de Vendas: R$ ${totalVendas.toFixed(2)}</span><br>
+        <span>Total de Retiradas: - R$ ${Math.abs(totalRetiradas).toFixed(2)}</span>
+    `;
 
-      document.querySelector('.modal-corpo').innerHTML = sectionContent;
-      document.querySelector('.modal-rodape').innerHTML = footerContent;
+    document.querySelector('.modal-corpo').innerHTML = sectionContent;
+    document.querySelector('.modal-rodape').innerHTML = footerContent;
 
   } catch (error) {
-    
+    console.error('Erro ao atualizar movimentações:', error);
   }
 }
 

@@ -202,7 +202,7 @@ class Caixa {
         WHERE
             s.caixa_id = (SELECT MAX(id_caixa) FROM caixa WHERE data_fechamento IS NULL)
         ORDER BY
-            datahora_transacao;
+            datahora_transacao desc;
         `);
 
         let totalVendas = 0;

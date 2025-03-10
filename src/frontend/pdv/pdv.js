@@ -81,6 +81,9 @@ const inserirProdutoViaLeitorBarras = () => {
                 
                     console.log(produtosVenda);
                     atualizarTabela();
+
+                    // Salva os produtos no localStorage após adicionar
+                    localStorage.setItem('produtosVendaPDV', JSON.stringify(produtosVenda));
                 }
             } catch (error) {
                 console.error(error);
@@ -106,6 +109,13 @@ const inserirProdutoViaLeitorBarras = () => {
 // Exemplo de lista de produtos
 const produtosVenda = [
 ];
+
+// Tenta carregar os produtos do localStorage ao iniciar a página
+const produtosSalvos = localStorage.getItem('produtosVendaPDV');
+if (produtosSalvos) {
+  produtosVenda.push(...JSON.parse(produtosSalvos));
+  atualizarTabela();
+}
 
 inserirProdutoViaLeitorBarras();
 
@@ -160,8 +170,9 @@ formBusca.addEventListener("submit", async (evento)=>{
 
 
     atualizarTabela();
+    // Salva os produtos no localStorage após adicionar
+    localStorage.setItem('produtosVendaPDV', JSON.stringify(produtosVenda));
 
-    /* formBusca.reset(); */
     quantidadeProduto.value = "";
 })
 
@@ -196,11 +207,16 @@ function atualizarTabela() {
     });
 
     atualizarFooter();
+
+    // Salva os produtos no localStorage após atualizar a tabela
+    localStorage.setItem('produtosVendaPDV', JSON.stringify(produtosVenda));
 }
 
 function removerProduto(index) {
     produtosVenda.splice(index, 1); 
-    atualizarTabela(); 
+    atualizarTabela();
+    // Salva os produtos no localStorage após remover
+    localStorage.setItem('produtosVendaPDV', JSON.stringify(produtosVenda)); 
 }
 
 function editarProduto(index) {
@@ -220,6 +236,9 @@ function editarProduto(index) {
         if (!isNaN(novaQuantidade) && novaQuantidade > 0) {
             produtosVenda[index].quantidade = novaQuantidade;
             atualizarTabela();
+
+            // Salva os produtos no localStorage após editar a quantidade
+            localStorage.setItem('produtosVendaPDV', JSON.stringify(produtosVenda));
         } else {
             toastr.error('Quantidade inválida!');
             atualizarTabela();
@@ -529,6 +548,8 @@ btnConcluirVenda.addEventListener('click', async ()=>{
             modalPagamento.style.display = 'none';
             modalConcluido.style.display = 'flex';
             resetInputs();
+            // Limpa os produtos do localStorage após a compra
+            localStorage.removeItem('produtosVendaPDV');
         } else {
             toastr.error('Erro ao adicionar o registro de venda');
             console.error('Erro ao adicionar o registro de venda: ' + result.erro);

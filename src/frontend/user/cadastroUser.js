@@ -1,3 +1,14 @@
+document.getElementById('campo-cpf').addEventListener('input', function (e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length > 11) {
+        value = value.slice(0, 11);
+    }
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    e.target.value = value;
+});
+
 const btnCad = document.getElementById('btn-cad');
 
 btnCad.addEventListener('click', async ()=>{
@@ -7,14 +18,23 @@ btnCad.addEventListener('click', async ()=>{
     const senha = document.getElementById('campo-senha').value;
     const cargo = document.getElementById('campo-cargo').value;
     const cpf = document.getElementById('campo-cpf').value;
+    const confirmarSenha = document.getElementById('campo-confirme-senha').value;
 
     if(!nome || !usuario || !senha || !cargo || !cpf){
         toastr.warning('Preencha todos os campos!');
         return
     }
 
-    
-    
+    if (senha !== confirmarSenha) {
+        toastr.warning('As senhas devem ser iguais!');
+        document.getElementById('campo-confirme-senha').style.borderColor = 'red';
+        document.getElementById('campo-confirme-senha').focus();
+        return;
+    } else {
+        document.getElementById('campo-confirme-senha').style.borderColor = '';
+    }
+
+
     const login = { 
         nomeCompleto: nome, 
         user: usuario, 
