@@ -1,36 +1,22 @@
 const mariadb = require('mysql2/promise');
+require('dotenv').config();
+
+const dbHost = "srv1604.hstgr.io";
+const dbUser = "u221550671_dev";
+const dbPassword = "ru8o9:yF";
+const dbName = "u221550671_atacadinho";
+const dbConnectionLimit = 5;
 
 //Configuração da conexão com mariaDB
 
 const pool = mariadb.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'atacadinho',
-  connectionLimit: 5
+  host: dbHost,
+  user: dbUser,
+  password: dbPassword,
+  database: dbName,
+  connectionLimit: dbConnectionLimit
 });
 
-/* Função createDataBaseIfNotExists: 
-Cria uma conexão inicial sem especificar um banco de dados.
-Executa a consulta SQL para criar o banco de dados se ele ainda não existir.
-Fecha a conexão após a operção.
- */
-
-async function createDataBaseIfNotExists() {
-  let conn;
-  try {
-    conn = await mariadb.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: ''
-    });
-    await conn.query(`CREATE DATABASE IF NOT EXISTS atacadinho`);
-  } catch (err) {
-    console.error('Erro ao criar o banco de dados: ', err);
-  } finally {
-    if (conn) conn.end();
-  }
-}
 
 /* 
   Função assíncrona para configurar o banco de dados:
@@ -252,4 +238,4 @@ async function setupDatabase() {
 }
 
 
-module.exports = { pool, createDataBaseIfNotExists, setupDatabase };
+module.exports = { pool, setupDatabase };

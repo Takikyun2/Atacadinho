@@ -1,77 +1,25 @@
 const { app, BrowserWindow, Menu, ipcMain,dialog  } = require('electron')
-const { spawn, execSync } = require('child_process');
 const path = require('path')
-const fs = require('fs'); // Adicionado para verificar se o WAMP está instalado
 const mysql = require('mysql2/promise');
-const { createDataBaseIfNotExists, setupDatabase } = require('./src/backend/database/database')
+const {setupDatabase } = require('./src/backend/database/database')
 const ProdutoController = require('./src/backend/controllers/ProdutoController')
 const LoginController = require('./src/backend/controllers/LoginController')
 const CategoriaController = require('./src/backend/controllers/CategoriaController')
 const CompraController = require('./src/backend/controllers/CompraController')
 const CaixaController  = require('./src/backend/controllers/CaixaController')
 const VendasController = require('./src/backend/controllers/VendaController');
+require('dotenv').config();
 
-
-// Função para verificar se o WAMP já está em execução
-function verificaWampExec() {
-  try {
-    const output = execSync('tasklist');
-    return output.toString().toLowerCase().includes('wampmanager.exe');
-  } catch (error) {
-    console.error('Erro ao verificar processos:', error);
-    return false;
-  }
-}
-
-// Função para verificar se o WAMP está instalado
-function verificaWampInstalado() {
-  const wampPath = path.join('C:', 'wamp64', 'wampmanager.exe');
-  return fs.existsSync(wampPath);
-}
-
-// Função para iniciar o WAMP Server de forma assíncrona
-function iniciarWAMPServer() {
-  return new Promise((resolve, reject) => {
-    if (verificaWampExec()) {
-      console.log('WAMP Server ja esta em execucao.');
-      resolve();
-    } else {
-      if (!verificaWampInstalado()) {
-        console.error('WAMP nao esta instalado no caminho especificado.');
-        dialog.showErrorBox(
-          'Erro - WAMP nao instalado',
-          'O WAMP nao foi encontrado no caminho especificado. Por favor, instale o WAMP e tente novamente.'
-        );
-        reject(new Error('WAMP nao esta instalado no caminho especificado.'));
-        return;
-      }
-
-      const wampPath = path.join('C:', 'wamp64', 'wampmanager.exe'); // Caminho do exe do WAMP
-      const wampProcess = spawn(wampPath, { detached: true, stdio: 'ignore', shell: true });
-
-      wampProcess.on('error', (error) => {
-        console.error('Erro ao iniciar o WAMP Server:', error);
-        dialog.showErrorBox(
-          'Erro ao iniciar o WAMP',
-          'Ocorreu um erro ao tentar iniciar o WAMP Server. Verifique se o WAMP está corretamente instalado.'
-        );
-        reject(error);
-      });
-
-      setTimeout(() => {
-        console.log('WAMP Server iniciado com sucesso!');
-        resolve();
-      }, 5 * 1000); // Tempo de espera para garantir inicialização
-    }
-  });
-}
+const dbHost = "srv1604.hstgr.io";
+const dbUser = "u221550671_dev";
+const dbPassword = "ru8o9:yF";
 
 // Função para verificar a conexão com o banco de dados
 async function waitForDatabase() {
   const dbConfig = {
-    host: 'localhost',
-    user: 'root',
-    password: '',
+    host: dbHost,
+    user: dbUser,
+    password: dbPassword,
   };
 
   const maxRetries = 10; // Número máximo de tentativas
@@ -132,21 +80,17 @@ function carregar_janela() {
   return janela; // Retorna a janela criada
 }
 
-// Inicializa o Electron após o WAMP Server e a conexão com o banco de dados
 app.whenReady().then(async () => {
   try {
-    // Verifica e inicia o WAMP
-    await iniciarWAMPServer();
 
     // Aguarda a conexão com o banco de dados
     await waitForDatabase();
 
     // Cria o banco de dados e configura as tabelas, se necessário
-    await createDataBaseIfNotExists();
     await setupDatabase();
 
     // Cria a janela principal
-    const janela = carregar_janela();
+    await carregar_janela();
 
     // Cria o menu da aplicação
     criarMenu();
@@ -154,22 +98,12 @@ app.whenReady().then(async () => {
     console.error('Erro ao iniciar o aplicativo:', error);
     dialog.showErrorBox(
       'Erro ao iniciar o aplicativo',
-      'Não foi possível iniciar o aplicativo. Verifique se o WAMP está instalado e o banco de dados está disponível.'
+      'Não foi possível iniciar o aplicativo. Verifique se o banco de dados está disponível.'
     );
     app.quit();
   }
 });
 
-/* app.whenReady().then(async () => {
-  await createDataBaseIfNotExists();
-  await setupDatabase();
-  carregar_janela();
-  criarMenu();
-}); */
-
-/* Ipc  */
-
-// ? - Produtos Ipc start
 
 //Metodos login
 ipcMain.handle('adicionar-login', async (event, login) => {
@@ -392,57 +326,9 @@ ipcMain.handle('listar-tipos-de-pagamentos', async () => {
 });
 
 
-// ? - Produtos Ipc end
-
-
-/* Menu */
-
-/*
-  Define a estrutura do menu: Cada item do menu tem um label (rótulo) e pode ter um accelerator (atalho de teclado).
-  Submenu Arquivo: Contém opções para criar um novo arquivo, abrir um arquivo existente, salvar um arquivo e sair do aplicativo.
-  Submenu Editar: Contém opções para desfazer, refazer, recortar, copiar, colar e selecionar tudo.
-  Submenu Visualizar: Contém opções para recarregar a página, alternar para tela cheia e ferramentas de desenvolvedor.
-  Submenu Janela: Contém opções para minimizar, fechar e sair. 
-  Submenu Ajuda: Contém opções para documentação e sobre.
-*/
 
 function criarMenu() {
   const template = [
-    /* {
-      label: 'Arquivo',
-
-      submenu: [
-        {
-          label: 'Novo',
-          accelerator: 'CmdOrCtrl+N',
-          click: () => {
-            console.log('Novo arquivo');
-          }
-        },
-        {
-          label: 'Abrir',
-          accelerator: 'CmdOrCtrl+O',
-          click: () => {
-            console.log('Abrir arquivo');
-          }
-        },
-        {
-          label: 'Salvar',
-          accelerator: 'CmdOrCtrl+S',
-          click: () => {
-            console.log('Salvar arquivo');
-          }
-        },
-        { type: 'separator' },
-        {
-          label: 'Sair',
-          accelerator: 'CmdOrCtrl+Q',
-          click: () => {
-            app.quit();
-          }
-        }
-      ]
-    }, */
     {
       label: 'Editar',
       submenu: [

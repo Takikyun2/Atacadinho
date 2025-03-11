@@ -1,0 +1,7 @@
+DB_HOST= You Host
+DB_PORT= You Host
+DB_DATABASE= You Database
+DB_USERNAME= You User name
+DB_PASSWORD= You Password
+
+DB_CONNECTION_LIMIT= You DB connection limit

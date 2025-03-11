@@ -3,38 +3,42 @@ const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 
 module.exports = {
   packagerConfig: {
-    asar: true,
+    asar: true,  // Empacotar o aplicativo em um único arquivo .asar
   },
   rebuildConfig: {},
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      config: {},
+      platforms: ['win32'],  // Garanta que a plataforma win32 esteja aqui
+      config: {
+        name: 'atacadinho',
+        exe: 'Atacadinho.exe',
+        authors: 'Turma de desenvolvimento de sistemas Senac 2023',
+        noMsi: true,  // Impede a criação do arquivo .msi
+      },
     },
     {
       name: '@electron-forge/maker-zip',
-      platforms: ['darwin'],
+      platforms: ['darwin'],  // Definido para MacOS apenas
     },
     {
       name: '@electron-forge/maker-deb',
-      config: {},
+      config: {
+        // Configurações específicas do maker-deb
+      },
     },
     {
       name: '@electron-forge/maker-rpm',
-      config: {},
+      config: {
+        // Configurações específicas do maker-rpm
+      },
     },
-    {
-      name: '@electron-forge/maker-rpm',
-      config: {}
-    }
   ],
   plugins: [
     {
       name: '@electron-forge/plugin-auto-unpack-natives',
       config: {},
     },
-    // Fuses are used to enable/disable various Electron functionality
-    // at package time, before code signing the application
     new FusesPlugin({
       version: FuseVersion.V1,
       [FuseV1Options.RunAsNode]: false,

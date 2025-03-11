@@ -24,6 +24,7 @@
     "electron": "^32.0.1"
   },
   "dependencies": {
+    "dotenv": "^16.4.7",
     "electron-squirrel-startup": "^1.0.1",
     "fs": "^0.0.1-security",
     "mariadb": "^3.3.1",
