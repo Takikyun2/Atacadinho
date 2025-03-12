@@ -1,36 +1,48 @@
 const mariadb = require('mysql2/promise');
+const crypto = require("crypto");
+const fs = require("fs");
+const path = require("path");
+
+const algorithm = "aes-256-cbc";
+const key = crypto.scryptSync("3Ws47PikCIGx", "salt", 32); 
+const decrypt = (encryptedData) => {
+  const [ivHex, encryptedText] = encryptedData.split(":"); 
+  const iv = Buffer.from(ivHex, "hex");
+  const encryptedBuffer = Buffer.from(encryptedText, "hex");
+
+  const decipher = crypto.createDecipheriv(algorithm, key, iv);
+  const decrypted = Buffer.concat([decipher.update(encryptedBuffer), decipher.final()]);
+
+  return decrypted.toString();
+};
+
+const filePath = path.join(process.resourcesPath, "config.enc");
+
+
+const encryptedData = fs.readFileSync(filePath, "utf8");
+const decryptedData = decrypt(encryptedData);
+
+// Converter JSON para objeto
+const config = JSON.parse(decryptedData);
+
+// Exibir os dados do banco (apenas para teste)
+
+const dbHost = config.DB_HOST;
+const dbUser = config.DB_USERNAME;
+const dbPassword = config.DB_PASSWORD;
+const dbName = config.DB_DATABASE;
+const dbConnectionLimit = config.DB_CONNECTION_LIMIT;
 
 //Configuração da conexão com mariaDB
 
 const pool = mariadb.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'atacadinho',
-  connectionLimit: 5
+  host: dbHost,
+  user: dbUser,
+  password: dbPassword,
+  database: dbName,
+  connectionLimit: dbConnectionLimit
 });
 
-/* Função createDataBaseIfNotExists: 
-Cria uma conexão inicial sem especificar um banco de dados.
-Executa a consulta SQL para criar o banco de dados se ele ainda não existir.
-Fecha a conexão após a operção.
- */
-
-async function createDataBaseIfNotExists() {
-  let conn;
-  try {
-    conn = await mariadb.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: ''
-    });
-    await conn.query(`CREATE DATABASE IF NOT EXISTS atacadinho`);
-  } catch (err) {
-    console.error('Erro ao criar o banco de dados: ', err);
-  } finally {
-    if (conn) conn.end();
-  }
-}
 
 /* 
   Função assíncrona para configurar o banco de dados:
@@ -252,4 +264,4 @@ async function setupDatabase() {
 }
 
 
-module.exports = { pool, createDataBaseIfNotExists, setupDatabase };
+module.exports = { pool, setupDatabase };
