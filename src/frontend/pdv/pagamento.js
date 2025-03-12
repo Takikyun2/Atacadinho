@@ -20,19 +20,6 @@ erroElement.style.display = 'none';
 erroElement.textContent = 'Insira um valor válido e suficiente para concluir a compra.';
 modalPagamento.querySelector('.content-pagamento').appendChild(erroElement);
 
-/* const calculaValorFinal = ()=>{
-
-    const valorCompra =  parseFloat(document.querySelector("#total-vendas-valor").textContent);
-
-
-    const descontoPercentual = 0; // imposto KKKKKK
-    const desconto = (valorCompra * descontoPercentual) / 100;
-    const valorFinal = valorCompra - desconto;
-
-    
-
-    return {valorFinal,desconto,descontoPercentual}
-} */
 
 // Abrir e fechar modal de pagamento
 openModalPagamentoBtn.addEventListener('click', () => {

@@ -532,7 +532,7 @@ btnConcluirVenda.addEventListener('click', async ()=>{
         if(inputValue.value){
             tipoDePagamentoDaVenda.push({
                 tipo_pagamento_id: index + 1, 
-                valor: inputValue.value
+                valor: valorTotalVenda
             })
         }
     })
