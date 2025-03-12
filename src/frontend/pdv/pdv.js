@@ -1,3 +1,27 @@
+const dadosUser = JSON.parse(sessionStorage.getItem('dadosUser'));// pegando dados do user guardado na sessao
+
+function verificarAcessoUsuario() {
+    if (dadosUser.user_type_id === 1) {
+        const restrictedLinks = [
+            '../../../src/views/registros/relatorios.html',
+            '../../../src/views/cadastros/cadastroDeProdutos.html',
+            '../../../src/views/registros/listagem-Produtos.html'
+        ];
+
+        restrictedLinks.forEach(link => {
+            const anchor = document.querySelector(`a[href="${link}"]`);
+            if (anchor) {
+                anchor.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    toastr.warning('Você não tem permissão para acessar esta página!');
+                });
+            }
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', verificarAcessoUsuario);
+
 aberturaDeCaixa ();
 
 const selectBusca = document.getElementById("select-busca-produto");
@@ -343,7 +367,7 @@ function aberturaDeCaixa (){
 
     
 
-    const dadosUser = JSON.parse(sessionStorage.getItem('dadosUser'));// pegando dados do user guardado na sessao
+   
 
 
     ///* Abre modal e cadastra no DB o registro */
@@ -489,7 +513,7 @@ btnConcluirVenda.addEventListener('click', async ()=>{
 
     const dadosCaixa = JSON.parse(sessionStorage.getItem('dadosCaixaAtual'));
 
-    const dadosUser = JSON.parse(sessionStorage.getItem('dadosUser'));// pegando dados do user guardado na sessao
+    /* const dadosUser = JSON.parse(sessionStorage.getItem('dadosUser'));// pegando dados do user guardado na sessao */
     
 
 
@@ -524,6 +548,11 @@ btnConcluirVenda.addEventListener('click', async ()=>{
     const { valorFinal } = calculaValorFinal();
     
     //verifica se o valor inserido nos inputs sao maiores que o debido atual se nao for mostra a mensagem de erro
+
+    if (totalPago < valorFinal) {
+        erroElement.style.display = 'block';
+        return;
+    }
 
     if (totalPago >= valorFinal) {
         const troco = totalPago - valorFinal;

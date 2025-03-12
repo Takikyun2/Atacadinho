@@ -95,10 +95,7 @@ const calcularDesconto = (valorFinal) => {
     });
 }
 
-// Concluir pagamento
-concluirPagamentoBtn.addEventListener('click', () => {
-    
-});
+
 
 // Fechar modal de concluído
 closeModalConcluidoBtn.addEventListener('click', () => {
@@ -140,7 +137,7 @@ const listarTiposDePagamentos = async () =>{
         formaPagamentoDiv.innerHTML = outputTiposPagamento;
         
     } catch (error) {
-        
+        console.error(error);
     }
 }
 

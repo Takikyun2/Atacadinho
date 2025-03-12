@@ -25,6 +25,33 @@ btnCad.addEventListener('click', async ()=>{
         return
     }
 
+    if (nome.length < 3) {
+        toastr.warning('O nome deve ter pelo menos 3 caracteres!');
+        document.getElementById('campo-nome-completo').style.borderColor = 'red';
+        document.getElementById('campo-nome-completo').focus();
+        return;
+    } else {
+        document.getElementById('campo-nome-completo').style.borderColor = '';
+    }
+
+    if (usuario.length < 3) {
+        toastr.warning('O nome de usuário deve ter pelo menos 3 caracteres!');
+        document.getElementById('campo-usuario').style.borderColor = 'red';
+        document.getElementById('campo-usuario').focus();
+        return;
+    } else {
+        document.getElementById('campo-usuario').style.borderColor = '';
+    }
+
+    if (senha.length < 6) {
+        toastr.warning('A senha deve ter pelo menos 6 caracteres!');
+        document.getElementById('campo-senha').style.borderColor = 'red';
+        document.getElementById('campo-senha').focus();
+        return;
+    } else {
+        document.getElementById('campo-senha').style.borderColor = '';
+    }
+
     if (senha !== confirmarSenha) {
         toastr.warning('As senhas devem ser iguais!');
         document.getElementById('campo-confirme-senha').style.borderColor = 'red';
@@ -34,11 +61,18 @@ btnCad.addEventListener('click', async ()=>{
         document.getElementById('campo-confirme-senha').style.borderColor = '';
     }
 
+    if (cpf.length < 14) {
+        toastr.warning('O CPF deve ter 11 caracteres!');
+        document.getElementById('campo-cpf').style.borderColor = 'red';
+        document.getElementById('campo-cpf').focus();
+        return;
+    }
+
 
     const login = { 
         nomeCompleto: nome, 
         user: usuario, 
-        senha: senha, 
+        senha: senha,
         cpf: cpf, 
         user_type_id: cargo
     }
@@ -88,10 +122,10 @@ const adicionarLogin = async (login) => {
 
           } else {
             toastr.error('Erro ao cadastrar login!');
-            console.log('Erro ao cadastrar o Login: ' + result.erro);
+            console.error('Erro ao cadastrar o Login: ' + result.erro);
           }
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 } 
 

@@ -10,6 +10,22 @@ formLogin.addEventListener('submit', (event)=>{
         return
     }
 
+    if (usuario.length < 3) {
+        toastr.warning('O nome de usuário deve ter pelo menos 3 caracteres!');
+        document.getElementById('usuario').style.borderColor = 'red';
+        document.getElementById('usuario').focus();
+        return;
+    } else {
+        document.getElementById('usuario').style.borderColor = '';
+    }
+
+    if (senha.length < 6) {
+        toastr.warning('A senha deve ter pelo menos 6 caracteres!');
+        document.getElementById('senha').style.borderColor = 'red';
+        document.getElementById('senha').focus();
+        return;
+    }
+
     validaLogin({
         user: usuario,
         senha: senha
