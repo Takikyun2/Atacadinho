@@ -3,7 +3,10 @@ const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 
 module.exports = {
   packagerConfig: {
-    asar: true,  // Empacotar o aplicativo em um único arquivo .asar
+    asar: true, 
+    extraResource: [
+      "src/backend/database/config.enc"
+    ]
   },
   rebuildConfig: {},
   makers: [

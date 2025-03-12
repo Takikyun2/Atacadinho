@@ -8,11 +8,32 @@ const CategoriaController = require('./src/backend/controllers/CategoriaControll
 const CompraController = require('./src/backend/controllers/CompraController')
 const CaixaController  = require('./src/backend/controllers/CaixaController')
 const VendasController = require('./src/backend/controllers/VendaController');
-require('dotenv').config();
+const crypto = require("crypto");
+const fs = require("fs");
 
-const dbHost = "srv1604.hstgr.io";
-const dbUser = "u221550671_dev";
-const dbPassword = "ru8o9:yF";
+const algorithm = "aes-256-cbc";
+const key = crypto.scryptSync("3Ws47PikCIGx", "salt", 32); 
+const decrypt = (encryptedData) => {
+  const [ivHex, encryptedText] = encryptedData.split(":"); 
+  const iv = Buffer.from(ivHex, "hex");
+  const encryptedBuffer = Buffer.from(encryptedText, "hex");
+
+  const decipher = crypto.createDecipheriv(algorithm, key, iv);
+  const decrypted = Buffer.concat([decipher.update(encryptedBuffer), decipher.final()]);
+
+  return decrypted.toString();
+};
+const filePath = path.join(process.resourcesPath, "config.enc");
+const encryptedData = fs.readFileSync(filePath, "utf8");
+const decryptedData = decrypt(encryptedData);
+
+// Converter JSON para objeto
+const config = JSON.parse(decryptedData);
+
+
+const dbHost = config.DB_HOST;
+const dbUser = config.DB_USERNAME;
+const dbPassword = config.DB_PASSWORD;
 
 // Função para verificar a conexão com o banco de dados
 async function waitForDatabase() {
