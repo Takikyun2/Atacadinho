@@ -43,24 +43,26 @@ async function waitForDatabase() {
     password: dbPassword,
   };
 
-  const maxRetries = 10; // Número máximo de tentativas
-  const retryInterval = 3000; // Intervalo entre tentativas (ms)
+  const maxRetries = 10;
+  const retryInterval = 3000;
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      console.log(`Tentativa ${attempt}: Verificando conexao com o banco de dados...`);
+      console.log(`Tentativa ${attempt}: Verificando conexão com o banco de dados...`);
       const connection = await mysql.createConnection(dbConfig);
       await connection.end();
-      console.log('Conexao com o banco de dados estabelecida!');
+      console.log('Conexão com o banco de dados estabelecida!');
       return true;
     } catch (error) {
+      console.error(`Erro na tentativa ${attempt}: ${error.message}`);
       console.warn(`Banco de dados indisponivel. Tentando novamente em ${retryInterval / 1000} segundos...`);
       await new Promise((res) => setTimeout(res, retryInterval));
     }
   }
 
-  throw new Error('O banco de dados nao esta disponivel apos varias tentativas.');
+  throw new Error('O banco de dados não está disponível após várias tentativas.');
 }
+
 
 // Função para carregar a janela principal
 function carregar_janela() {

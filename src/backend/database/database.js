@@ -25,8 +25,6 @@ const decryptedData = decrypt(encryptedData);
 // Converter JSON para objeto
 const config = JSON.parse(decryptedData);
 
-// Exibir os dados do banco (apenas para teste)
-
 const dbHost = config.DB_HOST;
 const dbUser = config.DB_USERNAME;
 const dbPassword = config.DB_PASSWORD;

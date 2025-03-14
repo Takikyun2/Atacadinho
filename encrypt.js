@@ -10,7 +10,6 @@ const encrypt = (data) => {
   const encrypted = Buffer.concat([cipher.update(data, "utf8"), cipher.final()]);
   return iv.toString("hex") + ":" + encrypted.toString("hex"); // Salvar IV junto com os dados
 };
-
 // Ler o JSON e criptografar
 const jsonData = fs.readFileSync("config.json", "utf8");
 const encryptedData = encrypt(jsonData);
