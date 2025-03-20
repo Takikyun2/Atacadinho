@@ -459,8 +459,7 @@ function criarMenu() {
       label: 'Visualizar',
       submenu: [
         { label: 'Recarregar', accelerator: 'CmdOrCtrl+R', role: 'reload' },
-        { label: 'Alternar Tela Cheia', accelerator: 'F11', role: 'togglefullscreen' },
-        { label: 'Ferramentas de Desenvolvedor', accelerator: 'Alt+CmdOrCtrl+I', role: 'toggledevtools' }
+        { label: 'Alternar Tela Cheia', accelerator: 'F11', role: 'togglefullscreen' }
       ]
     },
     {
@@ -479,7 +478,7 @@ function criarMenu() {
           label: 'Documentação',
           click: async () => {
             const { shell } = require('electron');
-            await shell.openExternal('https://electronjs.org');
+            await shell.openExternal('https://drive.google.com/file/d/1P9QCG2ak9D7NiiR22D_lCdx8ZLFjoerC/view?usp=sharing');
           }
         }
       ]
