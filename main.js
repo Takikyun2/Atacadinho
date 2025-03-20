@@ -475,6 +475,13 @@ function criarMenu() {
       role: 'help',
       submenu: [
         {
+          label: 'Tutoriais',
+          click: async () => {
+            const { shell } = require('electron');
+            await shell.openExternal('https://docs-atacadinho.netlify.app/');
+          }
+        },
+        {
           label: 'Documentação',
           click: async () => {
             const { shell } = require('electron');
